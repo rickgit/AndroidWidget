@@ -1,0 +1,58 @@
+def pDir = projectDir.path
+subprojects {
+    tasks.withType(JavaCompile) {
+        sourceCompatibility = 1.7
+        targetCompatibility = 1.7
+        options.encoding = "UTF-8"
+    }
+    repositories {
+
+//        maven {
+//            def s = rootProject.buildFile.getParent()+File.separator+"libs"
+//            url uri(s)}
+        flatDir {
+            dirs "${pDir}/app/libs/android","${pDir}/app/libs/retrofit","${pDir}/app/libs/glide"
+        }
+        jcenter()
+    }
+}
+// 配置子项目项目
+project.ext.androidlibraryprojects = ["Zxing","recyclerview"]
+project.ext.androidapkprojects = ["app"]
+project.ext.androidprojects = project.androidlibraryprojects + project.androidapkprojects
+/**
+ * 根据容器类型，过滤出需要的gradle project.
+ * @param proj
+ * @return
+ * @author anshu.wang 2016-09-26
+ */
+def filterProject(proj) {
+    subprojects.findAll { project ->
+        proj.contains(project.name)
+    }
+}
+
+configure(filterProject(androidapkprojects)) {
+    apply plugin: 'com.android.application'
+    android {
+        compileSdkVersion COMPILE_SDK_VERSION
+        buildToolsVersion BUILD_TOOLS_VERSION
+        defaultConfig {
+            minSdkVersion MIN_SDK_VERSION
+            targetSdkVersion TARGET_SDK_VERSION
+        }
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_7
+            targetCompatibility JavaVersion.VERSION_1_7
+        }
+
+        lintOptions {
+            checkReleaseBuilds false
+            quiet true
+            abortOnError false
+        }
+        compileOptions.encoding="UTF-8"
+
+
+    }
+}
