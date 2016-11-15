@@ -1,4 +1,5 @@
 def pDir = projectDir.path
+
 subprojects {
     tasks.withType(JavaCompile) {
         sourceCompatibility = 1.7
@@ -11,13 +12,14 @@ subprojects {
 //            def s = rootProject.buildFile.getParent()+File.separator+"libs"
 //            url uri(s)}
         flatDir {
-            dirs "${pDir}/app/libs/android","${pDir}/app/libs/retrofit","${pDir}/app/libs/glide"
+            dirs "${pDir}/app/libs/android","${pDir}/app/libs/retrofit","${pDir}/app/libs/glide","${pDir}/app/libs/recyclerview", "${pDir}/app/libs/palette"
+
         }
         jcenter()
     }
 }
 // 配置子项目项目
-project.ext.androidlibraryprojects = ["Zxing","recyclerview"]
+project.ext.androidlibraryprojects = ["Zxing", "recyclerview"]
 project.ext.androidapkprojects = ["app"]
 project.ext.androidprojects = project.androidlibraryprojects + project.androidapkprojects
 /**
@@ -51,7 +53,7 @@ configure(filterProject(androidapkprojects)) {
             quiet true
             abortOnError false
         }
-        compileOptions.encoding="UTF-8"
+        compileOptions.encoding = "UTF-8"
 
 
     }
