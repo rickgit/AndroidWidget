@@ -22,7 +22,7 @@ import java.util.TimeZone;
 
 import edu.ptu.demo.R;
 
-public class RecycleActivity extends FragmentActivity {
+public class RecyclerActivity extends FragmentActivity {
 
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
