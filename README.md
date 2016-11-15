@@ -1,6 +1,7 @@
 # AndroidWidget
 analysis android view and widget include some demo
 ##目录结构
+<pre>
 ├─app
 │  ├─libs
 │  │  ├─android
@@ -50,3 +51,4 @@ analysis android view and widget include some demo
                     └─support
                         └─v7
                             └─recyclerview
+</pre>
