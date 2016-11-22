@@ -1,4 +1,4 @@
-package edu.ptu.demo.test;
+package edu.ptu.demo.test.glide;
 
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -22,13 +22,14 @@ public class GlideActivity extends FragmentActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_glide);
-        View iv = findViewById(R.id.iv);
+        ImageView iv = (ImageView) findViewById(R .id.iv);
         View bg = findViewById(R.id.bg);
-        Glide.with(this).load(R.drawable.gs)
-                .into((ImageView) findViewById(R.id.iv));
+        Glide.with(this).load("https://test.open.dididapiao.com/image/icon/icon_default.png")
+                .into(iv);
 
-        BitmapDrawable drawable = (BitmapDrawable) getResources().getDrawable(R.drawable.gs);
-        Palette generate = Palette.from(drawable.getBitmap()).generate();
-        bg.setBackgroundColor(generate.getDarkMutedSwatch().getRgb());
+//        BitmapDrawable drawable = (BitmapDrawable) getResources().getDrawable(R.drawable.gs);
+//        Palette generate = Palette.from(drawable.getBitmap()).generate();
+//        bg.setBackgroundColor(generate.getDarkMutedSwatch().getRgb());
+        bg.setBackgroundResource(R.drawable.vector);
     }
 }

@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/srfl_my_dynamic"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--<android.support.design.widget.CoordinatorLayout
+        android:id="@+id/coorLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#00ff99">-->
+
+    <test.demo.com.view.MyScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff">
+        <!-- Scroll 表示向下滚动时,这个View会被滚出屏幕范围直到隐藏.
+             enterAlways 表示向上滚动时,这个View会随着滚动手势出现,直到恢复原来的位置.
+
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            使用上面的属性会显得卡顿
+            app:layout_scrollFlags="scroll|enterAlways"
+
+layout_scrollFlags中的几个值：
+scroll: 所有想滚动出屏幕的view都需要设置这个flag， 没有设置这个flag的view将被固定在屏幕顶部。
+enterAlways:这个flag让任意向下的滚动都会导致该view变为可见，启用快速“返回模式”。
+enterAlwaysCollapsed:当你的视图已经设置minHeight属性又使用此标志时，你的视图只能已最小高度进入，只有当滚动视图到达顶部时才扩大到完整高度。
+exitUntilCollapsed:滚动退出屏幕，最后折叠在顶端。
+【注意】: 设置了layout_scrollFlags标志的View必须在没有设置的View的之前定义，这样可以确保设置过的View都从上面移出, 只留下那些固定的View在下面。
+
+            app:layout_scrollFlags="scroll|enterAlways"  使用这个属性；当底部RecyclerView没有滑动到顶部的时候，要隐藏的布局就会自动出现；
+            想要实现的目的：在RecyclerView滑动到顶部时，隐藏的布局才出现
+            enterAlwaysCollapsed:属性：滑动到顶部时，有时不会自动出现；并且SwipeRefreshLayout的刷新事件也会调用
+-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+            <RelativeLayout
+                android:id="@+id/rl_head_bg"
+                android:layout_width="match_parent"
+                android:layout_height="286dp"
+                android:minHeight="286dp"
+                android:orientation="horizontal">
+                <RelativeLayout
+                    android:id="@+id/rl_back"
+                    android:layout_width="45dp"
+                    android:layout_height="65dp">
+                    <ImageView
+                        android:id="@+id/iv_back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="20dp"
+                     />
+                </RelativeLayout>
+                <FrameLayout
+                    android:id="@+id/ll_head"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_gravity="bottom"
+                    android:gravity="center"
+                    android:layout_centerHorizontal="true">
+
+                    <LinearLayout
+                        android:layout_alignParentBottom="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:layout_centerHorizontal="true">
+                        <ImageView
+                            android:id="@+id/iv_head"
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            android:layout_marginTop="3dp"
+                            android:layout_alignTop="@+id/rl_back"
+                            android:layout_centerHorizontal="true"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/tv_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:gravity="center_vertical"
+                            android:text="哈哈哈魔女"
+                            android:textColor="@android:color/white"
+                            android:textSize="20sp" />
+                        <TextView
+                            android:id="@+id/tv_hp_express_company"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:gravity="center_vertical"
+                            android:textColor="@android:color/white"
+                            android:text="魔女俱乐部"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/tv_hp_express_part"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:layout_marginBottom="10dp"
+                            android:text="集训营"
+                            android:gravity="center_vertical"
+                            android:textColor="@android:color/white"
+                            android:textSize="14sp" />
+                        <ImageView
+                            android:id="@+id/btn_concern"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:gravity="center_vertical"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                </FrameLayout>
+                <LinearLayout
+                    android:layout_alignParentBottom="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:orientation="horizontal"
+                    android:background="@android:color/darker_gray"
+                    android:layout_gravity="center"
+                    android:layout_centerHorizontal="true">
+                    <!--关注布局-->
+                    <LinearLayout
+                        android:id="@+id/ll_concern_tt"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginTop="6dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_centerHorizontal="true">
+
+                        <TextView
+                            android:id="@+id/tv_hp_sendPageCount_tt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:gravity="center_vertical"
+                            android:textColor="@android:color/white"
+                            android:text="他的关注"
+                            android:textSize="16sp" />
+                        <TextView
+                            android:id="@+id/tv_hp_send_tt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:layout_marginBottom="3dp"
+                            android:text="66"
+                            android:textColor="@android:color/white"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="0.5dp"
+                        android:layout_weight="0.001"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="6dp"
+                        android:layout_marginBottom="6dp"
+                        android:background="@android:color/white"
+                        />
+                    <!--粉丝布局-->
+                    <LinearLayout
+                        android:id="@+id/ll_fans_tt"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginTop="6dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/tv_hp_takePageCount_tt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:gravity="center"
+                            android:text="他的粉丝"
+                            android:textColor="@android:color/white"
+                            android:textSize="16sp" />
+                        <TextView
+                            android:id="@+id/tv_hp_take_tt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:textColor="@android:color/white"
+                            android:layout_marginBottom="3dp"
+                            android:text="3"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </RelativeLayout>
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recview"
+                android:layout_width="match_parent"
+                >
+
+            </android.support.v7.widget.RecyclerView>
+        </LinearLayout>
+    </test.demo.com.view.MyScrollView>
+
+</android.support.v4.widget.SwipeRefreshLayout>
+    <!--
+</android.support.design.widget.CoordinatorLayout>-->
+
+
+
+
+    <!--  <?xml version="1.0" encoding="utf-8"?>
+  <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical">
+  <android.support.design.widget.AppBarLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+
+      <android.support.v7.widget.Toolbar
+          android:id="@+id/third_activity_toolbar"
+          android:layout_width="match_parent"
+          android:layout_height="?attr/actionBarSize" />
+
+      <android.support.design.widget.TabLayout
+          android:id="@+id/tab_layout"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          app:layout_scrollFlags="scroll|enterAlways"
+          app:tabIndicatorColor="@color/medium_blue"
+          app:tabSelectedTextColor="@color/medium_blue"
+          app:tabTextAppearance="@style/TabText"
+          app:tabTextColor="@color/gray_text" />
+  </android.support.design.widget.AppBarLayout>
+
+  <android.support.v4.view.ViewPager
+      android:id="@+id/viewpager"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+  </android.support.design.widget.CoordinatorLayout>-->
