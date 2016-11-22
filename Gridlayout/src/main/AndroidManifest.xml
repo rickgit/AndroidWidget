@@ -1,0 +1,10 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="edu.ptu.gridlayout">
+
+    <application
+        package="android.support.v7.gridlayout"
+        android:allowBackup="true">
+
+    </application>
+
+</manifest>

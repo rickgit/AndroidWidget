@@ -30,6 +30,6 @@ public class GlideActivity extends FragmentActivity {
 //        BitmapDrawable drawable = (BitmapDrawable) getResources().getDrawable(R.drawable.gs);
 //        Palette generate = Palette.from(drawable.getBitmap()).generate();
 //        bg.setBackgroundColor(generate.getDarkMutedSwatch().getRgb());
-        bg.setBackgroundResource(R.drawable.vector);
+//        bg.setBackgroundResource(R.drawable.vector);
     }
 }

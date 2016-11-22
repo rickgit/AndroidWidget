@@ -12,14 +12,14 @@ subprojects {
 //            def s = rootProject.buildFile.getParent()+File.separator+"libs"
 //            url uri(s)}
         flatDir {
-            dirs "${pDir}/app/libs/android","${pDir}/app/libs/retrofit","${pDir}/app/libs/glide","${pDir}/app/libs/recyclerview", "${pDir}/app/libs/palette"
+            dirs "${pDir}/app/libs/android","${pDir}/app/libs/retrofit","${pDir}/app/libs/glide","${pDir}/app/libs/recyclerview", "${pDir}/app/libs/palette", "${pDir}/app/libs/gridlayout", "${pDir}/app/libs/cardview", "${pDir}/app/libs/constraint", "${pDir}/app/libs/design"
 
         }
         jcenter()
     }
 }
 // 配置子项目项目
-project.ext.androidlibraryprojects = ["Zxing", "recyclerview"]
+project.ext.androidlibraryprojects = ["RecyclerView","Cardview","Gridlayout","Design","V7appconpat"]
 project.ext.androidapkprojects = ["app"]
 project.ext.androidprojects = project.androidlibraryprojects + project.androidapkprojects
 /**
@@ -36,6 +36,30 @@ def filterProject(proj) {
 
 configure(filterProject(androidapkprojects)) {
     apply plugin: 'com.android.application'
+    android {
+        compileSdkVersion COMPILE_SDK_VERSION
+        buildToolsVersion BUILD_TOOLS_VERSION
+        defaultConfig {
+            minSdkVersion MIN_SDK_VERSION
+            targetSdkVersion TARGET_SDK_VERSION
+        }
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_7
+            targetCompatibility JavaVersion.VERSION_1_7
+        }
+
+        lintOptions {
+            checkReleaseBuilds false
+            quiet true
+            abortOnError false
+        }
+        compileOptions.encoding = "UTF-8"
+
+
+    }
+}
+configure(filterProject(androidlibraryprojects)) {
+    apply plugin: 'com.android.library'
     android {
         compileSdkVersion COMPILE_SDK_VERSION
         buildToolsVersion BUILD_TOOLS_VERSION

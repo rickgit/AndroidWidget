@@ -1,1 +1,1 @@
-include ':app', ':RecyclerView'
+include ':app', ':RecyclerView', ':Gridlayout', ':Cardview', ':Design', ':V7appconpat'
