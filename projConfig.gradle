@@ -12,7 +12,7 @@ subprojects {
 //            def s = rootProject.buildFile.getParent()+File.separator+"libs"
 //            url uri(s)}
         flatDir {
-            dirs "${pDir}/app/libs/android","${pDir}/app/libs/retrofit","${pDir}/app/libs/glide","${pDir}/app/libs/recyclerview", "${pDir}/app/libs/palette", "${pDir}/app/libs/gridlayout", "${pDir}/app/libs/cardview", "${pDir}/app/libs/constraint", "${pDir}/app/libs/design"
+            dirs "${pDir}/app/libs/android","${pDir}/app/libs/okhttp","${pDir}/app/libs/glide","${pDir}/app/libs/recyclerview", "${pDir}/app/libs/palette", "${pDir}/app/libs/gridlayout", "${pDir}/app/libs/cardview", "${pDir}/app/libs/constraint", "${pDir}/app/libs/rxjava", "${pDir}/app/libs/fastjson", "${pDir}/app/libs/design"
 
         }
         jcenter()

@@ -1,14 +1,9 @@
 apply plugin: 'com.android.library'
 
 android {
-
-
     defaultConfig {
-
         versionCode 1
         versionName "1.0"
-
-
     }
     buildTypes {
         release {
@@ -20,4 +15,5 @@ android {
 
 dependencies {
 
+    compile project(':V7appconpat')
 }

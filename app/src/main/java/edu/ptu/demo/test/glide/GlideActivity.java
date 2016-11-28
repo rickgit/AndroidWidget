@@ -1,17 +1,18 @@
 package edu.ptu.demo.test.glide;
 
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.graphics.Palette;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.List;
+
 import edu.ptu.demo.R;
+import retrofit2.Call;
+import retrofit2.Retrofit;
 
 /**
  * Created by anshu.wang on 2016/11/12.
@@ -31,5 +32,11 @@ public class GlideActivity extends FragmentActivity {
 //        Palette generate = Palette.from(drawable.getBitmap()).generate();
 //        bg.setBackgroundColor(generate.getDarkMutedSwatch().getRgb());
 //        bg.setBackgroundResource(R.drawable.vector);
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://api.github.com/")
+                .build();
+
+        GitHubService service = retrofit.create(GitHubService.class);
+        Call<List<Object>> repos = service.listRepos("octocat");
     }
 }

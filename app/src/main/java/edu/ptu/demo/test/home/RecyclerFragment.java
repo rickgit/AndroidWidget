@@ -61,7 +61,8 @@ public class RecyclerFragment extends Fragment {
                             convertView=LayoutInflater.from(getContext()).inflate(R.layout.item,null);
                         if (position%2==0)
                             convertView.setBackgroundColor(0xffaaccbb);
-                        else convertView.setBackgroundColor(0xffccbbaa);
+                        else
+                            convertView.setBackgroundColor(0xffccbbaa);
                         return convertView;
                     }
                 });
