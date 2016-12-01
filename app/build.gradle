@@ -44,12 +44,17 @@ dependencies {
     compile ':retrofit-2.1.0'
     compile ':glide-3.7.0'
     ///fastjson
-    compile ':converter-fastjson-android-2.0.2'//适配retrofit
+    compile ':converter-fastjson-android-2.0.2'
+    //适配retrofit
     compile ':fastjson-1.1.50.android'
     ///rxjava
-    compile ':adapter-rxjava-2.1.0'//适配retrofit
-    compile ':rxandroid-1.2.1' //AndroidSchedules.MainThread()
+    compile ':adapter-rxjava-2.1.0'
+    //适配retrofit
+    compile ':rxandroid-1.2.1'
+    //AndroidSchedules.MainThread()
     compile ':rxjava-1.1.6'
     //palette
     compile ':palette-v7-23.0.1'
+    compile 'junit:junit:4.12'
+
 }

@@ -32,11 +32,5 @@ public class GlideActivity extends FragmentActivity {
 //        Palette generate = Palette.from(drawable.getBitmap()).generate();
 //        bg.setBackgroundColor(generate.getDarkMutedSwatch().getRgb());
 //        bg.setBackgroundResource(R.drawable.vector);
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.github.com/")
-                .build();
-
-        GitHubService service = retrofit.create(GitHubService.class);
-        Call<List<Object>> repos = service.listRepos("octocat");
     }
 }

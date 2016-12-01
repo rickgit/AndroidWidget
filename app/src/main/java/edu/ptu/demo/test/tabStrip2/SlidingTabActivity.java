@@ -1,11 +1,14 @@
 package edu.ptu.demo.test.tabStrip2;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.widget.ProgressBar;
 
 import edu.ptu.demo.R;
+import edu.ptu.demo.test.progress.CustomProgressBar;
 import edu.ptu.demo.test.utils.list.PagerUtils;
 
 /**
@@ -31,6 +34,8 @@ public class SlidingTabActivity extends FragmentActivity {
                 return 0;
             }
         });
-
+        ProgressDialog customProgressBar =
+                CustomProgressBar.createCustomProgressBar(this);
+        customProgressBar.show();
     }
 }
