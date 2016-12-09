@@ -2,9 +2,11 @@ package edu.ptu.demo.test.tabStrip2;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 import android.widget.ProgressBar;
 
 import edu.ptu.demo.R;
@@ -20,13 +22,19 @@ public class SlidingTabActivity extends FragmentActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sliding2);
-        ViewPager vp = (ViewPager) findViewById(R.id.vp);
+        final ViewPager vp = (ViewPager) findViewById(R.id.vp);
         SlidingTabLayout stl = (SlidingTabLayout) findViewById(R.id.stl);
         stl.setDistributeEvenly(true);
         stl.setSelectedIndicatorColors(0xffaabbcc);
         stl.setBackgroundColor(0xffffffff);
         stl.setCustomTabView(R.layout.view_tab, R.id.tv);
         PagerUtils.createPagerAdapter(this,vp);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+              vp.getChildAt(1).setVisibility(View.GONE);
+            }
+        },3000);
         stl.setViewPager(vp);
         stl.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
             @Override

@@ -65,7 +65,8 @@ public class CustomProgressBar {
         final RotateAnimation animRotate = new RotateAnimation(0f,359f,
                 RotateAnimation.RELATIVE_TO_SELF, 0.5f,
                 RotateAnimation.RELATIVE_TO_SELF, 0.5f);
-        animRotate.setDuration(1000);
+        //Android 4.0前 600ms,holo 400ms
+        animRotate.setDuration(600);
         animRotate.setRepeatCount(Animation.INFINITE);
         animSet.addAnimation(animRotate);
         myImageView.startAnimation(animSet);

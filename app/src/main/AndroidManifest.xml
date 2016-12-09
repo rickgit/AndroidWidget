@@ -34,6 +34,9 @@
         </activity>
         <activity
             android:name="edu.ptu.demo.test.tabStrip2.SlidingTabActivity"
+            android:windowSoftInputMode="adjustPan"></activity>
+        <activity
+            android:name="edu.ptu.demo.test.webview.FeedbackFragmentActivity"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,6 +1,5 @@
 package edu.ptu.demo.test.rxjava;
 
-import org.junit.Test;
 
 import rx.Observable;
 import rx.functions.Action1;
