@@ -3,12 +3,16 @@ package edu.ptu.demo.test.webview;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.widget.PopupWindowCompat;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.Window;
 import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import edu.ptu.demo.R;
@@ -43,6 +47,19 @@ public class FeedbackFragmentActivity extends FragmentActivity{
         // 我们再看他的DemoJavaScriptInterface这个类。还要这个类一定要在主线程中
         webView.addJavascriptInterface(new DemoJavaScriptInterface(), "demo");
         webView.loadUrl("file:///android_asset/test.html");
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                View inflate = LayoutInflater.from(FeedbackFragmentActivity.this).inflate(R.layout.progress_dialog, null);
+                PopupWindow popupWindow = new PopupWindow(inflate);
+                popupWindow.setBackgroundDrawable(getResources().getDrawable(
+                        R.drawable.ic_launcher));
+
+                popupWindow.showAsDropDown(findViewById(R.id.content2));
+            }
+        },2000);
+
     }
     // 这是他定义由 addJavascriptInterface 提供的一个Object
     final class DemoJavaScriptInterface {
