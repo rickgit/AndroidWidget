@@ -1,6 +1,9 @@
 package edu.ptu.demo.test.gridview;
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -9,6 +12,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -19,17 +24,22 @@ import java.util.List;
 import edu.ptu.demo.R;
 import edu.ptu.demo.test.RecyclerActivity;
 import edu.ptu.demo.test.utils.Utils;
+import edu.ptu.demo.test.utils.permission.PermissionUtils;
 
 /**
  * Created by anshu.wang on 2016/12/29.
  */
 
 public class GridViewActivity extends FragmentActivity {
+
+    private TextView tv;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recycler);
         RecyclerView rcv = (RecyclerView) findViewById(R.id.rcv);
+        tv = (TextView) findViewById(R.id.tv);
         //GridLayout 3列
         GridLayoutManager mgr=new GridLayoutManager(this,3);
         rcv.setLayoutManager(mgr);
@@ -62,6 +72,12 @@ public class GridViewActivity extends FragmentActivity {
             }
         });
         getMacFromArpCache("192.182.0.1");
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                PermissionUtils.testPermission(GridViewActivity.this);
+            }
+        },3000);
     }
     /**
      * Try to extract a hardware MAC address from a given IP address using the
@@ -76,16 +92,18 @@ public class GridViewActivity extends FragmentActivity {
      * @param ip
      * @return the MAC from the ARP cache
      */
-    public static String getMacFromArpCache(String ip) {
+    public   String getMacFromArpCache(String ip) {
         if (ip == null)
             return null;
         BufferedReader br = null;
+        StringBuilder sb=new StringBuilder();
         try {
             br = new BufferedReader(new FileReader("/proc/net/arp"));
             String line;
             while ((line = br.readLine()) != null) {
                 String[] splitted = line.split(" +");
                 System.out.println("=++++>"+line);
+                sb.append(line+"\n");
                 if (splitted != null && splitted.length >= 4 && ip.equals(splitted[0])) {
                     // Basic sanity check
                     String mac = splitted[3];
@@ -104,7 +122,14 @@ public class GridViewActivity extends FragmentActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            tv.setText(sb.toString());
         }
         return null;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        Toast.makeText(this,permissions[0]+(grantResults[0]== PackageManager.PERMISSION_GRANTED),Toast.LENGTH_LONG).show();
     }
 }
