@@ -1,0 +1,16 @@
+apply plugin: 'application'
+mainClassName = "com.example.MCPTool"
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.example.MCPTool'
+    }
+}
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"
