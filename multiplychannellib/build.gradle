@@ -1,9 +1,13 @@
 apply plugin: 'application'
-mainClassName = "com.example.MCPTool"
+mainClassName = "com.multchannel.MCPTool"
 jar {
     manifest {
-        attributes 'Main-Class': 'com.example.MCPTool'
+        attributes 'Main-Class': 'com.multchannel.MCPTool'
     }
+}
+compileJava {
+    exclude('**/McReaderUtils.java')
+
 }
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])

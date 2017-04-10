@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example;
+package com.multchannel;
 
 import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
@@ -415,7 +415,7 @@ public class MCPTool {
                             String fileName = path.getName();
                             int dot = fileName.lastIndexOf(".");
                             //woqutzz_android_v1_4_0-100013
-                            String prefix = fileName.substring(0, dot);
+                            String prefix =  fileName.substring(0, dot);
                             String suffix = fileName.substring(dot);
                             for (String content : contents) {
                                 File target = new File(outdir, prefix + "" + content.split("_")[0] + suffix);
