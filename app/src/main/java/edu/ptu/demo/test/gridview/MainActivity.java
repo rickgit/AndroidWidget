@@ -2,8 +2,6 @@ package edu.ptu.demo.test.gridview;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
@@ -25,20 +23,20 @@ public class MainActivity extends Activity {
         child.postDelayed(new Runnable() {
             @Override
             public void run() {
-                child.setValue("23%");
+                child.setRadio("23%");
             }
         },100);
 
         child.postDelayed(new Runnable() {
             @Override
             public void run() {
-                child.setValue("130%");
+                child.setRadio("130%");
             }
         },5000);
         child.postDelayed(new Runnable() {
             @Override
             public void run() {
-                child.setValue("280%");
+                child.setRadio("280%");
             }
         },15000);
         vg.addView(child,new RelativeLayout.LayoutParams(240,120));

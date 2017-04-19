@@ -168,7 +168,7 @@ public class RoundIndicatorView extends View {
         canvas.drawText(roundIndicatorBean.getValue().text, roundIndicatorBean.getPanel()[0] / 2 - valueBound.width() / 2, roundIndicatorBean.getPanel()[0] / 2 - 4 - bounds.height(), valuePain);
     }
 
-    public void setValue(String ratio) {
+    public void setRadio(String ratio) {
         float value=0;
 
         if (ratio!=null||!ratio.equals("")||ratio.contains("%")){
@@ -176,7 +176,7 @@ public class RoundIndicatorView extends View {
         }
         if (value == 0) {
             roundIndicatorBean.getProcess().sweepAngle = roundIndicatorBean.getScale().off;
-        } else if (value < 1.6) {//0~160%，没刻度占用20%
+        } else if (value < 1.6) {//0~160%，每刻度占用20%
             float allAngle = roundIndicatorBean.getScale().off + roundIndicatorBean.getScale().scaleSize * 8;
             float allValue = 1.6f;
             roundIndicatorBean.getProcess().sweepAngle = allAngle / allValue * value;
