@@ -71,7 +71,7 @@ public class RoundIndicatorBean {
         public float radius;
         public float angleRangle[] = {0f, 180f};
         public float off = 6;
-        public float scaleSize = (angleRangle[1] - off * 2) / 12;
+        public float scaleSize = (angleRangle[1] - off * 2) / 11;
 
         public int getColor(float current, float process) {
             if (process >= current)

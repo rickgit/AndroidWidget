@@ -36,7 +36,19 @@ public class MainActivity extends Activity {
         child.postDelayed(new Runnable() {
             @Override
             public void run() {
+                child.setRadio("160%");
+            }
+        },3300);
+        child.postDelayed(new Runnable() {
+            @Override
+            public void run() {
                 child.setRadio("280%");
+            }
+        },15000);
+        child.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                child.setRadio("388%");
             }
         },15000);
         vg.addView(child,new RelativeLayout.LayoutParams(240,120));
