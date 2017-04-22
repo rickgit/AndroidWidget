@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import edu.ptu.demo.R;
+import edu.ptu.demo.test.roundindicator.CustomDialog;
 import edu.ptu.demo.test.roundindicator.RoundIndicatorView;
 
 /**
@@ -52,5 +53,7 @@ public class MainActivity extends Activity {
             }
         },15000);
         vg.addView(child,new RelativeLayout.LayoutParams(240,120));
+
+        CustomDialog.createCustomDialog(this);
     }
 }

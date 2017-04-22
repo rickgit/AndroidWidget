@@ -19,4 +19,15 @@
     <!-- From: file:/usr/local/google/buildbot/repo_clients/https___googleplex-android.googlesource.com_a_platform_manifest.git/mnc-sdk-release/frameworks/support/v7/recyclerview/res/values/ids.xml -->
     <eat-comment />
     <item name="item_touch_helper_previous_elevation" type="id" />
+
+    <style name="control_custom_popwindow" parent="@android:style/Theme.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <!-- 设置背景为空等于去掉了边框 -->
+        <item name="android:windowBackground">@null</item>
+        <!-- 设置背景是否变暗 -->
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
 </resources>
