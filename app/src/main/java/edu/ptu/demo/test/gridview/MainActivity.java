@@ -18,42 +18,42 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ViewGroup vg = (ViewGroup) findViewById(R.id.activity_main);
-        vg.removeAllViews();
-        final RoundIndicatorView child = new RoundIndicatorView(this);
-        child.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                child.setRadio("23%");
-            }
-        },100);
-
-        child.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                child.setRadio("130%");
-            }
-        },5000);
-        child.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                child.setRadio("160%");
-            }
-        },3300);
-        child.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                child.setRadio("280%");
-            }
-        },15000);
-        child.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                child.setRadio("388%");
-            }
-        },15000);
-        vg.addView(child,new RelativeLayout.LayoutParams(240,120));
-
-        CustomDialog.createCustomDialog(this);
+//        ViewGroup vg = (ViewGroup) findViewById(R.id.activity_main);
+//        vg.removeAllViews();
+//        final RoundIndicatorView child = new RoundIndicatorView(this);
+//        child.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                child.setRadio("23%");
+//            }
+//        },100);
+//
+//        child.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                child.setRadio("130%");
+//            }
+//        },5000);
+//        child.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                child.setRadio("160%");
+//            }
+//        },3300);
+//        child.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                child.setRadio("280%");
+//            }
+//        },15000);
+//        child.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                child.setRadio("388%");
+//            }
+//        },15000);
+//        vg.addView(child,new RelativeLayout.LayoutParams(240,120));
+//
+//        CustomDialog.createCustomDialog(this);
     }
 }
