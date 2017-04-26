@@ -10,6 +10,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 /**
@@ -140,7 +141,7 @@ public class RoundIndicatorView extends View {
         canvas.save(Canvas.MATRIX_SAVE_FLAG); //Saving the canvas and later restoring it so only this image will be rotated.
         canvas.rotate(roundIndicatorBean.getScale().off, roundIndicatorBean.getPanel()[0] / 2, roundIndicatorBean.getPanel()[0] / 2);//正数 ，顺时针旋转
         for (int i = 0; i < roundIndicatorBean.getScale().scaleSize; i++) {
-            int color = roundIndicatorBean.getScale().getColor(i * roundIndicatorBean.getScale().scaleSize + roundIndicatorBean.getScale().off, roundIndicatorBean.getProcess().sweepAngle);
+            int color = roundIndicatorBean.getScale().getColor(i );
             paint.setColor(color);
             canvas.drawArc(oval, 180 + roundIndicatorBean.getScale().lineWidth / 2, roundIndicatorBean.getScale().lineWidth, false, paint);
             canvas.rotate(roundIndicatorBean.getScale().scaleSize, roundIndicatorBean.getPanel()[0] / 2, roundIndicatorBean.getPanel()[0] / 2);
@@ -156,38 +157,52 @@ public class RoundIndicatorView extends View {
         mPaint.setTextAlign(Paint.Align.LEFT);
         Rect bounds = new Rect();
         mPaint.getTextBounds(roundIndicatorBean.getType().text, 0, roundIndicatorBean.getType().text.length(), bounds);
-        canvas.drawText(roundIndicatorBean.getType().text, roundIndicatorBean.getPanel()[0] / 2 - bounds.width() / 2, roundIndicatorBean.getPanel()[0] / 2- 4, mPaint);
+        canvas.drawText(roundIndicatorBean.getType().text, roundIndicatorBean.getPanel()[0] / 2 - bounds.width() / 2, roundIndicatorBean.getPanel()[0] / 2 - 4, mPaint);
 
         Paint valuePain = new Paint();
         valuePain.setTextSize(roundIndicatorBean.getValue().fontSize);
         valuePain.setColor(roundIndicatorBean.getValue().fontColor);
         valuePain.setTextAlign(Paint.Align.LEFT);
         Rect valueBound = new Rect();
-        valuePain.getTextBounds(roundIndicatorBean.getValue().text, 0, roundIndicatorBean.getValue().text.length() , valueBound);
+        valuePain.getTextBounds(roundIndicatorBean.getValue().text, 0, roundIndicatorBean.getValue().text.length(), valueBound);
         //数值
         canvas.drawText(roundIndicatorBean.getValue().text, roundIndicatorBean.getPanel()[0] / 2 - valueBound.width() / 2, roundIndicatorBean.getPanel()[0] / 2 - 4 - bounds.height(), valuePain);
     }
 
     public void setRadio(String ratio) {
-        float value=0;
+        float value = 0;
 
-        if (ratio!=null||!ratio.equals("")||ratio.contains("%")){
-            value = Float.parseFloat(ratio.replace("%", ""))/100f;
+        if (ratio != null || !ratio.equals("") || ratio.contains("%")) {
+            value = Float.parseFloat(ratio.replace("%", "")) / 100f;
         }
         if (value == 0) {
             roundIndicatorBean.getProcess().sweepAngle = roundIndicatorBean.getScale().off;
-        } else if (value < 1.6) {//0~160%，每刻度占用20%
-            float allAngle = roundIndicatorBean.getScale().off + roundIndicatorBean.getScale().scaleSize * 8;
+        } else if (value <= 1.6) {//0~160%，每刻度占用20%
+            float allAngle = roundIndicatorBean.getScale().scaleSize * 8;
             float allValue = 1.6f;
-            roundIndicatorBean.getProcess().sweepAngle = allAngle / allValue * value;
-        } else if (value < 2.8) {//每40%用一个刻度
-            float allAngle = roundIndicatorBean.getScale().off + roundIndicatorBean.getScale().scaleSize * 11;
-            float allValue = 2.8f;
-            roundIndicatorBean.getProcess().sweepAngle = allAngle / allValue * value;
+            roundIndicatorBean.getProcess().sweepAngle = roundIndicatorBean.getScale().off + allAngle / allValue * value;
+        } else if (value <= 2.8) {//每 40% 用一个刻度
+            float allAngle = roundIndicatorBean.getScale().scaleSize * 3;
+            float allValue = 2.8f - 1.6f;
+            float offAngle = roundIndicatorBean.getScale().off + roundIndicatorBean.getScale().scaleSize * 8;
+            roundIndicatorBean.getProcess().sweepAngle = offAngle + allAngle / allValue * (value - 1.6f);
         } else {
             roundIndicatorBean.getProcess().sweepAngle = roundIndicatorBean.getScale().off + roundIndicatorBean.getScale().scaleSize * 11;
         }
-        roundIndicatorBean.getValue().text=ratio;
+        roundIndicatorBean.getScale().maxScale=getOverScale(value);
+        roundIndicatorBean.getValue().text = ratio;
+        Log.i("roundIndicatorBean", value + " " + roundIndicatorBean.getProcess().sweepAngle);
         invalidate();
+    }
+
+    public int getOverScale(float currentValue) {//0.2
+
+        float [] scale={0,0.2f,0.4f,0.6f,0.8f,1f,1.2f,1.4f,1.6f,2.f,2.4f,2.8f};
+        for (int i = 0; i <scale.length; i++) {
+            System.out.println();
+            if (currentValue<=scale[i])
+                return i;
+        }
+        return scale.length-1;
     }
 }

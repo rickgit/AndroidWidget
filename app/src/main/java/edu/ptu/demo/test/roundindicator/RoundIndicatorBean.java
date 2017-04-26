@@ -42,8 +42,8 @@ public class RoundIndicatorBean {
         dashRule.sweepAngle = 180;
 
         scale = new Scale();
-        scale.lineWidth = 0.5f;
-        scale.length = 12;
+        scale.lineWidth = 1f;
+        scale.length = 16;
         scale.radius = pointWidth /2-32-28-scale.length;
 
 
@@ -69,12 +69,13 @@ public class RoundIndicatorBean {
         public float length;
         public float lineWidth;
         public float radius;
+        public int maxScale;
         public float angleRangle[] = {0f, 180f};
         public float off = 6;
         public float scaleSize = (angleRangle[1] - off * 2) / 11;
 
-        public int getColor(float current, float process) {
-            if (process >= current)
+        public int getColor(int currentScalue) {
+            if (maxScale >= currentScalue)
                 return getProcess().bgColor;
             return getDashRule().bgColor;
         }
