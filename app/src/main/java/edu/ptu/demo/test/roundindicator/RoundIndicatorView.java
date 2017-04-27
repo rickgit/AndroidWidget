@@ -198,10 +198,12 @@ public class RoundIndicatorView extends View {
     public int getOverScale(float currentValue) {//0.2
 
         float [] scale={0,0.2f,0.4f,0.6f,0.8f,1f,1.2f,1.4f,1.6f,2.f,2.4f,2.8f};
+        if (currentValue==0)
+            return 0;
         for (int i = 0; i <scale.length; i++) {
             System.out.println();
-            if (currentValue<=scale[i])
-                return i;
+            if (currentValue<scale[i])
+                return i-1;
         }
         return scale.length-1;
     }
