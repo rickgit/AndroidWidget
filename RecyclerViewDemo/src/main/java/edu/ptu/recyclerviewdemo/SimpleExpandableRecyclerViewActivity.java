@@ -1,13 +1,11 @@
 package edu.ptu.recyclerviewdemo;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SimpleItemAnimator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,18 +14,16 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity {
+public class SimpleExpandableRecyclerViewActivity extends AppCompatActivity {
     private RecyclerView.Adapter adapter;
 
-    public static class Group  implements StickyHeaderHelper.IHeader{
+    public static class Group {
         public boolean isExtend = true;
         public String name ;
         public List<String> datas = new ArrayList<>();
     }
 
-//    public List<Group> groups = new ArrayList<>();
     public List<Object> flatList = new ArrayList<>();
 
     @Override
@@ -60,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
             flatList.add(e);
             for (int j = 0; j < 5; j++) {
                 e.datas.add("child " + j);
+
             }
             flatList.addAll(e.datas);
         }
@@ -74,48 +71,17 @@ public class MainActivity extends AppCompatActivity {
         rcv.setItemAnimator(new DefaultItemAnimator());
         adapter = createrAdapter();
         rcv.setAdapter(adapter);
-        StickyHeaderHelper mStickyHeaderHelper= new StickyHeaderHelper((StickyHeaderHelper.HeaderAdapter) adapter, null,null);
-        mStickyHeaderHelper.attachToRecyclerView(rcv);
     }
 
     @NonNull
     private RecyclerView.Adapter createrAdapter() {
-        return new StickyHeaderHelper.HeaderAdapter() {
-            @Override
-            public boolean isHeader(Object item) {
-                if (item!=null&& item instanceof StickyHeaderHelper.IHeader)
-                    return true;
-                return false;
-            }
-
-            @Override
-            public Object getItem(int headerPos) {
-                return flatList.get(headerPos);
-            }
-
-            @Override
-            public boolean isExpandable(StickyHeaderHelper.IHeader header) {
-                if (header!=null&& header instanceof StickyHeaderHelper.IHeader)
-                    return true;
-                return false;
-            }
-
-            @Override
-            public int getGlobalPositionOf(StickyHeaderHelper.IHeader header) {
-                return flatList.indexOf(header);
-            }
-
-            @Override
-            public boolean isExpanded(StickyHeaderHelper.IHeader header) {
-                return ((Group)header).isExtend;
-            }
-
+        return new RecyclerView.Adapter() {
             @Override
             public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
                 View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
                 if (viewType == 0) {
                     inflate.setBackgroundColor(0xffaa90cc);
-                    return new StickyHeaderHelper.HeaderViewHolder(inflate,this) {
+                    return new RecyclerView.ViewHolder(inflate) {
                         @Override
                         public String toString() {
                             return super.toString();
@@ -123,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
                     };
                 } else {
                     inflate.setBackgroundColor(0xffcc89aa);
-                    return new StickyHeaderHelper.HeaderViewHolder(inflate,this) {
+                    return new RecyclerView.ViewHolder(inflate) {
                         @Override
                         public String toString() {
                             return super.toString();
@@ -134,19 +100,16 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-                TextView tv=null;
-                if (((ViewGroup) (holder.itemView)).getChildAt(0) instanceof TextView)
-                  tv = (TextView) ((ViewGroup) (holder.itemView)).getChildAt(0);
+                TextView tv = (TextView) ((ViewGroup) (holder.itemView)).getChildAt(0);
                 Object customItem = flatList.get(position);
 //                tv.setText(customItem.toString());
                 System.out.println("custom " + customItem + " " + position);
-                if (tv!=null){
                 if (customItem instanceof Group) {
                     tv.setText("view " + ((Group) customItem).name);
                 } else {
                     tv.setText("view " + flatList.get(position).toString());
 
-                }}
+                }
             }
 
             @Override
@@ -169,5 +132,4 @@ public class MainActivity extends AppCompatActivity {
             }
         };
     }
-
 }
