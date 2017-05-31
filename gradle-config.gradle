@@ -20,7 +20,7 @@ subprojects {
 }
 // 配置子项目项目
 project.ext.androidlibraryprojects = ["RecyclerView","Cardview","Gridlayout","Design","V7appconpat"]
-project.ext.androidapkprojects = ["app"]
+project.ext.androidapkprojects = ["app","RecyclerViewDemo"]
 project.ext.androidprojects = project.androidlibraryprojects + project.androidapkprojects
 /**
  * 根据容器类型，过滤出需要的gradle project.

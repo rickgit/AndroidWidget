@@ -27,16 +27,17 @@ dependencies {
     //    compile project(':Design')
     //constraint
     compile ':constraint-layout-solver-1.0.0-alpha6'
+//    compile 'com.android.support:gridlayout-v7:23.1.+'
     //recyclerview
-    compile ':recyclerview-v7-23.0.1'
-    compile project(':RecyclerView')
+//    compile ':recyclerview-v7-23.0.1'
+//    compile project(':RecyclerView')
     //cardview
     compile ':cardview-v7-23.0.1'
     compile project(':Cardview')
     //support-v4
-    compile ':support-v4_internal_impl-23.0.1'
-    compile ':support-v4_23.0.1'
-    compile ':support-annotations-23.0.1'
+//    compile ':support-v4_internal_impl-23.0.1'
+//    compile ':support-v4_23.0.1'
+//    compile ':support-annotations-23.0.1'
     //网络和图片
     compile ':okhttp-3.3.0'
     compile ':okio-1.8.0'
@@ -54,12 +55,23 @@ dependencies {
     compile ':rxjava-1.1.6'
     //palette
     compile ':palette-v7-23.0.1'
-
-//    compile 'com.android.support:support-vector-drawable:23.2.1'
-//    androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.0'
-//    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'、
+    //    compile 'com.android.support:support-vector-drawable:23.2.1'
+    //    androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.0'
+    //    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'、
     //单元测试 依赖hamcrest-core-1.3.jar
     testCompile 'junit:junit:4.12'
     // Optional -- Mockito framework,依赖objenesis-2.1.jar
     testCompile 'org.mockito:mockito-core:1.10.19'
+    //    compile 'com.viewpagerindicator:parent:2.4.1'
+    compile ('fr.baloomba:viewpagerindicator:2.4.2'){
+        exclude module:'support-v4'
+    }
+    compile ('com.github.hackware1993:MagicIndicator:1.5.0'){
+        exclude module :"appcompat-v7"
+    }
+    compile ("com.android.support:design:24.1.1"){
+//        exclude module:"recyclerview-v7"
+//        exclude module:"support-v4"
+    }
+//    compile 'com.github.hackware1993:MagicIndicator:1.5.0'
 }
