@@ -43,4 +43,11 @@ public class SmoothScrollLinearLayoutManager extends LinearLayoutManager {
 		startSmoothScroll(mSmoothScroller);
 	}
 
+	@Override
+	public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
+		try{
+		super.onLayoutChildren(recycler, state);}catch (Exception e){
+			System.out.println(""+e.getMessage());
+		}
+	}
 }

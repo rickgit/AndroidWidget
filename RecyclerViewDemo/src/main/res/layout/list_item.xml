@@ -6,7 +6,7 @@
     android:orientation="vertical">
 <TextView
     android:layout_width="match_parent"
-    android:text="asd"
+    android:id="@+id/tv"
     android:layout_height="wrap_content" />
     <View
         android:layout_width="match_parent"
