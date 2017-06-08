@@ -13,15 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package edu.ptu.recyclerviewdemo;
+package edu.ptu.recyclerviewdemo.stickheader;
 
 import android.animation.Animator;
 import android.support.annotation.IntRange;
-import android.support.annotation.NonNull;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.AdapterDataObserver;
 import android.support.v7.widget.RecyclerView.OnScrollListener;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,6 +27,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.FrameLayout;
+
+import edu.ptu.recyclerviewdemo.R;
+import edu.ptu.recyclerviewdemo.Utils;
 
 /**
  * A sticky header helper, to use only with {@link HeaderAdapter}.

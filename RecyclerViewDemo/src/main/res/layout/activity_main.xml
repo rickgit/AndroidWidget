@@ -7,7 +7,9 @@
     android:background="#ff235690"
     android:orientation="vertical"
   >
-
+    <edu.ptu.recyclerviewdemo.expandablelayout.ExpandableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"></edu.ptu.recyclerviewdemo.expandablelayout.ExpandableLayout>
     <Button
         android:id="@+id/add"
         android:layout_width="match_parent"

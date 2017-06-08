@@ -1,8 +1,8 @@
 package edu.ptu.recyclerviewdemo;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,7 +18,7 @@ import java.util.List;
 import edu.ptu.recyclerviewdemo.expandablelayout.ExpandableLayoutItem;
 import edu.ptu.recyclerviewdemo.stickheader.StickyHeaderHelper;
 
-public class MainActivity extends AppCompatActivity {
+public class ExpandableActivity extends AppCompatActivity {
     private RecyclerView.Adapter adapter;
 
     public static class Group implements StickyHeaderHelper.IHeader {
@@ -64,6 +64,9 @@ public class MainActivity extends AppCompatActivity {
         rcv.setAdapter(adapter);
         StickyHeaderHelper mStickyHeaderHelper = new StickyHeaderHelper((StickyHeaderHelper.HeaderAdapter) adapter, null, null);
         mStickyHeaderHelper.attachToRecyclerView(rcv);
+        rcv.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+        });
     }
 
     private void colloOrExpand(Group groupPar) {
@@ -117,15 +120,22 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
+                View inflate = null;
                 if (viewType == 0) {
+                    inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
                     inflate.setBackgroundColor(0xffaa90cc);
-
+                    return new HeaderViewHolderTem(inflate, this);
                 } else {
+                    inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_row, parent, false);
                     inflate.setBackgroundColor(0xffcc89aa);
-
+                    return new RecyclerView.ViewHolder(inflate) {
+                        @Override
+                        public String toString() {
+                            return super.toString();
+                        }
+                    };
                 }
-                return new HeaderViewHolderTem(inflate, this);
+
             }
 
             @Override
@@ -140,14 +150,21 @@ public class MainActivity extends AppCompatActivity {
                 final Object customItem = flatList.get(position);
 //                tv.setText(customItem.toString());
                 System.out.println("custom " + customItem + " " + position);
-                TextView tv = ((HeaderViewHolderTem) holder).tv;
-                if (tv != null) {
+                if (holder instanceof StickyHeaderHelper.HeaderViewHolder && ((HeaderViewHolderTem) holder).tv != null) {
                     if (customItem instanceof Group) {
-                        tv.setText("view " + ((Group) customItem).name);
-                    } else {
-                        tv.setText("view " + flatList.get(position).toString());
-
+                        ((HeaderViewHolderTem) holder).tv.setText("view " + ((Group) customItem).name);
                     }
+                } else {
+                    holder.itemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            ExpandableLayoutItem expandableLayout = (ExpandableLayoutItem) v.findViewWithTag(ExpandableLayoutItem.class.getName());
+                            if (expandableLayout.isOpened())
+                                expandableLayout.hide();
+                            else
+                                expandableLayout.show();
+                        }
+                    });
                 }
 
             }

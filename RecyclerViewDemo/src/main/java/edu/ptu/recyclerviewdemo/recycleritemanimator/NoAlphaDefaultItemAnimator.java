@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package edu.ptu.recyclerviewdemo;
+package edu.ptu.recyclerviewdemo.recycleritemanimator;
 
 import android.support.annotation.NonNull;
 import android.support.v4.animation.AnimatorCompatHelper;
