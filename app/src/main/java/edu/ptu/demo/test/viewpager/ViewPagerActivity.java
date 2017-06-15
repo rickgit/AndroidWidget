@@ -31,7 +31,7 @@ public class ViewPagerActivity extends FragmentActivity {
                 return new RecyclerFragment();
             }
         });
-        TabLayout tabs = (TabLayout) findViewById(R.id.titles);
-        tabs.setupWithViewPager(pager);
+//        TabLayout tabs = (TabLayout) findViewById(R.id.titles);
+//        tabs.setupWithViewPager(pager);
     }
 }

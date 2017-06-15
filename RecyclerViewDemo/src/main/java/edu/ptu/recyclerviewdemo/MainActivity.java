@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.ptu.recyclerviewdemo.expandablelayout.ExpandableLayoutItem;
+import edu.ptu.recyclerviewdemo.recycleritemanimator.NoAlphaDefaultItemAnimator;
 import edu.ptu.recyclerviewdemo.stickheader.StickyHeaderHelper;
 
 public class MainActivity extends AppCompatActivity {
@@ -59,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         rcv.setBackgroundColor(0xffcc89aa);
         rcv.setLayoutManager(new SmoothScrollLinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         rcv.setHasFixedSize(true);
-        rcv.setItemAnimator(new DefaultItemAnimator());
+        rcv.setItemAnimator(new NoAlphaDefaultItemAnimator());
         adapter = createrAdapter();
         rcv.setAdapter(adapter);
         StickyHeaderHelper mStickyHeaderHelper = new StickyHeaderHelper((StickyHeaderHelper.HeaderAdapter) adapter, null, null);
@@ -140,16 +141,17 @@ public class MainActivity extends AppCompatActivity {
                 final Object customItem = flatList.get(position);
 //                tv.setText(customItem.toString());
                 System.out.println("custom " + customItem + " " + position);
-                TextView tv = ((HeaderViewHolderTem) holder).tv;
-                if (tv != null) {
-                    if (customItem instanceof Group) {
-                        tv.setText("view " + ((Group) customItem).name);
-                    } else {
-                        tv.setText("view " + flatList.get(position).toString());
+                if (holder instanceof HeaderViewHolderTem) {
+                    TextView tv = ((HeaderViewHolderTem) holder).tv;
+                    if (tv != null) {
+                        if (customItem instanceof Group) {
+                            tv.setText("view " + ((Group) customItem).name);
+                        } else {
+                            tv.setText("view " + flatList.get(position).toString());
 
+                        }
                     }
                 }
-
             }
 
             public void colloOrExpandGroup(int groupposiziton) {

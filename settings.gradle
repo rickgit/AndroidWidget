@@ -1,3 +1,4 @@
 include ':app', ':RecyclerView', ':Gridlayout', ':Cardview', ':multiplychannellib'
 //include ':V7appconpat'
 include ':RecyclerViewDemo'
+include ':xlibs'
