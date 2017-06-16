@@ -1,0 +1,31 @@
+apply plugin: 'com.android.library'
+
+//apply plugin: 'com.github.dcendents.android-maven'
+// 这个version是区分library版本的，因此当我们需要更新library时记得修改这个version
+version = "1.0.6"
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion '25.0.0'
+
+    resourcePrefix "AnimRefreshRecyclerView" // 可以随便填，不知道干嘛用的
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    /* RecyclerView */
+    compile 'com.android.support:recyclerview-v7:23.1.0'
+}
+

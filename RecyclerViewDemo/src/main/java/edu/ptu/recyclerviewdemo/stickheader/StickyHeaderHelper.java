@@ -498,6 +498,7 @@ public class StickyHeaderHelper extends OnScrollListener {
     }
 
     public static abstract class HeaderViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private   RecyclerView recyclerview;
         private HeaderAdapter mAdapter;
         private int mBackupPosition = RecyclerView.NO_POSITION;
         private View contentView;
@@ -516,6 +517,7 @@ public class StickyHeaderHelper extends OnScrollListener {
             }
             contentView = view;
             getContentView().setOnClickListener(this);
+            this.recyclerview=recyclerView;
         }
 
         public HeaderViewHolder(View view, HeaderAdapter adapter) {

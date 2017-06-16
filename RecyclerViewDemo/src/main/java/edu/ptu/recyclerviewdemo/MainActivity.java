@@ -1,5 +1,6 @@
 package edu.ptu.recyclerviewdemo;
 
+import android.graphics.Color;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.sch.rfview.AnimRFRecyclerView;
+import com.sch.rfview.decoration.DividerItemDecoration;
+import com.sch.rfview.manager.AnimRFLinearLayoutManager;
 import com.xlibs.xrv.LayoutManager.XLinearLayoutManager;
 import com.xlibs.xrv.listener.OnLoadMoreListener;
 import com.xlibs.xrv.listener.OnRefreshListener;
@@ -27,7 +31,7 @@ import edu.ptu.recyclerviewdemo.stickheader.StickyHeaderHelper;
 
 public class MainActivity extends AppCompatActivity {
     private RecyclerView.Adapter adapter;
-    private XRecyclerView rcv;
+    private AnimRFRecyclerView rcv;
 
     public static class Group implements StickyHeaderHelper.IHeader {
         public boolean isExtend = true;
@@ -63,37 +67,58 @@ public class MainActivity extends AppCompatActivity {
 
 
         //
-        rcv = (XRecyclerView) findViewById(R.id.rcv);
+        rcv = (AnimRFRecyclerView) findViewById(R.id.rcv);
         rcv.setBackgroundColor(0xffcc89aa);
-        rcv.setItemViewCacheSize(0);
-        View mHeaderView = LayoutInflater.from(this).inflate(R.layout.header_view, null);
-        View mFooterView = LayoutInflater.from(this).inflate(R.layout.footer_view, null);
-        rcv.addHeaderView(mHeaderView, 50);
-        rcv.addFootView(mFooterView, 50);
-        rcv.setEnableRefreshAndLoadMore(true);
-        rcv.setLayoutManager(new XLinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        rcv.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                new Handler().postDelayed(new Runnable(){
-                    @Override
-                    public void run() {
-                        rcv.refreshComplate();
-                    }
-                },3000);
-            }
-        });
-        rcv.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-                new Handler().postDelayed(new Runnable(){
-                    @Override
-                    public void run() {
-                        rcv.loadMoreComplate();
-                    }
-                },3000);
-            }
-        });
+       View headerView = LayoutInflater.from(this).inflate(R.layout.header_view, null);
+       // 脚部
+        View footerView = LayoutInflater.from(this).inflate(R.layout.footer_view, null);
+
+        // 使用重写后的线性布局管理器
+        AnimRFLinearLayoutManager manager = new AnimRFLinearLayoutManager(this);
+        rcv.setLayoutManager(manager);
+        rcv.addItemDecoration(new DividerItemDecoration(this, manager.getOrientation(), true));
+//            // 添加头部和脚部，如果不添加就使用默认的头部和脚部
+//            mRecyclerView.addHeaderView(headerView);
+//            // 设置头部的最大拉伸倍率，默认1.5f，必须写在setHeaderImage()之前
+//            mRecyclerView.setScaleRatio(1.7f);
+//            // 设置下拉时拉伸的图片，不设置就使用默认的
+//            mRecyclerView.setHeaderImage((ImageView) headerView.findViewById(R.id.iv_hander));
+//            mRecyclerView.addFootView(footerView);
+        // 设置刷新动画的颜色
+        rcv.setColor(Color.RED, Color.BLUE);
+        // 设置头部恢复动画的执行时间，默认500毫秒
+        rcv.setHeaderImageDurationMillis(300);
+        // 设置拉伸到最高时头部的透明度，默认0.5f
+        rcv.setHeaderImageMinAlpha(0.6f);
+
+//        View mHeaderView = LayoutInflater.from(this).inflate(R.layout.header_view, null);
+//        View mFooterView = LayoutInflater.from(this).inflate(R.layout.footer_view, null);
+//        rcv.addHeaderView(mHeaderView, 50);
+//        rcv.addFootView(mFooterView, 50);
+//        rcv.setEnableRefreshAndLoadMore(true);
+//        rcv.setLayoutManager(new XLinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+//        rcv.setOnRefreshListener(new OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                new Handler().postDelayed(new Runnable(){
+//                    @Override
+//                    public void run() {
+//                        rcv.refreshComplate();
+//                    }
+//                },3000);
+//            }
+//        });
+//        rcv.setOnLoadMoreListener(new OnLoadMoreListener() {
+//            @Override
+//            public void onLoadMore() {
+//                new Handler().postDelayed(new Runnable(){
+//                    @Override
+//                    public void run() {
+//                        rcv.loadMoreComplate();
+//                    }
+//                },3000);
+//            }
+//        });
         rcv.setHasFixedSize(true);
         rcv.setItemAnimator(new NoAlphaDefaultItemAnimator());
         adapter = createrAdapter();
@@ -120,7 +145,6 @@ public class MainActivity extends AppCompatActivity {
                 flatList.remove(flatList.indexOf(group) + 1);
             }
             adapter.notifyItemRangeRemoved(flatList.indexOf(group) + 1, group.datas.size());
-
         }
     }
 
@@ -209,16 +233,19 @@ public class MainActivity extends AppCompatActivity {
                     for (int i = 0; i < group.datas.size(); i++) {
                         flatList.add(flatList.indexOf(group) + 1, group.datas.get(group.datas.size() - i - 1));
                     }
-                    adapter.notifyItemRangeInserted(flatList.indexOf(group) + 1, group.datas.size());
+                    rcv.getAdapter().notifyItemRangeInserted(flatList.indexOf(group) + 1+getRVHeaderCount() , group.datas.size());
                 } else {
                     for (int i = 0; i < group.datas.size(); i++) {
                         flatList.remove(flatList.indexOf(group) + 1);
                     }
-                    adapter.notifyItemRangeRemoved(flatList.indexOf(group) + 1, group.datas.size());
+                    rcv.getAdapter().notifyItemRangeRemoved(flatList.indexOf(group) + 1+getRVHeaderCount(), group.datas.size());
 
                 }
+//                rcv.getAdapter().notifyDataSetChanged();
             }
-
+            public int getRVHeaderCount(){
+                return 1;
+            }
             @Override
             public int getItemViewType(int position) {
                 if (flatList.get(position) instanceof Group)
