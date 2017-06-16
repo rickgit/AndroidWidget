@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import com.xlibs.xrv.viewHolder.FooterViewHolder;
 import com.xlibs.xrv.viewHolder.HeaderViewHolder;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 /**
@@ -77,6 +78,7 @@ public class XWrapAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == RecyclerView.INVALID_TYPE) {
+            System.out.println("===>   "+mHeaderViews.size()+" : "+headerPosition);
             return new HeaderViewHolder(mHeaderViews.get(headerPosition++));
         } else if (viewType == RecyclerView.INVALID_TYPE - 1) {
             return new FooterViewHolder(mFootViews.get(0));

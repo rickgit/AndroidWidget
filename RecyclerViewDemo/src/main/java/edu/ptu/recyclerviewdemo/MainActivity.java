@@ -12,6 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.xlibs.xrv.LayoutManager.XLinearLayoutManager;
+import com.xlibs.xrv.listener.OnLoadMoreListener;
+import com.xlibs.xrv.listener.OnRefreshListener;
+import com.xlibs.xrv.view.XRecyclerView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +26,7 @@ import edu.ptu.recyclerviewdemo.stickheader.StickyHeaderHelper;
 
 public class MainActivity extends AppCompatActivity {
     private RecyclerView.Adapter adapter;
+    private XRecyclerView rcv;
 
     public static class Group implements StickyHeaderHelper.IHeader {
         public boolean isExtend = true;
@@ -56,14 +62,37 @@ public class MainActivity extends AppCompatActivity {
 
 
         //
-        RecyclerView rcv = (RecyclerView) findViewById(R.id.rcv);
+        rcv = (XRecyclerView) findViewById(R.id.rcv);
         rcv.setBackgroundColor(0xffcc89aa);
-        rcv.setLayoutManager(new SmoothScrollLinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+
+        View mHeaderView = LayoutInflater.from(this).inflate(R.layout.header_view, null);
+        View mFooterView = LayoutInflater.from(this).inflate(R.layout.footer_view, null);
+        rcv.addHeaderView(mHeaderView, 50);
+        rcv.addFootView(mFooterView, 50);
+        rcv.setEnableRefreshAndLoadMore(true);
+        rcv.setLayoutManager(new XLinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        rcv.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+            }
+        });
+        rcv.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+
+            }
+        });
         rcv.setHasFixedSize(true);
         rcv.setItemAnimator(new NoAlphaDefaultItemAnimator());
         adapter = createrAdapter();
         rcv.setAdapter(adapter);
-        StickyHeaderHelper mStickyHeaderHelper = new StickyHeaderHelper((StickyHeaderHelper.HeaderAdapter) adapter, null, null);
+        StickyHeaderHelper mStickyHeaderHelper = new StickyHeaderHelper((StickyHeaderHelper.HeaderAdapter) adapter, null, null){
+            @Override
+            public int getHeaderCount() {
+                return 1;//多了个刷新的页面
+            }
+        };
         mStickyHeaderHelper.attachToRecyclerView(rcv);
     }
 
@@ -126,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
                     inflate.setBackgroundColor(0xffcc89aa);
 
                 }
-                return new HeaderViewHolderTem(inflate, this);
+                return new HeaderViewHolderTem(inflate, this,rcv);
             }
 
             @Override
@@ -176,8 +205,6 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public int getItemViewType(int position) {
-
-
                 if (flatList.get(position) instanceof Group)
                     return 0;
                 else {
@@ -197,10 +224,15 @@ public class MainActivity extends AppCompatActivity {
 
     public static class HeaderViewHolderTem extends StickyHeaderHelper.HeaderViewHolder {
         TextView tv;
-
-        public HeaderViewHolderTem(View view, StickyHeaderHelper.HeaderAdapter adapter) {
-            super(view, adapter);
+        public HeaderViewHolderTem(View view, StickyHeaderHelper.HeaderAdapter adapter,RecyclerView recyclerView) {
+            super(view, adapter,recyclerView);
             tv = (TextView) view.findViewById(R.id.tv);
+
+        }
+
+        @Override
+        public int getRecyclerHeaderCount() {
+            return 1;
         }
     }
 }

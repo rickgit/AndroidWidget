@@ -32,7 +32,7 @@ public class XLinearLayoutManager extends LinearLayoutManager {
         int scrollRange = super.scrollVerticallyBy(dy, recycler, state);
 
         mListener.overScrollBy(dy - scrollRange);
-
+        System.out.println("dy - scrollRange "+(dy - scrollRange));
         return scrollRange;
     }
 

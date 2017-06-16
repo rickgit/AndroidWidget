@@ -38,7 +38,7 @@ import edu.ptu.recyclerviewdemo.Utils;
  * 添加到header {@link #ensureHeaderParent()}
  * @since 25/03/2016 Created
  */
-public final class StickyHeaderHelper extends OnScrollListener {
+public class StickyHeaderHelper extends OnScrollListener {
 
     private static final String TAG = StickyHeaderHelper.class.getSimpleName();
 
@@ -134,11 +134,15 @@ public final class StickyHeaderHelper extends OnScrollListener {
             return;
         }
         int firstHeaderPosition = getStickyPosition(RecyclerView.NO_POSITION);
-        if (firstHeaderPosition >= 0) {
+        if (firstHeaderPosition >=getHeaderCount()) {
             updateHeader(firstHeaderPosition, updateHeaderContent);
         } else {
             clearHeader();
         }
+    }
+    public int getHeaderCount(){
+        //
+        return 0;
     }
 
     private void updateHeader(int headerPosition, boolean updateHeaderContent) {
@@ -157,6 +161,9 @@ public final class StickyHeaderHelper extends OnScrollListener {
             }
             mHeaderPosition = headerPosition;
             HeaderViewHolder holder = getHeaderViewHolder(headerPosition);
+            System.out.println(" HeaderViewHolder holder = getHeaderViewHolder(headerPosition)==== "+holder+" headerPosition "+headerPosition);
+            if (holder==null)
+                return;
 //			if (FlexibleAdapter.DEBUG)
 //				Log.d(TAG, "swapHeader newHeaderPosition=" + mHeaderPosition);
             swapHeader(holder);
@@ -347,18 +354,21 @@ public final class StickyHeaderHelper extends OnScrollListener {
 
     @SuppressWarnings("unchecked")
     private int getStickyPosition(int adapterPosHere) {
+
         if (adapterPosHere == RecyclerView.NO_POSITION) {
             adapterPosHere = Utils.findFirstVisibleItemPosition(mRecyclerView.getLayoutManager());
-            if (adapterPosHere == 0 && !hasStickyHeaderTranslated(0)) {
+            System.out.println("===> "+adapterPosHere);
+            if (adapterPosHere ==getHeaderCount() && !hasStickyHeaderTranslated(getHeaderCount())) {
+                System.out.println("===> RecyclerView.NO_POSITION");
                 return RecyclerView.NO_POSITION;
             }
         }
-        IHeader header = mAdapter.getSectionHeader(adapterPosHere);
+        IHeader header = mAdapter.getSectionHeader(adapterPosHere-getHeaderCount());
         // Header cannot be sticky if it's also an Expandable in collapsed status, RV will raise an exception
         if (header == null || mAdapter.isExpandable(header) && !mAdapter.isExpanded(header)) {
             return RecyclerView.NO_POSITION;
         }
-        return mAdapter.getGlobalPositionOf(header);
+        return mAdapter.getGlobalPositionOf(header)+getHeaderCount();
     }
 
     /**
@@ -371,7 +381,10 @@ public final class StickyHeaderHelper extends OnScrollListener {
     @SuppressWarnings("unchecked")
     private HeaderViewHolder getHeaderViewHolder(int position) {
         // Find existing ViewHolder
-        HeaderViewHolder holder = (HeaderViewHolder) mRecyclerView.findViewHolderForAdapterPosition(position);
+        RecyclerView.ViewHolder viewHolderForAdapterPosition = mRecyclerView.findViewHolderForAdapterPosition(position);
+        if (viewHolderForAdapterPosition==null||!(viewHolderForAdapterPosition instanceof HeaderViewHolder))
+            return null;
+        HeaderViewHolder holder = (HeaderViewHolder) viewHolderForAdapterPosition;
         if (holder == null) {
             // Create and binds a new ViewHolder
             holder = (HeaderViewHolder) mAdapter.createViewHolder(mRecyclerView, mAdapter.getItemViewType(position));
@@ -403,7 +416,8 @@ public final class StickyHeaderHelper extends OnScrollListener {
             headerView.measure(childWidth, childHeight);
             headerView.layout(0, 0, headerView.getMeasuredWidth(), headerView.getMeasuredHeight());
         }
-        mAdapter.bindViewHolder(holder, position);
+        System.out.println("===> position "+position);
+        mRecyclerView.getAdapter().bindViewHolder(holder, position);
         return holder;
     }
 
@@ -478,9 +492,24 @@ public final class StickyHeaderHelper extends OnScrollListener {
     }
 
     public static abstract class HeaderViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private final HeaderAdapter mAdapter;
+        private   HeaderAdapter mAdapter;
         private int mBackupPosition = RecyclerView.NO_POSITION;
         private View contentView;
+        public HeaderViewHolder(View view, StickyHeaderHelper.HeaderAdapter adapter,RecyclerView recyclerView) {
+            // Since itemView is declared "final", the split is done before the View is initialized
+            super(new FrameLayout(view.getContext()));
+            this.mAdapter = adapter;
+            itemView.setLayoutParams(recyclerView.getLayoutManager()
+                    .generateLayoutParams(view.getLayoutParams()));
+            ((FrameLayout) itemView).addView(view); //Add View after setLayoutParams
+            float elevation = ViewCompat.getElevation(view);
+            if (elevation > 0) {
+                ViewCompat.setBackground(itemView, view.getBackground());
+                ViewCompat.setElevation(itemView, elevation);
+            }
+            contentView = view;
+            getContentView().setOnClickListener(this);
+        }
 
         public HeaderViewHolder(View view, HeaderAdapter adapter) {
             // Since itemView is declared "final", the split is done before the View is initialized
@@ -509,7 +538,7 @@ public final class StickyHeaderHelper extends OnScrollListener {
         @Override
         public void onClick(View v){
             int position = getFlexibleAdapterPosition();
-            mAdapter.colloOrExpandGroup(position);
+            mAdapter.colloOrExpandGroup(position-getRecyclerHeaderCount());
         }
         public final int getFlexibleAdapterPosition() {
             int position = getAdapterPosition();
@@ -517,6 +546,9 @@ public final class StickyHeaderHelper extends OnScrollListener {
                 position = mBackupPosition;
             }
             return position;
+        }
+        public int getRecyclerHeaderCount(){
+            return 0;
         }
     }
 }
