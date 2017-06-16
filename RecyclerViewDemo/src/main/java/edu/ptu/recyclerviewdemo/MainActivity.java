@@ -1,5 +1,6 @@
 package edu.ptu.recyclerviewdemo;
 
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -64,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         //
         rcv = (XRecyclerView) findViewById(R.id.rcv);
         rcv.setBackgroundColor(0xffcc89aa);
-
+        rcv.setItemViewCacheSize(0);
         View mHeaderView = LayoutInflater.from(this).inflate(R.layout.header_view, null);
         View mFooterView = LayoutInflater.from(this).inflate(R.layout.footer_view, null);
         rcv.addHeaderView(mHeaderView, 50);
@@ -74,13 +75,23 @@ public class MainActivity extends AppCompatActivity {
         rcv.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
-
+                new Handler().postDelayed(new Runnable(){
+                    @Override
+                    public void run() {
+                        rcv.refreshComplate();
+                    }
+                },3000);
             }
         });
         rcv.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-
+                new Handler().postDelayed(new Runnable(){
+                    @Override
+                    public void run() {
+                        rcv.loadMoreComplate();
+                    }
+                },3000);
             }
         });
         rcv.setHasFixedSize(true);
@@ -150,12 +161,17 @@ public class MainActivity extends AppCompatActivity {
                 View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
                 if (viewType == 0) {
                     inflate.setBackgroundColor(0xffaa90cc);
-
+                    return new HeaderViewHolderTem(inflate, this,rcv);
                 } else {
                     inflate.setBackgroundColor(0xffcc89aa);
-
+                    return new RecyclerView.ViewHolder(inflate) {
+                        @Override
+                        public String toString() {
+                            return super.toString();
+                        }
+                    };
                 }
-                return new HeaderViewHolderTem(inflate, this,rcv);
+
             }
 
             @Override

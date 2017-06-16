@@ -34,8 +34,9 @@ import edu.ptu.recyclerviewdemo.Utils;
 /**
  * A sticky header helper, to use only with {@link HeaderAdapter}.
  * <p>Header ViewHolders must be of type {@link HeaderViewHolder}.</p>
- *
+ * <p>
  * 添加到header {@link #ensureHeaderParent()}
+ *
  * @since 25/03/2016 Created
  */
 public class StickyHeaderHelper extends OnScrollListener {
@@ -134,19 +135,23 @@ public class StickyHeaderHelper extends OnScrollListener {
             return;
         }
         int firstHeaderPosition = getStickyPosition(RecyclerView.NO_POSITION);
-        if (firstHeaderPosition >=getHeaderCount()) {
+        System.out.println("===> firstHeaderPosition:" + firstHeaderPosition);
+        if (firstHeaderPosition >= getHeaderCount()) {
             updateHeader(firstHeaderPosition, updateHeaderContent);
         } else {
             clearHeader();
         }
     }
-    public int getHeaderCount(){
+
+    public int getHeaderCount() {
         //
         return 0;
     }
 
     private void updateHeader(int headerPosition, boolean updateHeaderContent) {
         // Check if there is a new header to be sticky
+        System.out.println("===> mHeaderPosition" + mHeaderPosition + " headerPosition " + headerPosition);
+
         if (mHeaderPosition != headerPosition) {
             // #244 - Don't animate if header is already visible at the first layout position
             int firstVisibleItemPosition = Utils.findFirstVisibleItemPosition(mRecyclerView.getLayoutManager());
@@ -161,9 +166,8 @@ public class StickyHeaderHelper extends OnScrollListener {
             }
             mHeaderPosition = headerPosition;
             HeaderViewHolder holder = getHeaderViewHolder(headerPosition);
-            System.out.println(" HeaderViewHolder holder = getHeaderViewHolder(headerPosition)==== "+holder+" headerPosition "+headerPosition);
-            if (holder==null)
-                return;
+            System.out.println("===> holder" + holder + " headerPosition " + headerPosition);
+
 //			if (FlexibleAdapter.DEBUG)
 //				Log.d(TAG, "swapHeader newHeaderPosition=" + mHeaderPosition);
             swapHeader(holder);
@@ -273,9 +277,13 @@ public class StickyHeaderHelper extends OnScrollListener {
         // Restore every header item visibility
         for (int i = 0; i < mRecyclerView.getChildCount(); i++) {
             View oldHeader = mRecyclerView.getChildAt(i);
-            int headerPos = mRecyclerView.getChildAdapterPosition(oldHeader);
-            if (headerPos < 0 || headerPos >= mAdapter.getItemCount()) {
-                Log.e("restoreH", headerPos+"");
+            int headerPos = mRecyclerView.getChildAdapterPosition(oldHeader) - getHeaderCount();
+            if (headerPos < 0) {
+                Log.e("restoreH", headerPos + " 正在下拉加载");
+                continue;
+            }
+            if (headerPos >= mAdapter.getItemCount()) {
+                Log.e("restoreH", headerPos + "");
                 return;
             }
             try {
@@ -283,7 +291,7 @@ public class StickyHeaderHelper extends OnScrollListener {
                     oldHeader.setVisibility(View.VISIBLE);
                 }
             } catch (Exception e) {
-                Log.e("restoreH",e.getMessage().toString());
+                Log.e("restoreH", e.getMessage().toString());
             }
         }
     }
@@ -357,18 +365,18 @@ public class StickyHeaderHelper extends OnScrollListener {
 
         if (adapterPosHere == RecyclerView.NO_POSITION) {
             adapterPosHere = Utils.findFirstVisibleItemPosition(mRecyclerView.getLayoutManager());
-            System.out.println("===> "+adapterPosHere);
-            if (adapterPosHere ==getHeaderCount() && !hasStickyHeaderTranslated(getHeaderCount())) {
+            System.out.println("===> " + adapterPosHere);
+            if (adapterPosHere == getHeaderCount() && !hasStickyHeaderTranslated(getHeaderCount())) {
                 System.out.println("===> RecyclerView.NO_POSITION");
                 return RecyclerView.NO_POSITION;
             }
         }
-        IHeader header = mAdapter.getSectionHeader(adapterPosHere-getHeaderCount());
+        IHeader header = mAdapter.getSectionHeader(adapterPosHere - getHeaderCount());
         // Header cannot be sticky if it's also an Expandable in collapsed status, RV will raise an exception
         if (header == null || mAdapter.isExpandable(header) && !mAdapter.isExpanded(header)) {
             return RecyclerView.NO_POSITION;
         }
-        return mAdapter.getGlobalPositionOf(header)+getHeaderCount();
+        return mAdapter.getGlobalPositionOf(header) + getHeaderCount();
     }
 
     /**
@@ -381,15 +389,11 @@ public class StickyHeaderHelper extends OnScrollListener {
     @SuppressWarnings("unchecked")
     private HeaderViewHolder getHeaderViewHolder(int position) {
         // Find existing ViewHolder
-        RecyclerView.ViewHolder viewHolderForAdapterPosition = mRecyclerView.findViewHolderForAdapterPosition(position);
-        if (viewHolderForAdapterPosition==null||!(viewHolderForAdapterPosition instanceof HeaderViewHolder))
-            return null;
-        HeaderViewHolder holder = (HeaderViewHolder) viewHolderForAdapterPosition;
+        HeaderViewHolder holder = (HeaderViewHolder) mRecyclerView.findViewHolderForAdapterPosition(position);
         if (holder == null) {
             // Create and binds a new ViewHolder
-            holder = (HeaderViewHolder) mAdapter.createViewHolder(mRecyclerView, mAdapter.getItemViewType(position));
-            mAdapter.bindViewHolder(holder, position);
-
+            holder = (HeaderViewHolder) mRecyclerView.getAdapter().createViewHolder(mRecyclerView, mAdapter.getItemViewType(position-getHeaderCount()));
+            mRecyclerView.getAdapter().bindViewHolder(holder, position);
             // Restore the Adapter position
             holder.setBackupPosition(position);
 
@@ -416,7 +420,7 @@ public class StickyHeaderHelper extends OnScrollListener {
             headerView.measure(childWidth, childHeight);
             headerView.layout(0, 0, headerView.getMeasuredWidth(), headerView.getMeasuredHeight());
         }
-        System.out.println("===> position "+position);
+        System.out.println("===> position " + position);
         mRecyclerView.getAdapter().bindViewHolder(holder, position);
         return holder;
     }
@@ -464,7 +468,7 @@ public class StickyHeaderHelper extends OnScrollListener {
         public IHeader getSectionHeader(int position) {
             // When headers are visible and sticky, get the previous header
             for (int i = position; i >= 0; i--) {
-                if (i>=getItemCount())//FIXME 查找出原因
+                if (i >= getItemCount())//FIXME 查找出原因
                     continue;
                 Object item = getItem(i);
                 if (isHeader(item)) return (IHeader) item;
@@ -477,7 +481,9 @@ public class StickyHeaderHelper extends OnScrollListener {
         public abstract int getGlobalPositionOf(IHeader header);//get FlatList position
 
         public abstract boolean isExpanded(IHeader header);
+
         public abstract void colloOrExpandGroup(int groupposiziton);
+
         public RecyclerView getRecyclerView() {
             return mRecyclerView;
         }
@@ -492,10 +498,11 @@ public class StickyHeaderHelper extends OnScrollListener {
     }
 
     public static abstract class HeaderViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private   HeaderAdapter mAdapter;
+        private HeaderAdapter mAdapter;
         private int mBackupPosition = RecyclerView.NO_POSITION;
         private View contentView;
-        public HeaderViewHolder(View view, StickyHeaderHelper.HeaderAdapter adapter,RecyclerView recyclerView) {
+
+        public HeaderViewHolder(View view, StickyHeaderHelper.HeaderAdapter adapter, RecyclerView recyclerView) {
             // Since itemView is declared "final", the split is done before the View is initialized
             super(new FrameLayout(view.getContext()));
             this.mAdapter = adapter;
@@ -536,10 +543,11 @@ public class StickyHeaderHelper extends OnScrollListener {
         }
 
         @Override
-        public void onClick(View v){
+        public void onClick(View v) {
             int position = getFlexibleAdapterPosition();
-            mAdapter.colloOrExpandGroup(position-getRecyclerHeaderCount());
+            mAdapter.colloOrExpandGroup(position - getRecyclerHeaderCount());
         }
+
         public final int getFlexibleAdapterPosition() {
             int position = getAdapterPosition();
             if (position == RecyclerView.NO_POSITION) {
@@ -547,7 +555,8 @@ public class StickyHeaderHelper extends OnScrollListener {
             }
             return position;
         }
-        public int getRecyclerHeaderCount(){
+
+        public int getRecyclerHeaderCount() {
             return 0;
         }
     }

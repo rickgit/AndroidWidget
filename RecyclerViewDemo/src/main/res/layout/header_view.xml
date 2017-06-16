@@ -7,10 +7,10 @@
     android:background="#fff"
     android:gravity="center">
 
-    <ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@android:style/Widget.ProgressBar.Small"/>
+   <edu.ptu.recyclerviewdemo.progressview.ProgressView
+       android:layout_width="32dp"
+       android:src="@drawable/listview_head_logo"
+       android:layout_height="32dp" />
 
     <TextView
         android:layout_width="wrap_content"
