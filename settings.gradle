@@ -1,5 +1,8 @@
-include ':app', ':RecyclerView', ':Gridlayout', ':Cardview', ':multiplychannellib'
+include ':app', ':RecyclerView', ':Gridlayout', ':Cardview', ':multiplychannellib', ':NavPattern'
 //include ':V7appconpat'
 include ':RecyclerViewDemo'
 include ':xlibs'
 include ':AnimRefreshRecyclerView'
+project(':NavPattern').projectDir = new File('uipatterns/NavPattern')
+
+include ':NavPattern'
