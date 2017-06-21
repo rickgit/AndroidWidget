@@ -25,6 +25,7 @@
 package edu.ptu.navpattern.tooltip;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -35,6 +36,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
+import android.os.SystemClock;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DimenRes;
 import android.support.annotation.DrawableRes;
@@ -50,6 +52,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.AdapterView;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -103,7 +107,7 @@ public final class Tooltip {
         });
     }
 
-    private View getContentView(Builder builder) {
+    private View getContentView(final Builder builder) {
         GradientDrawable drawable = new GradientDrawable();
         drawable.setColor(builder.mBackgroundColor);
         drawable.setCornerRadius(builder.mCornerRadius);
@@ -126,23 +130,46 @@ public final class Tooltip {
             for (int i = 0; i < builder.itemText.length; i++) {
 
                 TextView textView = new TextView(builder.mContext);
-//                textView.setText(builder.itemText[i]);
+                textView.setText(builder.itemText[i]);
                 if (builder.itemLogo != null && builder.itemLogo.length > i) {
                     Drawable drawableLeft = builder.mContext.getResources().getDrawable(builder.itemLogo[i]);
 /// 这一步必须要做,否则不会显示.
-                    drawableLeft.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-                    textView.setCompoundDrawables(drawableLeft, null, null, null);
-                    textView.setCompoundDrawablePadding(4);
+//                    drawableLeft.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+//                    textView.setCompoundDrawables(drawableLeft, null, null, null);
+//                    textView.setCompoundDrawablePadding(4);
 //                    textView.setBackgroundDrawable(drawableLeft);
                     LinearLayout linearLayout = new LinearLayout(builder.mContext);
                     linearLayout.setOrientation(LinearLayout.HORIZONTAL);
-                    linearLayout.addView(textView);
+                    linearLayout.setGravity(Gravity.CENTER_VERTICAL);
                     ImageView icon = new ImageView(builder.mContext);
                     icon.setImageDrawable(drawableLeft);
                     linearLayout.addView(icon);
+                    linearLayout.addView(textView);
                     vgContent.addView(linearLayout);
+                    final int position = i;
+                    linearLayout.setClickable(false);
+                    linearLayout.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (builder.mOnItemClickListener != null) {
+                                builder.mOnItemClickListener.onClick(position);
+                            }
+                            mTouchListener.onTouch(v,MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_UP, v.getLeft()+5, v.getTop()+5, 0));
+                        }
+                    });
                 } else {
                     vgContent.addView(textView);
+                    final int position = i;
+                    textView.setClickable(false);
+                    textView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (builder.mOnItemClickListener != null) {
+                                builder.mOnItemClickListener.onClick(position);
+                            }
+                            mTouchListener.onTouch(v,null);
+                        }
+                    });
                 }
             }
 
@@ -230,6 +257,10 @@ public final class Tooltip {
      */
     public void dismiss() {
         mPopupWindow.dismiss();
+    }
+
+    public void cancel() {
+
     }
 
 
@@ -346,13 +377,13 @@ public final class Tooltip {
     };
 
     public static final class Builder {
-        private boolean isDismissOnClick;
-        private boolean isCancelable;
+        private boolean isDismissOnClick=true;
+        private boolean isCancelable=true;
 
-        private int mGravity;
+        private int mGravity=Gravity.BOTTOM;
         private int mBackgroundColor = 0xa0000000;
 
-        private float mCornerRadius;
+        private float mCornerRadius=dpToPx(3);
         private float mArrowHeight;
         private float mArrowWidth;
         private float mMargin;
@@ -367,6 +398,7 @@ public final class Tooltip {
         private Context mContext;
         private View mAnchorView;
         private OnDismissListener mOnDismissListener;
+        private OnItemClickListener mOnItemClickListener;
 
         public Builder(@NonNull MenuItem anchorMenuItem) {
             this(anchorMenuItem, 0);
@@ -541,6 +573,11 @@ public final class Tooltip {
             return this;
         }
 
+        public Builder setmOnItemClickListener(OnItemClickListener mOnItemClickListener) {
+            this.mOnItemClickListener = mOnItemClickListener;
+            return this;
+        }
+
         /**
          * Creates a {@link Tooltip} with the arguments supplied to this builder. It does not
          * {@link Tooltip#show()} the tooltip. This allows the user to do any extra processing
@@ -552,15 +589,15 @@ public final class Tooltip {
                 throw new IllegalArgumentException("Gravity must have be START, END, TOP or BOTTOM.");
             }
 
-            mArrowHeight = dpToPx(10) - 1;
-            mArrowWidth = dpToPx(10);
+            mArrowHeight = dpToPx(7) - 1;
+            mArrowWidth = dpToPx(12);
             if (mArrowDrawable == null) {
                 mArrowDrawable = new ArrowDrawable(mBackgroundColor, mGravity);
             }
             if (mMargin == -1) {
                 mMargin = 0;
             }
-            mPadding = dpToPx(mCornerRadius);//5
+            mPadding = dpToPx(5);//5
             return new Tooltip(this);
         }
 
