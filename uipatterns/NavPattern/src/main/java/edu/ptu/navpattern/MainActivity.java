@@ -19,8 +19,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Tooltip.Builder builder = new Tooltip.Builder(v)
-//                        .setItemText(new String[]{" s33333333333333333333333df", "asdf ", "sadf "}, new int[]{R.drawable.ic_launcher, R.drawable.ic_launcher, R.drawable.ic_launcher})
-                        .setItemText(new String[]{" s33333333333333333333333df", "asdf ", "sadf "})
+                        .setItemText(new String[]{" s33333333333333333333333df", "asdf ", "sadf "}, new int[]{R.drawable.ic_launcher, R.drawable.ic_launcher, R.drawable.ic_launcher})
+//                        .setItemText(new String[]{" s33333333333333333333333df", "asdf ", "sadf "})
                         .setmOnItemClickListener(new OnItemClickListener() {
                             @Override
                             public void onClick(int which) {

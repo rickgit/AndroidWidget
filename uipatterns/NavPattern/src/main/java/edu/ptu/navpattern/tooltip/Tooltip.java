@@ -25,39 +25,31 @@
 package edu.ptu.navpattern.tooltip;
 
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.res.ColorStateList;
 import android.content.res.Resources;
-import android.content.res.TypedArray;
-import android.graphics.Color;
+import android.graphics.Canvas;
 import android.graphics.PointF;
 import android.graphics.RectF;
-import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.SystemClock;
-import android.support.annotation.ColorInt;
 import android.support.annotation.DimenRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
-import android.support.annotation.StringRes;
 import android.support.annotation.StyleRes;
 import android.support.v4.content.res.ResourcesCompat;
-import android.support.v4.widget.TextViewCompat;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.widget.AdapterView;
-import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+
+import edu.ptu.navpattern.R;
 
 /**
  * Tooltip
@@ -125,6 +117,8 @@ public final class Tooltip {
         textViewParams.gravity = Gravity.CENTER;
         textViewParams.topMargin = 1;
         vgContent.setLayoutParams(textViewParams);
+        vgContent.setDividerDrawable(vgContent.getResources().getDrawable(R.drawable.divider_line));
+        vgContent.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);
 
         if (builder.itemText != null && builder.itemText.length > 0) {
             for (int i = 0; i < builder.itemText.length; i++) {
@@ -381,7 +375,7 @@ public final class Tooltip {
         private boolean isCancelable=true;
 
         private int mGravity=Gravity.BOTTOM;
-        private int mBackgroundColor = 0xa0000000;
+        private int mBackgroundColor = 0x39302f;
 
         private float mCornerRadius=dpToPx(3);
         private float mArrowHeight;

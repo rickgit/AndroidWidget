@@ -4,5 +4,4 @@ include ':RecyclerViewDemo'
 include ':xlibs'
 include ':AnimRefreshRecyclerView'
 project(':NavPattern').projectDir = new File('uipatterns/NavPattern')
-
-include ':NavPattern'
+project(':SegmentView').projectDir = new File('uipatterns/SegmentView')
