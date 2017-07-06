@@ -24,11 +24,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.sch.rfview.AnimRFRecyclerView
+        <com.xlibs.xrv.view.XRecyclerView
             android:id="@+id/rcv"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        </com.sch.rfview.AnimRFRecyclerView>
+        </com.xlibs.xrv.view.XRecyclerView>
     </FrameLayout>
 </LinearLayout>

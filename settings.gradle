@@ -1,7 +1,9 @@
-include ':app', ':RecyclerView', ':Gridlayout', ':Cardview', ':multiplychannellib', ':NavPattern', ':SegmentView'
+include  ':NavPattern', ':SegmentView', ':CustomViewOrDrawable'
+include ':app', ':RecyclerView', ':Gridlayout', ':Cardview', ':multiplychannellib'
 //include ':V7appconpat'
 include ':RecyclerViewDemo'
 include ':xlibs'
 include ':AnimRefreshRecyclerView'
 project(':NavPattern').projectDir = new File('uipatterns/NavPattern')
 project(':SegmentView').projectDir = new File('uipatterns/SegmentView')
+project(':CustomViewOrDrawable').projectDir = new File('uipatterns/CustomViewOrDrawable')

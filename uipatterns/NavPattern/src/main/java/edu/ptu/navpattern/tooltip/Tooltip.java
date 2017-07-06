@@ -38,6 +38,7 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StyleRes;
 import android.support.v4.content.res.ResourcesCompat;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -125,6 +126,9 @@ public final class Tooltip {
 
                 TextView textView = new TextView(builder.mContext);
                 textView.setText(builder.itemText[i]);
+                textView.setTextSize(TypedValue.COMPLEX_UNIT_SP,44);
+                textView.setTextColor(0xffffffff);
+                textView.setGravity(Gravity.CENTER_VERTICAL);
                 if (builder.itemLogo != null && builder.itemLogo.length > i) {
                     Drawable drawableLeft = builder.mContext.getResources().getDrawable(builder.itemLogo[i]);
 /// 这一步必须要做,否则不会显示.
@@ -133,6 +137,7 @@ public final class Tooltip {
 //                    textView.setCompoundDrawablePadding(4);
 //                    textView.setBackgroundDrawable(drawableLeft);
                     LinearLayout linearLayout = new LinearLayout(builder.mContext);
+                    linearLayout.setMinimumHeight((int) dpToPx(44f));
                     linearLayout.setOrientation(LinearLayout.HORIZONTAL);
                     linearLayout.setGravity(Gravity.CENTER_VERTICAL);
                     ImageView icon = new ImageView(builder.mContext);
@@ -155,6 +160,7 @@ public final class Tooltip {
                     vgContent.addView(textView);
                     final int position = i;
                     textView.setClickable(false);
+                    textView.setMinimumHeight((int) dpToPx(44f));
                     textView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_selected="true">
+        <inset android:drawable="@drawable/betgpc_n_cfm_check2" android:insetRight="0dp"></inset>
+    </item>
+    <item android:state_checked="false">
+        <inset android:drawable="@drawable/betgpc_n_cfm_check1" android:insetRight="0dp"></inset>
+    </item>
+    <item android:state_checked="true">
+        <inset android:drawable="@drawable/betgpc_n_cfm_check2" android:insetRight="0dp"></inset>
+    </item>
+    <item android:state_pressed="true">
+        <inset android:drawable="@drawable/betgpc_n_cfm_check2" android:insetRight="0dp"></inset>
+    </item>
+    <item android:state_long_pressable="true">
+        <inset android:drawable="@drawable/betgpc_n_cfm_check2" android:insetRight="0dp"></inset>
+    </item>
+
+</selector>

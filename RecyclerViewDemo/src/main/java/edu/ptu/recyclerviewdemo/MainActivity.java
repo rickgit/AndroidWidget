@@ -31,7 +31,7 @@ import edu.ptu.recyclerviewdemo.stickheader.StickyHeaderHelper;
 
 public class MainActivity extends AppCompatActivity {
     private RecyclerView.Adapter adapter;
-    private AnimRFRecyclerView rcv;
+    private XRecyclerView rcv;
 
     public static class Group implements StickyHeaderHelper.IHeader {
         public boolean isExtend = true;
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         //
-        rcv = (AnimRFRecyclerView) findViewById(R.id.rcv);
+        rcv = (XRecyclerView) findViewById(R.id.rcv);
         rcv.setBackgroundColor(0xffcc89aa);
        View headerView = LayoutInflater.from(this).inflate(R.layout.header_view, null);
        // 脚部
@@ -85,40 +85,40 @@ public class MainActivity extends AppCompatActivity {
 //            mRecyclerView.setHeaderImage((ImageView) headerView.findViewById(R.id.iv_hander));
 //            mRecyclerView.addFootView(footerView);
         // 设置刷新动画的颜色
-        rcv.setColor(Color.RED, Color.BLUE);
-        // 设置头部恢复动画的执行时间，默认500毫秒
-        rcv.setHeaderImageDurationMillis(300);
-        // 设置拉伸到最高时头部的透明度，默认0.5f
-        rcv.setHeaderImageMinAlpha(0.6f);
+//        rcv.setColor(Color.RED, Color.BLUE);
+//        // 设置头部恢复动画的执行时间，默认500毫秒
+//        rcv.setHeaderImageDurationMillis(300);
+//        // 设置拉伸到最高时头部的透明度，默认0.5f
+//        rcv.setHeaderImageMinAlpha(0.6f);
 
-//        View mHeaderView = LayoutInflater.from(this).inflate(R.layout.header_view, null);
-//        View mFooterView = LayoutInflater.from(this).inflate(R.layout.footer_view, null);
-//        rcv.addHeaderView(mHeaderView, 50);
-//        rcv.addFootView(mFooterView, 50);
-//        rcv.setEnableRefreshAndLoadMore(true);
-//        rcv.setLayoutManager(new XLinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-//        rcv.setOnRefreshListener(new OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                new Handler().postDelayed(new Runnable(){
-//                    @Override
-//                    public void run() {
-//                        rcv.refreshComplate();
-//                    }
-//                },3000);
-//            }
-//        });
-//        rcv.setOnLoadMoreListener(new OnLoadMoreListener() {
-//            @Override
-//            public void onLoadMore() {
-//                new Handler().postDelayed(new Runnable(){
-//                    @Override
-//                    public void run() {
-//                        rcv.loadMoreComplate();
-//                    }
-//                },3000);
-//            }
-//        });
+        View mHeaderView = LayoutInflater.from(this).inflate(R.layout.header_view, null);
+        View mFooterView = LayoutInflater.from(this).inflate(R.layout.footer_view, null);
+        rcv.addHeaderView(mHeaderView, 50);
+        rcv.addFootView(mFooterView, 50);
+        rcv.setEnableRefreshAndLoadMore(true);
+        rcv.setLayoutManager(new XLinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        rcv.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable(){
+                    @Override
+                    public void run() {
+                        rcv.refreshComplate();
+                    }
+                },3000);
+            }
+        });
+        rcv.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                new Handler().postDelayed(new Runnable(){
+                    @Override
+                    public void run() {
+                        rcv.loadMoreComplate();
+                    }
+                },3000);
+            }
+        });
         rcv.setHasFixedSize(true);
         rcv.setItemAnimator(new NoAlphaDefaultItemAnimator());
         adapter = createrAdapter();
