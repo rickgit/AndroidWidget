@@ -97,7 +97,7 @@ public class RadioFrameLinearLayout extends LinearLayout {
             }
             if (select >= 0) {
                 boolean islast = select == childCount - 1;
-                LogUtils.logMainInfo("islast "+islast);
+                LogUtils.logMainInfo("islast " + islast);
                 if (islast) {
                     lastBitmap = getSelectBitmap(islast);
                     drawSelect(select, canvas, lastBitmap, mWPaint);
@@ -115,7 +115,7 @@ public class RadioFrameLinearLayout extends LinearLayout {
 
     private void drawSelect(int position, Canvas canvas, Bitmap drawable, Paint mWPaint) {
         float childWidth = (this.getWidth() - getPaddingLeft() - getPaddingRight()) / childCount;
-        float startX = getPaddingLeft() + childWidth * position;
+        float startX = getPaddingLeft() + childWidth * position-mWPaint.getStrokeWidth();
         float endX = startX + childWidth;
 
         canvas.drawBitmap(drawable, startX, 0, mWPaint);
@@ -132,10 +132,8 @@ public class RadioFrameLinearLayout extends LinearLayout {
         }
 
         if (drawable.getIntrinsicWidth() <= 0 || drawable.getIntrinsicHeight() <= 0) {
-            float childWidth = (this.getWidth() - getPaddingLeft() - getPaddingRight()) / childCount + (isLast ? (-mWPaint.getStrokeWidth()*2 ): mWPaint.getStrokeWidth());//加上drawable strokeWidth
-
+            float childWidth = (this.getWidth() - getPaddingLeft() - getPaddingRight()) / childCount + (isLast ?0: mWPaint.getStrokeWidth());//加上drawable strokeWidth
             int height = (int) (getHeight() - getPaddingTop() - getPaddingBottom());
-
             bitmap = Bitmap.createBitmap((int) childWidth, height, Bitmap.Config.ARGB_8888);// Single color bitmap will be created of 1x1 pixel
         } else {
             float childWidth = (this.getWidth() - getPaddingLeft() - getPaddingRight() - paintStrokeWidth) / childCount;
@@ -157,12 +155,21 @@ public class RadioFrameLinearLayout extends LinearLayout {
      * @return
      */
     public Bitmap getBitmap(boolean islast) {
-        if (bitmap == null) {
-            bitmap = drawableToBitmap(getResources().getDrawable(R.drawable.rect_center), mWPaint.getStrokeWidth(), islast);
+        if (islast) {
+            if (lastBitmap == null) {
+                lastBitmap = drawableToBitmap(getResources().getDrawable(R.drawable.rect_center), mWPaint.getStrokeWidth(), islast);
 //            bitmap = new SoftReference<Bitmap>(drawableToBitmap(getResources().getDrawable(R.drawable.rect_center), mWPaint.getStrokeWidth()));
-            LogUtils.logMainInfo("创建新对象");
+                LogUtils.logMainInfo("创建新对象");
+            }
+            return lastBitmap;
+        } else {
+            if (bitmap == null) {
+                bitmap = drawableToBitmap(getResources().getDrawable(R.drawable.rect_center), mWPaint.getStrokeWidth(), islast);
+//            bitmap = new SoftReference<Bitmap>(drawableToBitmap(getResources().getDrawable(R.drawable.rect_center), mWPaint.getStrokeWidth()));
+                LogUtils.logMainInfo("创建新对象");
+            }
+            return bitmap;
         }
-        return bitmap;
     }
 
     /**
@@ -171,13 +178,21 @@ public class RadioFrameLinearLayout extends LinearLayout {
      * @return
      */
     public Bitmap getSelectBitmap(boolean islast) {
-        if (selectBitmap == null) {
-            selectBitmap = drawableToBitmap(getResources().getDrawable(R.drawable.rect_center_red), mWPaint.getStrokeWidth(), islast);
+        if (islast) {
+            if (lastSelectBitmap == null) {
+                lastSelectBitmap = drawableToBitmap(getResources().getDrawable(R.drawable.rect_center_red), mWPaint.getStrokeWidth(), islast);
 //            selectBitmap = new SoftReference<Bitmap>(drawableToBitmap(getResources().getDrawable(R.drawable.rect_center_red), mWPaint.getStrokeWidth()));
-            LogUtils.logMainInfo("创建新对象");
+            }
+            LogUtils.logMainInfo(" getSelectBitmap " + islast + ": " + selectBitmap.getWidth() + " : ");
+            return lastSelectBitmap;
+        } else {
+            if (selectBitmap == null) {
+                selectBitmap = drawableToBitmap(getResources().getDrawable(R.drawable.rect_center_red), mWPaint.getStrokeWidth(), islast);
+//            selectBitmap = new SoftReference<Bitmap>(drawableToBitmap(getResources().getDrawable(R.drawable.rect_center_red), mWPaint.getStrokeWidth()));
+            }
+            LogUtils.logMainInfo(" getSelectBitmap " + islast + ": " + selectBitmap.getWidth() + " : ");
+            return selectBitmap;
         }
-
-        return selectBitmap;
     }
 
     public void setSelect(int select) {
