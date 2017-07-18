@@ -69,8 +69,8 @@ public class MainActivity extends AppCompatActivity {
         //
         rcv = (XRecyclerView) findViewById(R.id.rcv);
         rcv.setBackgroundColor(0xffcc89aa);
-       View headerView = LayoutInflater.from(this).inflate(R.layout.header_view, null);
-       // 脚部
+        View headerView = LayoutInflater.from(this).inflate(R.layout.header_view, null);
+        // 脚部
         View footerView = LayoutInflater.from(this).inflate(R.layout.footer_view, null);
 
         // 使用重写后的线性布局管理器
@@ -100,30 +100,30 @@ public class MainActivity extends AppCompatActivity {
         rcv.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
-                new Handler().postDelayed(new Runnable(){
+                new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         rcv.refreshComplate();
                     }
-                },3000);
+                }, 3000);
             }
         });
         rcv.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                new Handler().postDelayed(new Runnable(){
+                new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         rcv.loadMoreComplate();
                     }
-                },3000);
+                }, 3000);
             }
         });
         rcv.setHasFixedSize(true);
         rcv.setItemAnimator(new NoAlphaDefaultItemAnimator());
         adapter = createrAdapter();
         rcv.setAdapter(adapter);
-        StickyHeaderHelper mStickyHeaderHelper = new StickyHeaderHelper((StickyHeaderHelper.HeaderAdapter) adapter, null, null){
+        StickyHeaderHelper mStickyHeaderHelper = new StickyHeaderHelper((StickyHeaderHelper.HeaderAdapter) adapter, null, null) {
             @Override
             public int getHeaderCount() {
                 return 1;//多了个刷新的页面
@@ -182,11 +182,13 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
+
                 if (viewType == 0) {
-                    inflate.setBackgroundColor(0xffaa90cc);
-                    return new HeaderViewHolderTem(inflate, this,rcv);
+                    View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
+                    ((ViewGroup)inflate).getChildAt(0).setBackgroundColor(0xffaa90cc);
+                    return new HeaderViewHolderTem(inflate, this, rcv);
                 } else {
+                    View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
                     inflate.setBackgroundColor(0xffcc89aa);
                     return new RecyclerView.ViewHolder(inflate) {
                         @Override
@@ -233,19 +235,21 @@ public class MainActivity extends AppCompatActivity {
                     for (int i = 0; i < group.datas.size(); i++) {
                         flatList.add(flatList.indexOf(group) + 1, group.datas.get(group.datas.size() - i - 1));
                     }
-                    rcv.getAdapter().notifyItemRangeInserted(flatList.indexOf(group) + 1+getRVHeaderCount() , group.datas.size());
+                    rcv.getAdapter().notifyItemRangeInserted(flatList.indexOf(group) + 1 + getRVHeaderCount(), group.datas.size());
                 } else {
                     for (int i = 0; i < group.datas.size(); i++) {
                         flatList.remove(flatList.indexOf(group) + 1);
                     }
-                    rcv.getAdapter().notifyItemRangeRemoved(flatList.indexOf(group) + 1+getRVHeaderCount(), group.datas.size());
+                    rcv.getAdapter().notifyItemRangeRemoved(flatList.indexOf(group) + 1 + getRVHeaderCount(), group.datas.size());
 
                 }
 //                rcv.getAdapter().notifyDataSetChanged();
             }
-            public int getRVHeaderCount(){
+
+            public int getRVHeaderCount() {
                 return 1;
             }
+
             @Override
             public int getItemViewType(int position) {
                 if (flatList.get(position) instanceof Group)
@@ -267,8 +271,9 @@ public class MainActivity extends AppCompatActivity {
 
     public static class HeaderViewHolderTem extends StickyHeaderHelper.HeaderViewHolder {
         TextView tv;
-        public HeaderViewHolderTem(View view, StickyHeaderHelper.HeaderAdapter adapter,RecyclerView recyclerView) {
-            super(view, adapter,recyclerView);
+
+        public HeaderViewHolderTem(View view, StickyHeaderHelper.HeaderAdapter adapter, RecyclerView recyclerView) {
+            super(view, adapter, recyclerView);
             tv = (TextView) view.findViewById(R.id.tv);
 
         }

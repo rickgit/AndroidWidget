@@ -30,6 +30,7 @@ import android.widget.FrameLayout;
 
 import edu.ptu.recyclerviewdemo.R;
 import edu.ptu.recyclerviewdemo.Utils;
+import edu.ptucustomviewordrawable.LogUtils;
 
 /**
  * A sticky header helper, to use only with {@link HeaderAdapter}.
@@ -105,7 +106,8 @@ public class StickyHeaderHelper extends OnScrollListener {
             ViewGroup oldParentLayout = getParent(mRecyclerView);
             oldParentLayout.addView(stickyContainer);
             // Initialize Holder Layout
-            mStickyHolderLayout = (ViewGroup) LayoutInflater.from(mRecyclerView.getContext()).inflate(R.layout.sticky_header_layout, stickyContainer);
+            mStickyHolderLayout = stickyContainer;
+            LogUtils.logMainInfo("mStickyHolderLayout "+mStickyHolderLayout);
         }
 //		else if (FlexibleAdapter.DEBUG) {
 //			Log.i(TAG, "User defined StickyHolderLayout initialized");
@@ -160,9 +162,9 @@ public class StickyHeaderHelper extends OnScrollListener {
                     headerPosition != firstVisibleItemPosition) {
                 displayWithAnimation = false;
                 mStickyHolderLayout.setAlpha(0);
-                mStickyHolderLayout.animate().alpha(1).start();
-            } else {
-                mStickyHolderLayout.setAlpha(1);
+                mStickyHolderLayout.animate().alpha(1).start();LogUtils.logMainInfo("setAlpha 1");
+            } else {LogUtils.logViewInfo(mStickyHolderLayout);
+                mStickyHolderLayout.setAlpha(1);LogUtils.logMainInfo("setAlpha 1");
             }
             mHeaderPosition = headerPosition;
             HeaderViewHolder holder = getHeaderViewHolder(headerPosition);
@@ -220,7 +222,7 @@ public class StickyHeaderHelper extends OnScrollListener {
                     } else {
                         if (nextChild.getTop() > 0) {
                             int headerHeight = mStickyHolderLayout.getMeasuredHeight();
-                            int nextHeaderOffsetY = nextChild.getTop() - headerHeight;
+                            int nextHeaderOffsetY = nextChild.getTop() - headerHeight+10;// 加上阴影
                             headerOffsetY = Math.min(nextHeaderOffsetY, 0);
                             // Early remove the elevation/shadow to match with the next view
                             if (nextHeaderOffsetY < 5) elevation = 0f;
@@ -261,9 +263,12 @@ public class StickyHeaderHelper extends OnScrollListener {
         // #139 - Copy xml params instead of Measured params
         ViewGroup.LayoutParams params = mStickyHolderLayout.getLayoutParams();
         params.width = view.getLayoutParams().width;
-        params.height = view.getLayoutParams().height;
+        params.height = view.getLayoutParams().height-100;
         removeViewFromParent(view);
         mStickyHolderLayout.addView(view);
+        if (mStickyHolderLayout.getChildAt(0)!=null){
+            ((ViewGroup)mStickyHolderLayout.getChildAt(0)).getChildAt(1).setVisibility(View.VISIBLE);mStickyHolderLayout.invalidate();
+        }
         configureLayoutElevation();
     }
 
