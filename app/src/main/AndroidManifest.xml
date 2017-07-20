@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="edu.ptu.demo">
+
     <!-- _____________________________________基础权限____________________________________ -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_CONTACTS"/>
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
     <application
         android:name=".test.BaseApp"
         android:allowBackup="true"
@@ -18,39 +20,32 @@
             android:value="GlideModule" />
 
         <activity
-            android:name="edu.ptu.demo.test.ListviewActivity"
-            android:windowSoftInputMode="adjustPan">
-
-        </activity>
-
-        <activity
-            android:name="edu.ptu.demo.test.home.HomeActivity"
-            android:windowSoftInputMode="adjustPan">
-
-        </activity>
-        <activity
-            android:name="edu.ptu.demo.test.glide.GlideActivity"
-            android:windowSoftInputMode="adjustPan">
-
-        </activity>
-        <activity
-            android:name="edu.ptu.demo.test.tabStrip2.SlidingTabActivity"
+            android:name=".test.ListviewActivity"
             android:windowSoftInputMode="adjustPan"></activity>
         <activity
-            android:name="edu.ptu.demo.test.webview.FeedbackFragmentActivity"
-            android:windowSoftInputMode="adjustPan">
-
-        </activity>
+            android:name=".test.home.HomeActivity"
+            android:windowSoftInputMode="adjustPan"></activity>
         <activity
-            android:name="edu.ptu.demo.test.gridview.MainActivity"
-            android:windowSoftInputMode="adjustPan">
-
-        </activity>
+            android:name=".test.glide.GlideActivity"
+            android:windowSoftInputMode="adjustPan"></activity>
+        <activity
+            android:name=".test.tabStrip2.SlidingTabActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".test.webview.FeedbackFragmentActivity"
+            android:windowSoftInputMode="adjustPan"></activity>
+        <activity
+            android:name=".test.gridview.MainActivity"
+            android:windowSoftInputMode="adjustPan"></activity>
         <activity
             android:name=".test.viewpager.ViewPagerActivity"
             android:windowSoftInputMode="adjustPan">
+
+        </activity>
+        <activity android:name=".test.edittext.EditTextActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

@@ -107,7 +107,7 @@ public class StickyHeaderHelper extends OnScrollListener {
             oldParentLayout.addView(stickyContainer);
             // Initialize Holder Layout
             mStickyHolderLayout = stickyContainer;
-            LogUtils.logMainInfo("mStickyHolderLayout "+mStickyHolderLayout);
+            LogUtils.logMainInfo("mStickyHolderLayout " + mStickyHolderLayout);
         }
 //		else if (FlexibleAdapter.DEBUG) {
 //			Log.i(TAG, "User defined StickyHolderLayout initialized");
@@ -162,9 +162,12 @@ public class StickyHeaderHelper extends OnScrollListener {
                     headerPosition != firstVisibleItemPosition) {
                 displayWithAnimation = false;
                 mStickyHolderLayout.setAlpha(0);
-                mStickyHolderLayout.animate().alpha(1).start();LogUtils.logMainInfo("setAlpha 1");
-            } else {LogUtils.logViewInfo(mStickyHolderLayout);
-                mStickyHolderLayout.setAlpha(1);LogUtils.logMainInfo("setAlpha 1");
+                mStickyHolderLayout.animate().alpha(1).start();
+                LogUtils.logMainInfo("setAlpha 1");
+            } else {
+                LogUtils.logViewInfo(mStickyHolderLayout);
+                mStickyHolderLayout.setAlpha(1);
+                LogUtils.logMainInfo("setAlpha 1");
             }
             mHeaderPosition = headerPosition;
             HeaderViewHolder holder = getHeaderViewHolder(headerPosition);
@@ -222,7 +225,7 @@ public class StickyHeaderHelper extends OnScrollListener {
                     } else {
                         if (nextChild.getTop() > 0) {
                             int headerHeight = mStickyHolderLayout.getMeasuredHeight();
-                            int nextHeaderOffsetY = nextChild.getTop() - headerHeight+10;// 加上阴影
+                            int nextHeaderOffsetY = nextChild.getTop() - headerHeight + 10;// 加上阴影
                             headerOffsetY = Math.min(nextHeaderOffsetY, 0);
                             // Early remove the elevation/shadow to match with the next view
                             if (nextHeaderOffsetY < 5) elevation = 0f;
@@ -263,11 +266,12 @@ public class StickyHeaderHelper extends OnScrollListener {
         // #139 - Copy xml params instead of Measured params
         ViewGroup.LayoutParams params = mStickyHolderLayout.getLayoutParams();
         params.width = view.getLayoutParams().width;
-        params.height = view.getLayoutParams().height-100;
+        params.height = view.getLayoutParams().height - 100;
         removeViewFromParent(view);
         mStickyHolderLayout.addView(view);
-        if (mStickyHolderLayout.getChildAt(0)!=null){
-            ((ViewGroup)mStickyHolderLayout.getChildAt(0)).getChildAt(1).setVisibility(View.VISIBLE);mStickyHolderLayout.invalidate();
+        if (mStickyHolderLayout.getChildAt(0) != null) {
+            ((ViewGroup) mStickyHolderLayout.getChildAt(0)).getChildAt(1).setVisibility(View.VISIBLE);//FIXME 加上阴影
+            mStickyHolderLayout.invalidate();
         }
         configureLayoutElevation();
     }
@@ -397,7 +401,7 @@ public class StickyHeaderHelper extends OnScrollListener {
         HeaderViewHolder holder = (HeaderViewHolder) mRecyclerView.findViewHolderForAdapterPosition(position);
         if (holder == null) {
             // Create and binds a new ViewHolder
-            holder = (HeaderViewHolder) mRecyclerView.getAdapter().createViewHolder(mRecyclerView, mAdapter.getItemViewType(position-getHeaderCount()));
+            holder = (HeaderViewHolder) mRecyclerView.getAdapter().createViewHolder(mRecyclerView, mAdapter.getItemViewType(position - getHeaderCount()));
             mRecyclerView.getAdapter().bindViewHolder(holder, position);
             // Restore the Adapter position
             holder.setBackupPosition(position);
@@ -503,7 +507,7 @@ public class StickyHeaderHelper extends OnScrollListener {
     }
 
     public static abstract class HeaderViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private   RecyclerView recyclerview;
+        private RecyclerView recyclerview;
         private HeaderAdapter mAdapter;
         private int mBackupPosition = RecyclerView.NO_POSITION;
         private View contentView;
@@ -522,7 +526,7 @@ public class StickyHeaderHelper extends OnScrollListener {
             }
             contentView = view;
             getContentView().setOnClickListener(this);
-            this.recyclerview=recyclerView;
+            this.recyclerview = recyclerView;
         }
 
         public HeaderViewHolder(View view, HeaderAdapter adapter) {
