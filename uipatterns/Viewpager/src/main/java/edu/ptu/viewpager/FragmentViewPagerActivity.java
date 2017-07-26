@@ -9,6 +9,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import edu.ptu.viewpager.fragment.Simp1Fragment;
+
 /**
  * Created by anshu.wang on 2017/7/24.
  */
@@ -23,7 +25,7 @@ public class FragmentViewPagerActivity   extends AppCompatActivity {
         vp.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
-                return   SimpFragment.getInstance(position);
+                return Simp1Fragment.getInstance(position);
             }
 
             @Override

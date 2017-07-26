@@ -1,28 +1,33 @@
-package edu.ptu.viewpager;
+package edu.ptu.viewpager.fragment;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+
+import edu.ptu.viewpager.LogUtils;
+import edu.ptu.viewpager.R;
 
 /**
  * Created by anshu.wang on 2017/7/26.
  */
 
-public class SimpFragment extends Fragment {
+public class Simp2Fragment extends SimpFragment {
 
     private int key=-2;
 
-    public static  SimpFragment getInstance(int i){
-        SimpFragment simpFragment = new SimpFragment();
+    public static Simp2Fragment getInstance(int i){
+        Simp2Fragment simpFragment = new Simp2Fragment();
         Bundle args = new Bundle();
         args.putInt("key",-1);
         simpFragment.setArguments(args);
         return simpFragment;
     }
    @SuppressLint("ValidFragment")
-   private SimpFragment(){
+   private Simp2Fragment(){
        LogUtils.logMainInfo("SimpFragment"+key);
    }
     @Override
@@ -36,7 +41,7 @@ public class SimpFragment extends Fragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        LogUtils.logMainInfo("setUserVisibleHint"+key);
+        LogUtils.logMainInfo("setUserVisibleHint "+isVisibleToUser+": "+key);
     }
 
     @Override
@@ -49,5 +54,12 @@ public class SimpFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         LogUtils.logMainInfo("onViewCreated"+key);
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        LogUtils.logMainInfo("onCreateView"+key);
+        return super.onCreateView(inflater,container,savedInstanceState);
     }
 }
