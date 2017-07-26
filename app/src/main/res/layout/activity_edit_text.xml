@@ -28,4 +28,8 @@
         android:text="按钮"
         android:id="@+id/btn"
         android:layout_height="wrap_content" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>
