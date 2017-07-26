@@ -13,6 +13,8 @@ import android.widget.FrameLayout;
  * {@link #setUserVisibleHint(Activity, boolean)}
  * {@link #onCreateView(LayoutInflater, ViewGroup, Bundle)}
  * {@link #onActivityCreated(Activity)} (LayoutInflater, ViewGroup, Bundle)}
+ *
+ * <b> replace 不会调用 setUserVisibleHint <b/>
  * Created by anshu.wang on 2017/7/26.
  */
 
