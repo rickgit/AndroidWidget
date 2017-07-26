@@ -1,4 +1,4 @@
-package edu.ptu.viewpager;
+package edu.ptu.viewpager.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import java.util.List;
 
+import edu.ptu.viewpager.R;
 import edu.ptu.viewpager.fragment.Simp1Fragment;
 import edu.ptu.viewpager.fragment.Simp2Fragment;
 import edu.ptu.viewpager.fragment.Simp3Fragment;

@@ -1,7 +1,9 @@
-package edu.ptu.viewpager;
+package edu.ptu.viewpager.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import edu.ptu.viewpager.R;
 
 public class MainActivity extends AppCompatActivity {
 

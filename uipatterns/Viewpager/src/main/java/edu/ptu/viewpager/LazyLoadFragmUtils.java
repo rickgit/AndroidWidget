@@ -9,7 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-/**
+/**需要调用三个方法
+ * {@link #setUserVisibleHint(Activity, boolean)}
+ * {@link #onCreateView(LayoutInflater, ViewGroup, Bundle)}
+ * {@link #onActivityCreated(Activity)} (LayoutInflater, ViewGroup, Bundle)}
  * Created by anshu.wang on 2017/7/26.
  */
 
