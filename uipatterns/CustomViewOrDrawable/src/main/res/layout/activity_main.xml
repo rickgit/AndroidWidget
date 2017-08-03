@@ -8,8 +8,9 @@
     tools:context="edu.ptucustomviewordrawable.MainActivity">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/tv"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
         android:text="Hello World!"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -45,4 +46,24 @@
 
     </edu.ptucustomviewordrawable.customDrawLine.RadioFrameLinearLayout>
 
+    <edu.ptucustomviewordrawable.customDrawLine.DrawNum
+        android:id="@+id/drawpanel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ccaa33"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:textSize="48dp"
+            android:gravity="center"
+            android:text="按钮1 " />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center"  android:textSize="48dp"
+            android:text="按钮2 " />
+    </edu.ptucustomviewordrawable.customDrawLine.DrawNum>
 </LinearLayout>

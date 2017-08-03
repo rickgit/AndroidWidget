@@ -31,10 +31,10 @@
          android:scaleType="fitXY"
         android:clickable="true"
         android:text="追加投注" />
-    <edu.ptu.navpattern.tablayout.Tablayout
+    <edu.ptu.navpattern.tablayout.SlidingTablayout
         android:id="@+id/tabllayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></edu.ptu.navpattern.tablayout.Tablayout>
+        android:layout_height="wrap_content"></edu.ptu.navpattern.tablayout.SlidingTablayout>
     <android.support.v4.view.ViewPager
         android:layout_width="match_parent"
         android:id="@+id/vp"

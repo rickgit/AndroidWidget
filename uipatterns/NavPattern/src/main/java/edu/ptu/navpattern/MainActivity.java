@@ -15,6 +15,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.ptu.navpattern.tablayout.SlidingTablayout;
+import edu.ptu.navpattern.tablayout.SlidingViewPagerHelper;
 import edu.ptu.navpattern.tablayout.Tablayout;
 import edu.ptu.navpattern.tablayout.ViewpagerHelper;
 import edu.ptu.navpattern.tooltip.OnItemClickListener;
@@ -51,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         viewList.add(view1);
         viewList.add(view2);
         viewList.add(view3);
-        Tablayout tablayout = (Tablayout) findViewById(R.id.tabllayout);
+        SlidingTablayout tablayout = (SlidingTablayout) findViewById(R.id.tabllayout);
         ViewPager vp= (ViewPager) findViewById(R.id.vp);
         vp.setAdapter(new PagerAdapter() {
             @Override
@@ -71,8 +73,11 @@ public class MainActivity extends AppCompatActivity {
             CharSequence [] charSequences={"11","222","33"};
             @Override
             public Object instantiateItem(ViewGroup container, int position) {
-                container.addView(viewList.get(position));
-                return viewList.get(position);
+                View child = viewList.get(position);
+                if (position==1)
+                    child.setBackgroundColor(0xffaa00cc);
+                container.addView(child);
+                return child;
 
             }
 
@@ -82,6 +87,6 @@ public class MainActivity extends AppCompatActivity {
                 container.removeView(viewList.get(position));
             }
         });
-        new ViewpagerHelper().bindViewPager(vp,tablayout);
+        new SlidingViewPagerHelper().bindViewPager(vp,tablayout);
     }
 }
