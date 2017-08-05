@@ -12,12 +12,14 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.ptu.navpattern.tablayout.Tablayout;
-import edu.ptu.navpattern.tablayout.ViewPagerHelper;
+import edu.ptu.navpattern.tablayout.FixViewPagerHelper;
+import edu.ptu.navpattern.tablayout.SlidingTablayout;
+import edu.ptu.navpattern.tablayout.SlidingViewPagerHelper;
 import edu.ptu.navpattern.tooltip.OnItemClickListener;
 import edu.ptu.navpattern.tooltip.Tooltip;
 
 public class MainActivity extends AppCompatActivity {
+    CharSequence [] charSequences={"11","222"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +48,10 @@ public class MainActivity extends AppCompatActivity {
 
        final List<View> viewList = new ArrayList<View>();// 将要分页显示的View装入数组中
 
-        for (int i = 0; i < 13; i++) {
+        for (int i = 0; i < charSequences.length; i++) {
             viewList.add(inflater.inflate(R.layout.item, null));
         }
-        Tablayout tablayout = (Tablayout) findViewById(R.id.tabllayout);
+        SlidingTablayout tablayout = (SlidingTablayout) findViewById(R.id.tabllayout);
         ViewPager vp= (ViewPager) findViewById(R.id.vp);
         vp.setAdapter(new PagerAdapter() {
             @Override
@@ -66,8 +68,7 @@ public class MainActivity extends AppCompatActivity {
             public CharSequence getPageTitle(int position) {
                 return charSequences[position];
             }
-            CharSequence [] charSequences={"11","222","33","11","222","33","11","222","33","11","222","33","444"};
-            @Override
+                        @Override
             public Object instantiateItem(ViewGroup container, int position) {
                 View child = viewList.get(position);
                 if (position%2==1)
@@ -83,6 +84,6 @@ public class MainActivity extends AppCompatActivity {
                 container.removeView(viewList.get(position));
             }
         });
-        new ViewPagerHelper().bindViewPager(vp,tablayout);
+        new FixViewPagerHelper().bindViewPager(vp,tablayout);
     }
 }

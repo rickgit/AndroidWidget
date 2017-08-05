@@ -20,7 +20,7 @@ import edu.ptu.navpattern.R;
  * Created by rick.wang on 2017/8/3.
  */
 
-public class SlidingViewPagerHelper {
+public class FixViewPagerHelper {
     private SlidingTablayout tablayout;
     private ViewPager mViewPager;
 
@@ -52,14 +52,15 @@ public class SlidingViewPagerHelper {
 
     private void populateTabStrip() {
         final PagerAdapter adapter = mViewPager.getAdapter();
-
+        tablayout.getTabsContainer().setGravity(Gravity.CENTER_HORIZONTAL);
         for (int i = 0; i < adapter.getCount(); i++) {
             ViewGroup tabView = null;
             // If there is a custom tab view layout id set, try and inflate it
             tabView = createDefaultTabView(mViewPager.getContext(), adapter.getPageTitle(i));
 //            tabView.setId(i);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT);
-            params.weight = 1;
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+//            params.weight = 1;
             tablayout.getTabsContainer().addView(tabView, params);
 
             final ViewGroup finalTabView = tabView;

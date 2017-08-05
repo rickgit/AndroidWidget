@@ -50,7 +50,9 @@ public class SlidingTablayout extends HorizontalScrollView {
     }
 
     public void initView(Context context) {
-        addView(tabsContainer = new LinearLayout(context));
+        setFillViewport(true);//设置滚动视图是否可以伸缩其内容以填充视口
+        if (tabsContainer == null)
+            addView(tabsContainer = new LinearLayout(context));
     }
 
     public LinearLayout getTabsContainer() {
@@ -188,7 +190,7 @@ public class SlidingTablayout extends HorizontalScrollView {
     private float mIndicatorCornerRadius = 5;
     private int mIndicatorColor = 0xffaacc11;
     private float mIndicatorHeight = 5;
-    private float mIndicatorWidth=90;
+    private float mIndicatorWidth = 90;
     private float mIndicatorMarginLeft = 5;
     private float mIndicatorMarginTop = 5;
     private float mIndicatorMarginRight = 5;
