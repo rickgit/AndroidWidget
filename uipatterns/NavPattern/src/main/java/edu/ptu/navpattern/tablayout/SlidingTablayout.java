@@ -98,14 +98,13 @@ public class SlidingTablayout extends HorizontalScrollView {
         if (mTabCount <= 0) {
             return;
         }
-
         int offset = (int) (mCurrentPositionOffset * tabsContainer.getChildAt(mCurrentTab).getWidth());
         /**当前Tab的left+当前Tab的Width乘以positionOffset*/
-        int newScrollX = tabsContainer.getChildAt(mCurrentTab).getLeft() + offset;
+        int newScrollX = tabsContainer.getChildAt(mCurrentTab).getLeft() + offset;//滚动到 mCurrentTab 个位置
 
         if (mCurrentTab > 0 || offset > 0) {
-            /**HorizontalScrollView移动到当前tab,并居中*/
-            newScrollX -= getWidth() / 2 - getPaddingLeft();
+            /**HorizontalScrollView移动到当前tab,并居中*/// |---|-------------|----------------||
+            newScrollX -= getWidth() / 2 - getPaddingLeft();//距离超过屏幕一般才滚动
             calcIndicatorRect();
             newScrollX += ((mTabRect.right - mTabRect.left) / 2);
         }
@@ -186,14 +185,23 @@ public class SlidingTablayout extends HorizontalScrollView {
 //    private Paint mRectPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     private GradientDrawable mIndicatorDrawable = new GradientDrawable();
-    private float mIndicatorCornerRadius=1;
-    private int mIndicatorColor=0xffaacc11;
-    private float mIndicatorHeight=5;
-    private float mIndicatorWidth;
-    private float mIndicatorMarginLeft=5;
-    private float mIndicatorMarginTop=5;
-    private float mIndicatorMarginRight=5;
-    private float mIndicatorMarginBottom=5;
+    private float mIndicatorCornerRadius = 5;
+    private int mIndicatorColor = 0xffaacc11;
+    private float mIndicatorHeight = 5;
+    private float mIndicatorWidth=90;
+    private float mIndicatorMarginLeft = 5;
+    private float mIndicatorMarginTop = 5;
+    private float mIndicatorMarginRight = 5;
+    private float mIndicatorMarginBottom = 0;
+
+    public void setIndicatorWidth(float mIndicatorWidth) {
+        this.mIndicatorWidth = mIndicatorWidth;
+    }
+
+    @Override
+    protected void dispatchDraw(Canvas canvas) {
+        super.dispatchDraw(canvas);
+    }
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -231,11 +239,6 @@ public class SlidingTablayout extends HorizontalScrollView {
                     height - (int) mIndicatorHeight - (int) mIndicatorMarginBottom,
                     paddingLeft + mIndicatorRect.right - (int) mIndicatorMarginRight,
                     height - (int) mIndicatorMarginBottom);
-            LogUtils.logMainInfo((paddingLeft + (int) mIndicatorMarginLeft + mIndicatorRect.left)+" :"
-                            +" :"+( height - (int) mIndicatorHeight - (int) mIndicatorMarginBottom)+" :"+
-                    ( paddingLeft + mIndicatorRect.right - (int) mIndicatorMarginRight)+" :"+(
-                    height - (int) mIndicatorMarginBottom));
-
             mIndicatorDrawable.setCornerRadius(mIndicatorCornerRadius);
             mIndicatorDrawable.draw(canvas);
         }

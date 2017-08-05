@@ -9,9 +9,11 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import edu.ptu.navpattern.LogUtils;
 import edu.ptu.navpattern.R;
 
 /**
@@ -29,9 +31,10 @@ public class SlidingViewPagerHelper {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 tablayout.setmCurrentTab(position);
-                tablayout.setmCurrentPositionOffset(positionOffsetPixels);
+                tablayout.setmCurrentPositionOffset(positionOffset);
                 tablayout.scrollToCurrentTab();
                 tablayout.invalidate();
+                LogUtils.logMainInfo(" position :" + position + "; offset " + positionOffset + " ;" + positionOffsetPixels);
             }
 
             @Override
@@ -53,11 +56,20 @@ public class SlidingViewPagerHelper {
         for (int i = 0; i < adapter.getCount(); i++) {
             ViewGroup tabView = null;
             // If there is a custom tab view layout id set, try and inflate it
-            tabView = createDefaultTabView(mViewPager.getContext(),adapter.getPageTitle(i));
+            tabView = createDefaultTabView(mViewPager.getContext(), adapter.getPageTitle(i));
 //            tabView.setId(i);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT);
             params.weight = 1;
             tablayout.getTabsContainer().addView(tabView, params);
+
+            final ViewGroup finalTabView = tabView;
+            if (i%2==1)
+            tabView.setBackgroundColor(0xff000000);
+            tabView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                public void onGlobalLayout() {
+                    tablayout.setIndicatorWidth(finalTabView.getWidth());
+                }
+            });
             tabView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -67,7 +79,7 @@ public class SlidingViewPagerHelper {
 //                            if (mSnapOnTabClick) {
 //                                mViewPager.setCurrentItem(position, false);
 //                            } else {
-                                mViewPager.setCurrentItem(position);
+                            mViewPager.setCurrentItem(position);
 //                            }
 
 //                            if (mListener != null) {
@@ -85,8 +97,8 @@ public class SlidingViewPagerHelper {
     }
 
     private ViewGroup createDefaultTabView(Context context, CharSequence pageTitle) {
-        ViewGroup vg = (ViewGroup) LayoutInflater.from(context).inflate(R.layout.layout_tab,null);
-        TextView textView= (TextView) vg.getChildAt(0);
+        ViewGroup vg = (ViewGroup) LayoutInflater.from(context).inflate(R.layout.layout_tab, null);
+        TextView textView = (TextView) vg.getChildAt(0);
         textView.setGravity(Gravity.CENTER);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
         textView.setTypeface(Typeface.DEFAULT_BOLD);
