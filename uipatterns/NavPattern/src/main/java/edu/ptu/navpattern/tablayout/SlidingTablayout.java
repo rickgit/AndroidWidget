@@ -189,7 +189,7 @@ public class SlidingTablayout extends HorizontalScrollView {
     private float mIndicatorCornerRadius=1;
     private int mIndicatorColor=0xffaacc11;
     private float mIndicatorHeight=5;
-    private float mIndicatorWidth;
+    private float mIndicatorWidth=20;
     private float mIndicatorMarginLeft=5;
     private float mIndicatorMarginTop=5;
     private float mIndicatorMarginRight=5;

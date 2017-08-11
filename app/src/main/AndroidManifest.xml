@@ -19,30 +19,7 @@
             android:name="edu.ptu.demo.test.glide.OkHttpGlideModule"
             android:value="GlideModule" />
 
-        <activity
-            android:name=".test.ListviewActivity"
-            android:windowSoftInputMode="adjustPan"></activity>
-        <activity
-            android:name=".test.home.HomeActivity"
-            android:windowSoftInputMode="adjustPan"></activity>
-        <activity
-            android:name=".test.glide.GlideActivity"
-            android:windowSoftInputMode="adjustPan"></activity>
-        <activity
-            android:name=".test.tabStrip2.SlidingTabActivity"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".test.webview.FeedbackFragmentActivity"
-            android:windowSoftInputMode="adjustPan"></activity>
-        <activity
-            android:name=".test.gridview.MainActivity"
-            android:windowSoftInputMode="adjustPan"></activity>
-        <activity
-            android:name=".test.viewpager.ViewPagerActivity"
-            android:windowSoftInputMode="adjustPan">
-
-        </activity>
-        <activity android:name=".test.edittext.EditTextActivity">
+        <activity android:name="edu.ptu.demo.test.gridview.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

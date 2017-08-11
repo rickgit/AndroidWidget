@@ -66,4 +66,5 @@
             android:gravity="center"  android:textSize="48dp"
             android:text="按钮2 " />
     </edu.ptucustomviewordrawable.customDrawLine.DrawNum>
+
 </LinearLayout>
