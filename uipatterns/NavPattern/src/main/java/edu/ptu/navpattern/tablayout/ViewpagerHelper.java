@@ -15,7 +15,7 @@ import android.widget.TextView;
  * Created by anshu.wang on 2017/6/28.
  */
 
-public class ViewpagerHelper {
+public class ViewPagerHelper {
     private ViewPager mViewPager;
     private Tablayout tablayout;
 
