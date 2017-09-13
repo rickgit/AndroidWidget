@@ -82,12 +82,12 @@ public class SlidingLayout extends FrameLayout {
 //                    if (releasedChild == mAutoBackView)
 //                    {
                     int finalTop = (new Random().nextInt(400));
-                    mDragHelper.settleCapturedViewAt(0, finalTop);
+//                    mDragHelper.settleCapturedViewAt(0, 0);
 //                    mDragHelper.smoothSlideViewTo(getChildAt(0),0,-getChildAt(0).getHeight());
-//                    mDragHelper.smoothSlideViewTo(releasedChild,0,releasedChild.getHeight());
+                    mDragHelper.smoothSlideViewTo(releasedChild,0,finalTop);
 
-//                    ViewCompat.postInvalidateOnAnimation(SlidingLayout.this);
-                    invalidate();
+                    ViewCompat.postInvalidateOnAnimation(SlidingLayout.this);
+//                    invalidate();
 
 //                    }
                 }
