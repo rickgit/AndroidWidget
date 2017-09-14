@@ -1,4 +1,4 @@
-package edu.ptu.customview;
+package edu.ptu.customview.viewpager;
 
 import android.content.Context;
 import android.os.Build;
@@ -7,16 +7,11 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.annotation.StyleRes;
-import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.ViewCompat;
-import android.support.v4.view.ViewGroupCompat;
 import android.support.v4.widget.ViewDragHelper;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import java.util.Random;
@@ -27,7 +22,7 @@ import edu.ptu.customview.utils.LogUtils;
  * Created by rick.wang on 2017/9/13.
  */
 
-public class SlidingLayout extends FrameLayout {
+public class ViewPagerSlidingLayout extends FrameLayout {
     private ViewDragHelper mDragHelper;
 
     /**
@@ -36,42 +31,34 @@ public class SlidingLayout extends FrameLayout {
     private static final int MIN_FLING_VELOCITY = 400; // dips per second
     private View dragView;
 
-    public SlidingLayout(@NonNull Context context) {
+    public ViewPagerSlidingLayout(@NonNull Context context) {
         super(context);
         init(context);
     }
 
-    public SlidingLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public ViewPagerSlidingLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
-    public SlidingLayout(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
+    public ViewPagerSlidingLayout(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public SlidingLayout(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
+    public ViewPagerSlidingLayout(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init(context);
     }
-    class YScrollDetector extends GestureDetector.SimpleOnGestureListener {
-        @Override
-        public boolean onScroll(MotionEvent e1, MotionEvent e2, float dx, float dy) {
-            return (Math.abs(dy) <= Math.abs(dx));
-        }
-    }
+
     public void init(Context context) {
         if (mDragHelper == null) {
-            //手势处理类
             mDragHelper = ViewDragHelper.create(this, 0.5f, new ViewDragHelper.Callback() {
                 @Override
                 public boolean tryCaptureView(View child, int pointerId) {
                     LogUtils.logMainInfo("view " + child);
-                    boolean b = child == getChildAt(2);
-
-                    return b;
+                    return child == getChildAt(3);
                 }
 //                @Override
 //                public int clampViewPositionHorizontal(View child, int left, int dx)
@@ -103,21 +90,11 @@ public class SlidingLayout extends FrameLayout {
                         mDragHelper.smoothSlideViewTo(releasedChild, 0, getChildAt(0).getHeight());
                     else if (releasedChild.getY() >= getChildAt(0).getHeight() * 3 / 2)
                         mDragHelper.smoothSlideViewTo(releasedChild, 0, getChildAt(0).getHeight() * 2);
-                    ViewCompat.postInvalidateOnAnimation(SlidingLayout.this);
+                    ViewCompat.postInvalidateOnAnimation(ViewPagerSlidingLayout.this);
 //                    invalidate();
 
 //                    }
                 }
-
-//                @Override
-//                public int getViewHorizontalDragRange(View child) {
-//                   return 120;
-//                }
-////
-//                @Override
-//                public int getViewVerticalDragRange(View child) {
-//                    return 120;
-//                }
 
                 public int clampViewPositionHorizontal(View child, int left, int dx) {
 //                    final int leftBound = getPaddingLeft();
@@ -128,8 +105,6 @@ public class SlidingLayout extends FrameLayout {
 
                     return newLeft;
                 }
-
-                @Override
 
                 public void onViewPositionChanged(View changedView, int left, int top, int dx, int dy) {
                     super.onViewPositionChanged(changedView, left, top, dx, dy);
@@ -146,37 +121,21 @@ public class SlidingLayout extends FrameLayout {
 //                    }
 
                 }
-
-                @Override
-                public void onEdgeDragStarted(int edgeFlags, int pointerId) {
-                    super.onEdgeDragStarted(edgeFlags, pointerId);
-//                    mDragHelper.captureChildView(getChildAt(2), pointerId);
-                }
             });
             final float density = context.getResources().getDisplayMetrics().density;
             mDragHelper.setMinVelocity(MIN_FLING_VELOCITY * density);
-//            mDragHelper.setEdgeTrackingEnabled(ViewDragHelper.EDGE_TOP);
         }
     }
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
         boolean b = mDragHelper.shouldInterceptTouchEvent(event);
-        LogUtils.logMainInfo("执行onInterceptTouchEvent "+b);
-
-        return true;//&& gestureDetector.onTouchEvent(event)
+        return true;
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         mDragHelper.processTouchEvent(event);
-        if (event.getAction()==MotionEvent.ACTION_DOWN||event.getAction()==MotionEvent.ACTION_UP||event.getAction()==MotionEvent.ACTION_CANCEL)
-        for (int i = 0; i < getChildCount(); i++) {
-            View childAt = getChildAt(i);
-            boolean viewUnder = mDragHelper.isViewUnder(childAt, (int) event.getX(), (int) event.getY());
-            if (viewUnder)
-            childAt.dispatchTouchEvent(event);
-        }
         return true;
     }
 
@@ -208,7 +167,7 @@ public class SlidingLayout extends FrameLayout {
         int measuredWidthc = contentViewc.getMeasuredWidth();
 
         contentViewc.layout(left, -measureHeightc - measureHeight, right, -measureHeight);
-        View contentView = getChildAt(2);
+        View contentView = getChildAt(3);
         // 获取在onMeasure中计算的视图尺寸
         int measureHeight2 = contentView.getMeasuredHeight();
         int measuredWidth2 = contentView.getMeasuredWidth();

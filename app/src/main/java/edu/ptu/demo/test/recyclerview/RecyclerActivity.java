@@ -1,4 +1,4 @@
-package edu.ptu.demo.test;
+package edu.ptu.demo.test.recyclerview;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
