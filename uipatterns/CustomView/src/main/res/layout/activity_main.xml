@@ -26,28 +26,75 @@
             android:minHeight="160dp"
             android:text="TextView Top " />
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/tv1"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <edu.ptu.customview.MyTextView
+                    android:id="@+id/tv1"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_weight="1"
+
+                    android:background="#aca"
+                    android:text="TextView center " />
+
+                <TextView
+                    android:id="@+id/tv3"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_weight="1"
+                    android:background="#cca"
+                    android:text="TextView center " />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_weight="1"
+                    android:background="#cca"
+                    android:text="TextView center " /> <TextView
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
                 android:layout_marginTop="12dp"
                 android:layout_weight="1"
-                android:background="#aca"
-                android:text="TextView center " />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"  android:id="@+id/tv2"
-                android:layout_marginTop="12dp"
                 android:background="#cca"
                 android:text="TextView center " />
-        </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_weight="1"
+                    android:background="#cca"
+                    android:text="TextView center " />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_weight="1"
+                    android:background="#cca"
+                    android:text="TextView center " />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_weight="1"
+                    android:background="#cca"
+                    android:text="TextView center " />
+            </LinearLayout>
+
+        </ScrollView>
+
     </edu.ptu.customview.SlidingLayout>
 
 

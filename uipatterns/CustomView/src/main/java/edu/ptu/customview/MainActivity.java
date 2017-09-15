@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import edu.ptu.customview.utils.LogUtils;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -23,16 +25,13 @@ public class MainActivity extends AppCompatActivity {
         });
         findViewById(R.id.tv1).setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public boolean onLongClick(View view) {   Toast.makeText(view.getContext(), "This is a  LongClickListener 1!", Toast.LENGTH_SHORT).show();
+            public boolean onLongClick(View view) {
+                LogUtils.logMainInfo("This is a SnackBar 2!");
+                Toast.makeText(view.getContext(), "This is a  LongClickListener 1!", Toast.LENGTH_SHORT).show();
                 return false;
             }
         });
-        findViewById(R.id.tv2).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(view.getContext(), "This is a SnackBar 2!", Toast.LENGTH_SHORT).show();
-            }
-        });
+
 
     }
 }

@@ -70,7 +70,9 @@ public class SlidingLayout extends FrameLayout {
     public void init(Context context) {
         if (mDragHelper == null) {
             //构建GestureDetector实例
-            mGestureDetector = new GestureDetectorCompat(context, new GestureDetector.OnGestureListener() {
+            mGestureDetector = new GestureDetectorCompat(context, new GestureDetector.SimpleOnGestureListener() {
+
+
                 @Override
                 public boolean onDown(MotionEvent event) {
                     mDragHelper.processTouchEvent(event);
@@ -82,56 +84,60 @@ public class SlidingLayout extends FrameLayout {
                             childAt.dispatchTouchEvent(event);
                         }
                     }
+                    mDownY = (int) event.getY();
+                    return true;
+                }
+
+                int mDownY;
+
+
+                @Override
+                public boolean onSingleTapUp(MotionEvent event) {
+
+                    boolean viewUnder = mDragHelper.isViewUnder(touchView, (int) event.getX(), (int) event.getY());
+                    if (viewUnder)
+                        touchView.dispatchTouchEvent(event);
+
                     return true;
                 }
 
                 @Override
-                public void onShowPress(MotionEvent event) {
-//                    mDragHelper.processTouchEvent(event);
-//                    if (touchView != null)
-//                        touchView.setLongClickable(false);
-                }
-
-                @Override
-                public boolean onSingleTapUp(MotionEvent event) {
-                    for (int i = 0; i < getChildCount(); i++) {
-                        View childAt = getChildAt(i);
-                        boolean viewUnder = mDragHelper.isViewUnder(childAt, (int) event.getX(), (int) event.getY());
-                        if (viewUnder) {
-                            touchView = childAt;
-                            childAt.dispatchTouchEvent(event);
+                public boolean onScroll(MotionEvent motionEvent, MotionEvent event, float v, float v1) {
+                    if (getChildAt(2).getY() == 0 && event.getY() - mDownY <= 0 || ((ViewGroup) getChildAt(2)).getScrollY() > 0) {
+                        boolean viewUnder = mDragHelper.isViewUnder(touchView, (int) event.getX(), (int) event.getY());
+                        if (viewUnder)
+                            touchView.dispatchTouchEvent(event);
+                    } else {
+                        mDragHelper.processTouchEvent(event);
+                        if (touchView != null) {
+                            MotionEvent obtain = MotionEvent.obtain(event);
+                            obtain.setAction(MotionEvent.ACTION_CANCEL);//取消longclick,取消listview滑动
+                            touchView.dispatchTouchEvent(obtain);
+                            touchView = null;
                         }
                     }
                     return true;
                 }
 
                 @Override
-                public boolean onScroll(MotionEvent motionEvent, MotionEvent event, float v, float v1) {
-                    mDragHelper.processTouchEvent(event);
-                    if (touchView != null) {
-                        MotionEvent obtain = MotionEvent.obtain(event);
-                        obtain.setAction(MotionEvent.ACTION_CANCEL);//取消longclick,取消listview滑动
-                        touchView.dispatchTouchEvent(obtain);
-                    }
-                    return true;
-                }
-
-                @Override
-                public void onLongPress(MotionEvent event) {
-                    for (int i = 0; i < getChildCount(); i++) {
-                        View childAt = getChildAt(i);
-                        boolean viewUnder = mDragHelper.isViewUnder(childAt, (int) event.getX(), (int) event.getY());
-                        if (viewUnder)
-                            childAt.dispatchTouchEvent(event);
-                    }
+                public void onShowPress(MotionEvent e) {
+                    super.onShowPress(e);
+                    LogUtils.logMainInfo("显示 释放");
                 }
 
                 @Override
                 public boolean onFling(MotionEvent motionEvent, MotionEvent event, float v, float v1) {
-                    mDragHelper.processTouchEvent(event);
-                    if (touchView != null)
-                        touchView.setLongClickable(false);
-                    return false;
+
+                    if (getChildAt(2).getY() == 0 && event.getY() - mDownY <= 0 || ((ViewGroup) getChildAt(2)).getScrollY() > 0) {
+                        boolean viewUnder = mDragHelper.isViewUnder(touchView, (int) event.getX(), (int) event.getY());
+                        if (viewUnder)
+                            touchView.dispatchTouchEvent(event);
+                    } else {
+                        mDragHelper.processTouchEvent(event);
+                        if (touchView != null)
+                            touchView.setLongClickable(false);
+                    }
+                    return true;
                 }
             });
             //手势处理类
@@ -239,7 +245,12 @@ public class SlidingLayout extends FrameLayout {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        mGestureDetector.onTouchEvent(event);
+        boolean isUsed = mGestureDetector.onTouchEvent(event);
+        LogUtils.logMainInfo("显示是否消耗" + isUsed);
+        if (!isUsed && (MotionEvent.ACTION_CANCEL == event.getAction() || MotionEvent.ACTION_UP == event.getAction()))//一直在原点按着
+        {
+            mDragHelper.processTouchEvent(event);
+        }
         return true;
     }
 
