@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import edu.ptu.customview.R;
 import edu.ptu.customview.SlidingLayout;
+import edu.ptu.customview.ViewPagerSlidingLayout;
 
 public class ViewPagerMainActivity extends AppCompatActivity {
 

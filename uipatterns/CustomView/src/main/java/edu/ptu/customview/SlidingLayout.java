@@ -77,16 +77,19 @@ public class SlidingLayout extends FrameLayout {
                     for (int i = 0; i < getChildCount(); i++) {
                         View childAt = getChildAt(i);
                         boolean viewUnder = mDragHelper.isViewUnder(childAt, (int) event.getX(), (int) event.getY());
-                        if (viewUnder){touchView=childAt;
-                            childAt.dispatchTouchEvent(event);}
+                        if (viewUnder) {
+                            touchView = childAt;
+                            childAt.dispatchTouchEvent(event);
+                        }
                     }
                     return true;
                 }
 
                 @Override
                 public void onShowPress(MotionEvent event) {
-                    mDragHelper.processTouchEvent(event);  if (touchView!=null)
-                    touchView.setLongClickable(false);
+//                    mDragHelper.processTouchEvent(event);
+//                    if (touchView != null)
+//                        touchView.setLongClickable(false);
                 }
 
                 @Override
@@ -105,7 +108,7 @@ public class SlidingLayout extends FrameLayout {
                 @Override
                 public boolean onScroll(MotionEvent motionEvent, MotionEvent event, float v, float v1) {
                     mDragHelper.processTouchEvent(event);
-                    if (touchView!=null) {
+                    if (touchView != null) {
                         MotionEvent obtain = MotionEvent.obtain(event);
                         obtain.setAction(MotionEvent.ACTION_CANCEL);//取消longclick,取消listview滑动
                         touchView.dispatchTouchEvent(obtain);
@@ -125,8 +128,9 @@ public class SlidingLayout extends FrameLayout {
 
                 @Override
                 public boolean onFling(MotionEvent motionEvent, MotionEvent event, float v, float v1) {
-                    mDragHelper.processTouchEvent(event);  if (touchView!=null)
-                    touchView.setLongClickable(false);
+                    mDragHelper.processTouchEvent(event);
+                    if (touchView != null)
+                        touchView.setLongClickable(false);
                     return false;
                 }
             });
@@ -236,34 +240,6 @@ public class SlidingLayout extends FrameLayout {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         mGestureDetector.onTouchEvent(event);
-//        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-//            for (int i = 0; i < getChildCount(); i++) {
-//                View childAt = getChildAt(i);
-//                boolean viewUnder = mDragHelper.isViewUnder(childAt, (int) event.getX(), (int) event.getY());
-//                if (viewUnder)
-//                    childAt.onTouchEvent(event);
-//            }
-//            super.onTouchEvent(event);
-//            mDragHelper.processTouchEvent(event);
-//            touchEvent = 0;
-//        } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
-//            long l = event.getEventTime() - event.getDownTime();
-//            LogUtils.logMainInfo("时间 " + l + " : " + ViewConfiguration.getPressedStateDuration());
-//            LogUtils.logMainInfo("距离 " + Math.abs(event.getY() - downY) + " : " + Math.abs(event.getX() - downX));
-//            if (l > 100) {//点击事件，长按事件
-//                if (Math.abs(event.getY() - downY) * 2 > Math.abs(event.getX() - downX) && l < 150 && (Math.abs(event.getY() - downY) > 300) || touchEvent == 1) {//显示上部分：当上下滑动时候
-//                    touchEvent = 1;
-//                    mDragHelper.processTouchEvent(event);
-//                } else {//判断点击的时间
-//                    //左右滑动时候
-//                    super.onTouchEvent(event);
-//                }
-//            }
-//        } else if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) {//判断是那个动作小号
-//            if (touchEvent != 1) {
-//                return super.onTouchEvent(event);
-//            } else mDragHelper.processTouchEvent(event);
-//        }
         return true;
     }
 
