@@ -21,12 +21,12 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(view.getContext(), "This is a SnackBar 1!", Toast.LENGTH_SHORT).show();
             }
         });
-//        findViewById(R.id.tv1).setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View view) {   Toast.makeText(view.getContext(), "This is a SnackBar 1!", Toast.LENGTH_SHORT).show();
-//                return false;
-//            }
-//        });
+        findViewById(R.id.tv1).setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {   Toast.makeText(view.getContext(), "This is a  LongClickListener 1!", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
         findViewById(R.id.tv2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
