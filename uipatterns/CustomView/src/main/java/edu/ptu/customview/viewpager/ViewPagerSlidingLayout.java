@@ -1,4 +1,4 @@
-package edu.ptu.customview;
+package edu.ptu.customview.viewpager;
 
 import android.content.Context;
 import android.os.Build;
@@ -9,16 +9,15 @@ import android.support.annotation.RequiresApi;
 import android.support.annotation.StyleRes;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.ViewCompat;
-import android.support.v4.view.ViewGroupCompat;
 import android.support.v4.widget.ViewDragHelper;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.HorizontalScrollView;
+import android.widget.LinearLayout;
 
 import java.util.Random;
 
@@ -65,69 +64,92 @@ public class ViewPagerSlidingLayout extends FrameLayout {
         }
     }
 
-    View touchView;
+//    View touchView;
 
     public void init(Context context) {
         if (mDragHelper == null) {
             //构建GestureDetector实例
-            mGestureDetector = new GestureDetectorCompat(context, new GestureDetector.OnGestureListener() {
+            mGestureDetector = new GestureDetectorCompat(context, new GestureDetector.SimpleOnGestureListener() {
+                public boolean isToucHorizSv;
+
                 @Override
                 public boolean onDown(MotionEvent event) {
                     mDragHelper.processTouchEvent(event);
                     for (int i = 0; i < getChildCount(); i++) {
                         View childAt = getChildAt(i);
+                        if (childAt instanceof ViewGroup)
+                            if (((ViewGroup) childAt).getChildAt(0) instanceof HorizontalScrollView) {
+                                float v = event.getY() - childAt.getY();
+                                if (v < ((ViewGroup) childAt).getChildAt(0).getHeight() && v < ((ViewGroup) childAt).getChildAt(0).getHeight())
+                                    isToucHorizSv = true;
+                                else isToucHorizSv = false;
+                            }
                         boolean viewUnder = mDragHelper.isViewUnder(childAt, (int) event.getX(), (int) event.getY());
-                        if (viewUnder){touchView=childAt;
-                            childAt.dispatchTouchEvent(event);}
+                        if (viewUnder && getChildAt(2) == childAt) {
+                            childAt.dispatchTouchEvent(event);
+
+                        }
+
+
                     }
+                    mDownY = (int) event.getY();
                     return true;
                 }
 
-                @Override
-                public void onShowPress(MotionEvent event) {
-                    mDragHelper.processTouchEvent(event);  if (touchView!=null)
-                        touchView.setLongClickable(false);
-                }
+                int mDownY;
+
 
                 @Override
                 public boolean onSingleTapUp(MotionEvent event) {
-                    for (int i = 0; i < getChildCount(); i++) {
-                        View childAt = getChildAt(i);
-                        boolean viewUnder = mDragHelper.isViewUnder(childAt, (int) event.getX(), (int) event.getY());
-                        if (viewUnder) {
-                            touchView = childAt;
-                            childAt.dispatchTouchEvent(event);
-                        }
-                    }
+
+                    boolean viewUnder = mDragHelper.isViewUnder(getChildAt(2), (int) event.getX(), (int) event.getY());
+                    if (viewUnder)
+                        getChildAt(2).dispatchTouchEvent(event);
+
                     return true;
                 }
 
                 @Override
                 public boolean onScroll(MotionEvent motionEvent, MotionEvent event, float v, float v1) {
-                    mDragHelper.processTouchEvent(event);
-                    if (touchView!=null) {
-                        MotionEvent obtain = MotionEvent.obtain(event);
-                        obtain.setAction(MotionEvent.ACTION_CANCEL);//取消longclick,取消listview滑动
-                        touchView.dispatchTouchEvent(obtain);
+                    if (isToucHorizSv){
+                        (getChildAt(2)).dispatchTouchEvent(event);
+                    }else if (isScrollViewPager(event)  ) {
+                        getChildAt(2).dispatchTouchEvent(event);
+                    } else {
+                        mDragHelper.processTouchEvent(event);
+//                        MotionEvent obtain = MotionEvent.obtain(event);
+//                        obtain.setAction(MotionEvent.ACTION_CANCEL);//取消longclick,取消listview滑动
+//                        getChildAt(2).dispatchTouchEvent(obtain);
+
                     }
                     return true;
                 }
 
+                private boolean isScrollViewPager(MotionEvent event) {
+                    boolean isScrollVpDown = getChildAt(2).getY() == 0 && event.getY() - mDownY <= 0;
+                    if (isScrollVpDown)
+                        return true;
+                    return ((ViewGroup) ((ViewGroup) getChildAt(2)).getChildAt(1)).getChildAt(0).getScrollY() > 0;
+
+                }
+
                 @Override
-                public void onLongPress(MotionEvent event) {
-                    for (int i = 0; i < getChildCount(); i++) {
-                        View childAt = getChildAt(i);
-                        boolean viewUnder = mDragHelper.isViewUnder(childAt, (int) event.getX(), (int) event.getY());
-                        if (viewUnder)
-                            childAt.dispatchTouchEvent(event);
-                    }
+                public void onShowPress(MotionEvent e) {
+                    super.onShowPress(e);
+                    LogUtils.logMainInfo("显示 释放");
                 }
 
                 @Override
                 public boolean onFling(MotionEvent motionEvent, MotionEvent event, float v, float v1) {
-                    mDragHelper.processTouchEvent(event);  if (touchView!=null)
-                        touchView.setLongClickable(false);
-                    return false;
+
+                    if (isScrollViewPager(event) || isToucHorizSv) {
+                        boolean viewUnder = mDragHelper.isViewUnder(getChildAt(2), (int) event.getX(), (int) event.getY());
+                        if (viewUnder)
+                            getChildAt(2).dispatchTouchEvent(event);
+                    } else {
+                        mDragHelper.processTouchEvent(event);
+                    }
+                    return true;
                 }
             });
             //手势处理类
@@ -197,26 +219,18 @@ public class ViewPagerSlidingLayout extends FrameLayout {
 
                     //拖动蓝色方块时，红色也跟随移动
                     int t = changedView.getTop() - getChildAt(1).getHeight();
-//                    getChildAt(1).layout(getChildAt(1).getLeft(), t,
-//                            getChildAt(1).getRight() , changedView.getTop() );
                     ViewCompat.offsetTopAndBottom(getChildAt(1), dy);
-//                    if (t>=0){
-//                        getChildAt(0).layout(getChildAt(0).getLeft(), t-getChildAt(0).getHeight(),
-//                                getChildAt(0).getRight() , t);
                     ViewCompat.offsetTopAndBottom(getChildAt(0), dy);
-//                    }
 
                 }
 
                 @Override
                 public void onEdgeDragStarted(int edgeFlags, int pointerId) {
                     super.onEdgeDragStarted(edgeFlags, pointerId);
-//                    mDragHelper.captureChildView(getChildAt(2), pointerId);
                 }
             });
             final float density = context.getResources().getDisplayMetrics().density;
             mDragHelper.setMinVelocity(MIN_FLING_VELOCITY * density);
-//            mDragHelper.setEdgeTrackingEnabled(ViewDragHelper.EDGE_TOP);
         }
     }
 
@@ -235,35 +249,12 @@ public class ViewPagerSlidingLayout extends FrameLayout {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        mGestureDetector.onTouchEvent(event);
-//        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-//            for (int i = 0; i < getChildCount(); i++) {
-//                View childAt = getChildAt(i);
-//                boolean viewUnder = mDragHelper.isViewUnder(childAt, (int) event.getX(), (int) event.getY());
-//                if (viewUnder)
-//                    childAt.onTouchEvent(event);
-//            }
-//            super.onTouchEvent(event);
-//            mDragHelper.processTouchEvent(event);
-//            touchEvent = 0;
-//        } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
-//            long l = event.getEventTime() - event.getDownTime();
-//            LogUtils.logMainInfo("时间 " + l + " : " + ViewConfiguration.getPressedStateDuration());
-//            LogUtils.logMainInfo("距离 " + Math.abs(event.getY() - downY) + " : " + Math.abs(event.getX() - downX));
-//            if (l > 100) {//点击事件，长按事件
-//                if (Math.abs(event.getY() - downY) * 2 > Math.abs(event.getX() - downX) && l < 150 && (Math.abs(event.getY() - downY) > 300) || touchEvent == 1) {//显示上部分：当上下滑动时候
-//                    touchEvent = 1;
-//                    mDragHelper.processTouchEvent(event);
-//                } else {//判断点击的时间
-//                    //左右滑动时候
-//                    super.onTouchEvent(event);
-//                }
-//            }
-//        } else if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) {//判断是那个动作小号
-//            if (touchEvent != 1) {
-//                return super.onTouchEvent(event);
-//            } else mDragHelper.processTouchEvent(event);
-//        }
+        boolean isUsed = mGestureDetector.onTouchEvent(event);
+        LogUtils.logMainInfo("显示是否消耗" + isUsed);
+        if (!isUsed && (MotionEvent.ACTION_CANCEL == event.getAction() || MotionEvent.ACTION_UP == event.getAction()))//一直在原点按着
+        {
+            mDragHelper.processTouchEvent(event);
+        }
         return true;
     }
 
