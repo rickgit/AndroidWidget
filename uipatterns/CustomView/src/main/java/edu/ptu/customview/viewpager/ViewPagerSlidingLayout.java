@@ -9,6 +9,7 @@ import android.support.annotation.RequiresApi;
 import android.support.annotation.StyleRes;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.ViewCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.ViewDragHelper;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
@@ -80,40 +81,39 @@ public class ViewPagerSlidingLayout extends FrameLayout {
                         if (childAt instanceof ViewGroup)
                             if (((ViewGroup) childAt).getChildAt(0) instanceof HorizontalScrollView) {
                                 float v = event.getY() - childAt.getY();
-                                if (v < ((ViewGroup) childAt).getChildAt(0).getHeight() && v < ((ViewGroup) childAt).getChildAt(0).getHeight())
+                                if (v < ((ViewGroup) childAt).getChildAt(0).getHeight() && v < ((ViewGroup) childAt).getChildAt(0).getHeight()) {
                                     isToucHorizSv = true;
-                                else isToucHorizSv = false;
+                                } else isToucHorizSv = false;
                             }
                         boolean viewUnder = mDragHelper.isViewUnder(childAt, (int) event.getX(), (int) event.getY());
                         if (viewUnder && getChildAt(2) == childAt) {
-                            childAt.dispatchTouchEvent(event);
-
+                            if (isToucHorizSv)
+                                ((ViewGroup) childAt).getChildAt(0).dispatchTouchEvent(event);//横向会被viewpager拦截
+                            else
+                                childAt.dispatchTouchEvent(event);
                         }
-
-
                     }
                     mDownY = (int) event.getY();
+                    mDownX = (int) event.getX();
                     return true;
                 }
 
                 int mDownY;
-
+                int mDownX;
 
                 @Override
                 public boolean onSingleTapUp(MotionEvent event) {
-
                     boolean viewUnder = mDragHelper.isViewUnder(getChildAt(2), (int) event.getX(), (int) event.getY());
                     if (viewUnder)
                         getChildAt(2).dispatchTouchEvent(event);
-
                     return true;
                 }
 
                 @Override
                 public boolean onScroll(MotionEvent motionEvent, MotionEvent event, float v, float v1) {
-                    if (isToucHorizSv){
-                        (getChildAt(2)).dispatchTouchEvent(event);
-                    }else if (isScrollViewPager(event)  ) {
+                    if (isToucHorizSv) {
+                        ((ViewGroup) getChildAt(2)).getChildAt(0).dispatchTouchEvent(event);
+                    } else if (isScrollViewPager(event)) {
                         getChildAt(2).dispatchTouchEvent(event);
                     } else {
                         mDragHelper.processTouchEvent(event);
@@ -126,11 +126,16 @@ public class ViewPagerSlidingLayout extends FrameLayout {
                 }
 
                 private boolean isScrollViewPager(MotionEvent event) {
-                    boolean isScrollVpDown = getChildAt(2).getY() == 0 && event.getY() - mDownY <= 0;
+                    ViewPager vp = (ViewPager) ((ViewGroup) (getChildAt(2))).getChildAt(1);
+                    boolean isScrollVpDown = vp.getChildAt(vp.getCurrentItem()).getScrollY() > 0 && event.getY() - mDownY >= 0;
                     if (isScrollVpDown)
                         return true;
-                    return ((ViewGroup) ((ViewGroup) getChildAt(2)).getChildAt(1)).getChildAt(0).getScrollY() > 0;
-
+                    boolean isVpScrollUp = (((ViewGroup) getChildAt(2)).getY() == 0) && event.getY() - mDownY <= 0;
+                    if (isVpScrollUp)
+                        return isVpScrollUp;
+//                    if (Math.abs(event.getY() - mDownY) < Math.abs(event.getX() - getX()))
+//                        return true;
+                    return false;
                 }
 
                 @Override
@@ -141,8 +146,9 @@ public class ViewPagerSlidingLayout extends FrameLayout {
 
                 @Override
                 public boolean onFling(MotionEvent motionEvent, MotionEvent event, float v, float v1) {
-
-                    if (isScrollViewPager(event) || isToucHorizSv) {
+                    if (isToucHorizSv) {
+                        ((ViewGroup) getChildAt(2)).getChildAt(0).dispatchTouchEvent(event);
+                    } else if (isScrollViewPager(event)) {
                         boolean viewUnder = mDragHelper.isViewUnder(getChildAt(2), (int) event.getX(), (int) event.getY());
                         if (viewUnder)
                             getChildAt(2).dispatchTouchEvent(event);

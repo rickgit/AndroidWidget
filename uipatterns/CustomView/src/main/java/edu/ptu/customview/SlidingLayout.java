@@ -71,8 +71,6 @@ public class SlidingLayout extends FrameLayout {
         if (mDragHelper == null) {
             //构建GestureDetector实例
             mGestureDetector = new GestureDetectorCompat(context, new GestureDetector.SimpleOnGestureListener() {
-
-
                 @Override
                 public boolean onDown(MotionEvent event) {
                     mDragHelper.processTouchEvent(event);
@@ -153,7 +151,7 @@ public class SlidingLayout extends FrameLayout {
                 @Override
                 public int clampViewPositionVertical(View child, int top, int dy) {
                     final int topBound = getPaddingTop();
-                    final int bottomBound = getHeight() - dragView.getHeight() - topBound;
+                    final int bottomBound = getHeight() - 50 - topBound;
 
                     final int newtop = Math.min(Math.max(top, topBound), bottomBound);
                     return newtop;
@@ -207,12 +205,7 @@ public class SlidingLayout extends FrameLayout {
 
                     //拖动蓝色方块时，红色也跟随移动
                     int t = changedView.getTop() - getChildAt(1).getHeight();
-//                    getChildAt(1).layout(getChildAt(1).getLeft(), t,
-//                            getChildAt(1).getRight() , changedView.getTop() );
                     ViewCompat.offsetTopAndBottom(getChildAt(1), dy);
-//                    if (t>=0){
-//                        getChildAt(0).layout(getChildAt(0).getLeft(), t-getChildAt(0).getHeight(),
-//                                getChildAt(0).getRight() , t);
                     ViewCompat.offsetTopAndBottom(getChildAt(0), dy);
 //                    }
 
