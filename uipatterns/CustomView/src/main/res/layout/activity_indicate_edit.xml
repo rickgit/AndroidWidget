@@ -16,11 +16,11 @@
             android:layout_height="wrap_content"
             android:cursorVisible="false"
             android:imeOptions="actionNext"
-
+            
             android:inputType="number"
             android:maxLines="1"
-            android:minHeight="16dp"
-            android:minWidth="16dp"
+            android:minHeight="24dp"
+            android:minWidth="24dp"
             android:nextFocusForward="@+id/et2" />
 
         <EditText
@@ -31,9 +31,9 @@
             android:cursorVisible="false"
             android:imeOptions="actionNext"
             android:inputType="number"
-            android:maxLines="1"
-            android:minHeight="16dp"
-            android:minWidth="16dp"
+            android:maxLines="1"  
+            android:minHeight="24dp"
+            android:minWidth="24dp"
             android:nextFocusForward="@+id/et3" />
 
         <EditText
@@ -44,9 +44,9 @@
             android:cursorVisible="false"
             android:imeOptions="actionNext"
             android:inputType="number"
-            android:maxLines="1"
-            android:minHeight="16dp"
-            android:minWidth="16dp"
+            android:maxLines="1"  
+            android:minHeight="24dp"
+            android:minWidth="24dp"
             android:nextFocusForward="@+id/et4" />
 
         <EditText
@@ -58,8 +58,8 @@
             android:imeOptions="actionNext"
             android:inputType="number"
             android:maxLines="1"
-            android:minHeight="16dp"
-            android:minWidth="16dp"
+            android:minHeight="24dp"
+            android:minWidth="24dp"  
             android:nextFocusForward="@+id/et5" />
 
         <EditText
@@ -71,8 +71,8 @@
             android:imeOptions="actionNext"
             android:inputType="number"
             android:maxLines="1"
-            android:minHeight="16dp"
-            android:minWidth="16dp"
+            android:minHeight="24dp"  
+            android:minWidth="24dp"
             android:nextFocusForward="@+id/et6" />
 
         <EditText
@@ -83,9 +83,9 @@
             android:cursorVisible="false"
             android:imeOptions="actionNext"
             android:inputType="number"
-            android:maxLines="1"
-            android:minHeight="16dp"
-            android:minWidth="16dp"
+            android:maxLines="1"  
+            android:minHeight="24dp"
+            android:minWidth="24dp"
             android:nextFocusForward="@+id/et7" />
 
         <EditText
@@ -95,10 +95,10 @@
             android:layout_toRightOf="@id/et6"
             android:cursorVisible="false"
             android:imeOptions="actionNext"
-            android:inputType="number"
+            android:inputType="number"  
             android:maxLines="1"
-            android:minHeight="16dp"
-            android:minWidth="16dp"
+            android:minHeight="24dp"
+            android:minWidth="24dp"
             android:nextFocusForward="@+id/et8" />
 
         <EditText
@@ -108,10 +108,10 @@
             android:layout_toRightOf="@id/et7"
             android:cursorVisible="false"
             android:imeOptions="actionNext"
-            android:inputType="number"
+            android:inputType="number"  
             android:maxLines="1"
-            android:minHeight="16dp"
-            android:minWidth="16dp"
+            android:minHeight="24dp"
+            android:minWidth="24dp"
             android:nextFocusForward="@+id/et9" />
 
         <EditText
@@ -123,8 +123,8 @@
             android:imeOptions="actionNext"
             android:inputType="number"
             android:maxLines="1"
-            android:minHeight="16dp"
-            android:minWidth="16dp"
+            android:minHeight="24dp"  
+            android:minWidth="24dp"
             android:nextFocusForward="@+id/et10" />
 
         <EditText
@@ -136,8 +136,8 @@
             android:imeOptions="actionNext"
             android:inputType="number"
             android:maxLines="1"
-            android:minHeight="16dp"
-            android:minWidth="16dp"
+            android:minHeight="24dp"  
+            android:minWidth="24dp"
             android:nextFocusForward="@+id/et11" />
 
         <EditText
@@ -148,8 +148,9 @@
             android:cursorVisible="false"
             android:inputType="number"
             android:maxLines="1"
-            android:minHeight="16dp"
-            android:minWidth="16dp" />
+            
+            android:minHeight="24dp"
+            android:minWidth="24dp" />
 
     </edu.ptu.customview.eidttext.IndicatEditVG>
 </LinearLayout>
