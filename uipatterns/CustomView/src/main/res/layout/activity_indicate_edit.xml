@@ -5,6 +5,7 @@
     android:orientation="vertical">
 
     <edu.ptu.customview.eidttext.IndicatEditVG
+        android:id="@+id/vg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="64dp">
@@ -13,97 +14,140 @@
             android:id="@+id/et1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="text|textMultiLine"
+            android:cursorVisible="false"
+            android:imeOptions="actionNext"
+
+            android:inputType="number"
+            android:maxLines="1"
             android:minHeight="12dp"
-            android:minWidth="12dp" />
+            android:minWidth="12dp"
+            android:nextFocusForward="@+id/et2" />
 
         <EditText
             android:id="@+id/et2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/et1"
-            android:inputType="text|textMultiLine"
+            android:cursorVisible="false"
+            android:imeOptions="actionNext"
+            android:inputType="number"
+            android:maxLines="1"
             android:minHeight="12dp"
-            android:minWidth="12dp" />
+            android:minWidth="12dp"
+            android:nextFocusForward="@+id/et3" />
 
         <EditText
             android:id="@+id/et3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/et2"
-            android:inputType="text|textMultiLine"
+            android:cursorVisible="false"
+            android:imeOptions="actionNext"
+            android:inputType="number"
+            android:maxLines="1"
             android:minHeight="12dp"
-            android:minWidth="12dp" />
+            android:minWidth="12dp"
+            android:nextFocusForward="@+id/et4" />
 
         <EditText
             android:id="@+id/et4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/et3"
-            android:inputType="text|textMultiLine"
+            android:cursorVisible="false"
+            android:imeOptions="actionNext"
+            android:inputType="number"
+            android:maxLines="1"
             android:minHeight="12dp"
-            android:minWidth="12dp" />
+            android:minWidth="12dp"
+            android:nextFocusForward="@+id/et5" />
 
         <EditText
             android:id="@+id/et5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/et4"
-            android:inputType="text|textMultiLine"
+            android:cursorVisible="false"
+            android:imeOptions="actionNext"
+            android:inputType="number"
+            android:maxLines="1"
             android:minHeight="12dp"
-            android:minWidth="12dp" />
+            android:minWidth="12dp"
+            android:nextFocusForward="@+id/et6" />
 
         <EditText
             android:id="@+id/et6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/et5"
-            android:inputType="text|textMultiLine"
+            android:cursorVisible="false"
+            android:imeOptions="actionNext"
+            android:inputType="number"
+            android:maxLines="1"
             android:minHeight="12dp"
-            android:minWidth="12dp" />
+            android:minWidth="12dp"
+            android:nextFocusForward="@+id/et7" />
 
         <EditText
             android:id="@+id/et7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/et6"
-            android:inputType="text|textMultiLine"
+            android:cursorVisible="false"
+            android:imeOptions="actionNext"
+            android:inputType="number"
+            android:maxLines="1"
             android:minHeight="12dp"
-            android:minWidth="12dp" />
+            android:minWidth="12dp"
+            android:nextFocusForward="@+id/et8" />
 
         <EditText
             android:id="@+id/et8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/et7"
-            android:inputType="text|textMultiLine"
+            android:cursorVisible="false"
+            android:imeOptions="actionNext"
+            android:inputType="number"
+            android:maxLines="1"
             android:minHeight="12dp"
-            android:minWidth="12dp" />
+            android:minWidth="12dp"
+            android:nextFocusForward="@+id/et9" />
 
         <EditText
             android:id="@+id/et9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/et8"
-            android:inputType="text|textMultiLine"
+            android:cursorVisible="false"
+            android:imeOptions="actionNext"
+            android:inputType="number"
+            android:maxLines="1"
             android:minHeight="12dp"
-            android:minWidth="12dp" />
+            android:minWidth="12dp"
+            android:nextFocusForward="@+id/et10" />
 
         <EditText
             android:id="@+id/et10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/et9"
-            android:inputType="text|textMultiLine"
+            android:layout_toRightOf="@+id/et9"
+            android:cursorVisible="false"
+            android:imeOptions="actionNext"
+            android:inputType="number"
+            android:maxLines="1"
             android:minHeight="12dp"
-            android:minWidth="12dp" />
+            android:minWidth="12dp"
+            android:nextFocusForward="@+id/et11" />
 
         <EditText
             android:id="@+id/et11"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/et10"
-            android:inputType="text|textMultiLine"
+            android:cursorVisible="false"
+            android:inputType="number"
+            android:maxLines="1"
             android:minHeight="12dp"
             android:minWidth="12dp" />
 
