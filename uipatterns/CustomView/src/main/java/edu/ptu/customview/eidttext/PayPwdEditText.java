@@ -54,21 +54,21 @@ public class PayPwdEditText extends RelativeLayout {
     }
 
     /**
-     * @param bgdrawable    背景drawable
-     * @param pwdlength     密码长度
-     * @param splilinewidth 分割线宽度
-     * @param splilinecolor 分割线颜色
-     * @param pwdcolor      密码字体颜色
-     * @param pwdsize       密码字体大小
+     * @param bgDrawable 背景drawable
+     * @param pwdLength  密码长度
+     * @param splitWidth 分割线宽度
+     * @param splitColor 分割线颜色
+     * @param pwdColor   密码字体颜色
+     * @param pwdSize    密码字体大小
      * @return void
      * @author anshu.wang 2017-10-12 14:10:56
      **/
-    public void initStyle(int bgdrawable, int pwdlength, float splilinewidth, int splilinecolor, int pwdcolor, int pwdsize) {
-        this.pwdlength = pwdlength;
-        dividerPaint.setColor(0xffFF4081);
-        dividerPaint.setStrokeWidth(dip2px(context, 0.3f));
-        initEdit(bgdrawable);
-        initShowInput(bgdrawable, pwdlength, splilinewidth, splilinecolor, pwdcolor, pwdsize);
+    public void initStyle(int bgDrawable, int pwdLength, float splitWidth, int splitColor, int pwdColor, int pwdSize) {
+        this.pwdlength = pwdLength;
+        dividerPaint.setColor(splitColor);
+        dividerPaint.setStrokeWidth(dip2px(context, splitWidth));
+        initEdit(bgDrawable);
+        initShowInput(bgDrawable, pwdLength, splitWidth, splitColor, pwdColor, pwdSize);
     }
 
     /**
@@ -147,7 +147,9 @@ public class PayPwdEditText extends RelativeLayout {
         params.weight = 1;
         params.gravity = Gravity.CENTER;
 
+        LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(dip2px(context, slpilinewidth), LayoutParams.MATCH_PARENT);
         for (int i = 0; i < textViews.length; i++) {
+            final int index = i;
             TextView textView = new TextView(context);
             textView.setGravity(Gravity.CENTER);
             textViews[i] = textView;
