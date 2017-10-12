@@ -147,9 +147,7 @@ public class PayPwdEditText extends RelativeLayout {
         params.weight = 1;
         params.gravity = Gravity.CENTER;
 
-        LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(dip2px(context, slpilinewidth), LayoutParams.MATCH_PARENT);
         for (int i = 0; i < textViews.length; i++) {
-            final int index = i;
             TextView textView = new TextView(context);
             textView.setGravity(Gravity.CENTER);
             textViews[i] = textView;
@@ -157,13 +155,6 @@ public class PayPwdEditText extends RelativeLayout {
             textViews[i].setTextColor(context.getResources().getColor(pwdcolor));
             textViews[i].setInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD | InputType.TYPE_CLASS_NUMBER);
             linearLayout.addView(textView, params);
-
-
-            if (i < textViews.length - 1) {
-                View view = new View(context);
-                view.setBackgroundColor(context.getResources().getColor(splilinecolor));
-                linearLayout.addView(view, params2);
-            }
         }
     }
 
