@@ -148,7 +148,6 @@
             android:cursorVisible="false"
             android:inputType="number"
             android:maxLines="1"
-            
             android:minHeight="24dp"
             android:minWidth="24dp" />
 
