@@ -122,13 +122,13 @@ public class LotteryNumGenView extends View {
     public void setText(String text) {
         this.text = text;
     }
-    float num=0.01f;
+
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
 
-             mOffset = (int) (mOffset+ 100*mInterpolator.getInterpolation(mOffset/720));
+            mOffset = (int) (mOffset+ 80*mInterpolator.getInterpolation(0.45f));
             if (mOffset>=360) {
                 mOffset = 0;
             }
