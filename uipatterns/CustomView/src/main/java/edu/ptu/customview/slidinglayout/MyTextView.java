@@ -1,4 +1,4 @@
-package edu.ptu.customview;
+package edu.ptu.customview.slidinglayout;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
