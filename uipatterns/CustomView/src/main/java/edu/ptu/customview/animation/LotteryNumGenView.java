@@ -113,37 +113,40 @@ public class LotteryNumGenView extends View {
     }
 
     public void startGen() {
-        dex=1000;//三秒加速到最大速度
+        dex = 1000;//三秒加速到最大速度
         handler.removeMessages(0);
-        handler.sendEmptyMessageDelayed(0,1);
+        handler.sendEmptyMessageDelayed(0, 1);
     }
 
+    @Deprecated
     public void stopGen() {
         handler.removeMessages(0);
     }
 
     public void setText(String text) {
         this.text = text;
+        invalidate();
     }
 
-    float dex = 1000;//三秒后加速到全部
+    float dex = 2000;//一秒后加速到全部，更换数字，减速
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            if (dex >= 0) {
-                dex=dex-30;
-            } else {
-                dex = 0;
+            if (dex > 1000) {
+                text = "16";
             }
-            float f =( 3000 - dex )/ 3000f;
-            float v = 80 * mInterpolator.getInterpolation(0.45f * f);//最大速度每毫秒
+            dex=dex+20;
+            float v = 80 * mInterpolator.getInterpolation(dex / 3000);//最大速度每毫秒
             mOffset = (int) (mOffset + v);
             if (mOffset >= 360) {
                 mOffset = 0;
             }
-            invalidate();
-            sendEmptyMessage(0);
+            if (dex <= 3000) {
+                invalidate();
+                sendEmptyMessage(0);
+            }else { mOffset = 0;
+            }
         }
     };
 }

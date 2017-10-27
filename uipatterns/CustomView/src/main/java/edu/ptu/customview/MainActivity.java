@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.tv_change).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                genView.setText("16");
+                genView.setText("10");
             }
         });
         findViewById(R.id.tv_stop).setOnClickListener(new View.OnClickListener() {
