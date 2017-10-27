@@ -113,7 +113,8 @@ public class LotteryNumGenView extends View {
     }
 
     public void startGen() {
-//        handler.removeMessages(0);
+        dex=1000;//三秒加速到最大速度
+        handler.removeMessages(0);
         handler.sendEmptyMessageDelayed(0,1);
     }
 
@@ -125,7 +126,7 @@ public class LotteryNumGenView extends View {
         this.text = text;
     }
 
-    float dex = 3000;//三秒后加速到全部
+    float dex = 1000;//三秒后加速到全部
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -136,7 +137,8 @@ public class LotteryNumGenView extends View {
                 dex = 0;
             }
             float f =( 3000 - dex )/ 3000f;
-            mOffset = (int) (mOffset + 80 * mInterpolator.getInterpolation(0.45f * f));
+            float v = 80 * mInterpolator.getInterpolation(0.45f * f);//最大速度每毫秒
+            mOffset = (int) (mOffset + v);
             if (mOffset >= 360) {
                 mOffset = 0;
             }
