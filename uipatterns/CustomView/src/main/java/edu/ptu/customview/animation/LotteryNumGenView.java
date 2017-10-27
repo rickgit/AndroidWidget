@@ -19,7 +19,7 @@ import android.view.animation.Interpolator;
 public class LotteryNumGenView extends View {
     private int mOffset = 90;
     private Paint textPaint;
-    private String text="01";
+    private String text = "01";
     private Rect mTextBounds = new Rect();
     private int mTextCenterX;
     private int mTextHeight;
@@ -112,9 +112,11 @@ public class LotteryNumGenView extends View {
         canvas.restore();
     }
 
-    public void startGen() {handler.removeMessages(0);
-        handler.sendEmptyMessage(0);
+    public void startGen() {
+//        handler.removeMessages(0);
+        handler.sendEmptyMessageDelayed(0,1);
     }
+
     public void stopGen() {
         handler.removeMessages(0);
     }
@@ -123,13 +125,19 @@ public class LotteryNumGenView extends View {
         this.text = text;
     }
 
+    float dex = 3000;//三秒后加速到全部
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-
-            mOffset = (int) (mOffset+ 80*mInterpolator.getInterpolation(0.45f));
-            if (mOffset>=360) {
+            if (dex >= 0) {
+                dex=dex-30;
+            } else {
+                dex = 0;
+            }
+            float f =( 3000 - dex )/ 3000f;
+            mOffset = (int) (mOffset + 80 * mInterpolator.getInterpolation(0.45f * f));
+            if (mOffset >= 360) {
                 mOffset = 0;
             }
             invalidate();
