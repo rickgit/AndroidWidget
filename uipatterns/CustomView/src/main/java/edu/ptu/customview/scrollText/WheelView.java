@@ -1,4 +1,4 @@
-package edu.ptu.customview.lib;
+package edu.ptu.customview.scrollText;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -8,11 +8,8 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Handler;
 import android.util.AttributeSet;
-import android.view.GestureDetector;
 import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AdapterView;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -24,8 +21,8 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 import edu.ptu.customview.R;
-import edu.ptu.customview.lib.adapter.OnItemSelectedListener;
-import edu.ptu.customview.lib.adapter.WheelAdapter;
+import edu.ptu.customview.scrollText.adapter.OnItemSelectedListener;
+import edu.ptu.customview.scrollText.adapter.WheelAdapter;
 
 
 /**

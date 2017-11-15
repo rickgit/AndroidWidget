@@ -1,4 +1,4 @@
-package edu.ptu.customview.lib.adapter;
+package edu.ptu.customview.scrollText.adapter;
 
 public interface WheelAdapter<T> {
 	/**

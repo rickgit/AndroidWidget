@@ -1,4 +1,4 @@
-package edu.ptu.customview.lib;
+package edu.ptu.customview.scrollText;
 
 import android.os.Handler;
 import android.os.Message;

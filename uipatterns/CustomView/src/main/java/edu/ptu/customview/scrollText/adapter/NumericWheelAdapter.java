@@ -1,4 +1,4 @@
-package edu.ptu.customview.lib.adapter;
+package edu.ptu.customview.scrollText.adapter;
 
 /**
  * Numeric Wheel adapter.

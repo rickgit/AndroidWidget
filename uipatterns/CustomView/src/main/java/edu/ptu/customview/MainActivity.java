@@ -3,23 +3,16 @@ package edu.ptu.customview;
 import android.animation.ValueAnimator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import edu.ptu.customview.animation.LotteryNumGenView;
 import edu.ptu.customview.animation.LotteryScrollNumView;
-import edu.ptu.customview.animation.SimpleTextView;
-import edu.ptu.customview.lib.WheelView;
-import edu.ptu.customview.lib.adapter.ArrayWheelAdapter;
-import edu.ptu.customview.slidinglayout.SlidingLayout;
-import edu.ptu.customview.utils.LogUtils;
+import edu.ptu.customview.scrollText.WheelView;
+import edu.ptu.customview.scrollText.adapter.ArrayWheelAdapter;
 
 public class MainActivity extends AppCompatActivity {
 

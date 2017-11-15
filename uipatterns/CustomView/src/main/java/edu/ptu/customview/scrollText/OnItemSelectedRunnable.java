@@ -1,7 +1,7 @@
-package edu.ptu.customview.lib;
+package edu.ptu.customview.scrollText;
 
 
-import edu.ptu.customview.lib.adapter.OnItemSelectedListener;
+import edu.ptu.customview.scrollText.adapter.OnItemSelectedListener;
 
 final class OnItemSelectedRunnable implements Runnable {
     final WheelView loopView;
