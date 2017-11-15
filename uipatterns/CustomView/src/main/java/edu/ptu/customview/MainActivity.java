@@ -1,15 +1,31 @@
 package edu.ptu.customview;
 
+import android.animation.ValueAnimator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.LinearInterpolator;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 import edu.ptu.customview.animation.LotteryNumGenView;
+import edu.ptu.customview.animation.LotteryScrollNumView;
+import edu.ptu.customview.animation.SimpleTextView;
+import edu.ptu.customview.lib.WheelView;
+import edu.ptu.customview.lib.adapter.ArrayWheelAdapter;
 import edu.ptu.customview.slidinglayout.SlidingLayout;
 import edu.ptu.customview.utils.LogUtils;
 
 public class MainActivity extends AppCompatActivity {
+
+    private LotteryScrollNumView child;
+    private WheelView whellView;
+    private ValueAnimator animator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,20 +35,42 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.tv_start).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                genView.startGen();
+//                genView.startGen();
+//                child.setNumber(3,System.currentTimeMillis()+5000,300);
+                animator = ValueAnimator.ofFloat(21f,800.0f);
+                animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                    @Override
+                    public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                        whellView.scrollBy((Float) valueAnimator.getAnimatedValue());
+                    }
+                });
+                animator.setDuration(15000);
+                animator.setInterpolator(new LinearInterpolator());
+                animator.start();
+
             }
         });
         findViewById(R.id.tv_change).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                genView.setText("10");
+//                child.addOffset(0);
+                animator.cancel();
             }
         });
-        findViewById(R.id.tv_stop).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                genView.stopGen();
+
+        LinearLayout vg = (LinearLayout) findViewById(R.id.vg_lottery_num);
+        child =new LotteryScrollNumView(this);
+
+        vg.addView(child);
+
+        whellView = (WheelView) findViewById(R.id.wheelview);
+        whellView.setAdapter(new ArrayWheelAdapter(new ArrayList(){
+            {
+                for (int i = 0; i < 32; i++) {
+                    add(String.format("%02d",i));
+                }
             }
-        });
+        }));
+
     }
 }

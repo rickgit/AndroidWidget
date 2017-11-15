@@ -118,11 +118,6 @@ public class LotteryNumGenView extends View {
         handler.sendEmptyMessageDelayed(0, 1);
     }
 
-    @Deprecated
-    public void stopGen() {
-        handler.removeMessages(0);
-    }
-
     public void setText(String text) {
         this.text = text;
         invalidate();

@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
+    android:background="#cca1dd"
     android:orientation="vertical">
 
     <Button
@@ -23,4 +24,14 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:background="#ccaacb" />
+    <LinearLayout
+        android:id="@+id/vg_lottery_num"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></LinearLayout>
+    <edu.ptu.customview.lib.WheelView
+        android:id="@+id/wheelview"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content" />
 </LinearLayout>
