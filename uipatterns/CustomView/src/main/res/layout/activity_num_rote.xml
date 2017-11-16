@@ -2,66 +2,92 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:background="#cca1dd"
+    android:gravity="center"
     android:orientation="vertical">
 
     <Button
+        android:id="@+id/tv_start"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tv_start" />
+        android:layout_height="wrap_content" />
+
     <Button
+        android:id="@+id/tv_change"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tv_change" />
+        android:layout_height="wrap_content" />
+
     <Button
+        android:id="@+id/tv_stop"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tv_stop" />
+        android:layout_height="wrap_content" />
 
     <edu.ptu.customview.animation.LotteryNumGenView
         android:id="@+id/tv_num"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:background="#ccaacb" />
+
     <LinearLayout
         android:id="@+id/vg_lottery_num"
-        android:orientation="horizontal"
-        android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></LinearLayout>
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"></LinearLayout>
+
     <LinearLayout
-        android:layout_width="wrap_content"
         android:id="@+id/wheelviews"
+        android:layout_width="wrap_content"
+        android:divider="@drawable/divider"
+        android:showDividers="middle"
         android:layout_height="wrap_content">
+
         <edu.ptu.customview.scrollText.WheelView
             android:id="@+id/wheelview1"
             android:layout_width="30dp"
-            android:layout_height="wrap_content" />
+
+            android:layout_height="35dp"
+            android:background="@drawable/circle_fff6f6_ee332b" />
+
         <edu.ptu.customview.scrollText.WheelView
             android:id="@+id/wheelview2"
             android:layout_width="30dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="35dp"
+
+            android:background="@drawable/circle_fff6f6_ee332b" />
+
         <edu.ptu.customview.scrollText.WheelView
             android:id="@+id/wheelview3"
             android:layout_width="30dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="35dp"
+            android:background="@drawable/circle_fff6f6_ee332b" />
+
         <edu.ptu.customview.scrollText.WheelView
             android:id="@+id/wheelview4"
             android:layout_width="30dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="35dp"
+
+            android:background="@drawable/circle_fff6f6_ee332b" />
+
         <edu.ptu.customview.scrollText.WheelView
             android:id="@+id/wheelview5"
             android:layout_width="30dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="35dp"
+
+            android:background="@drawable/circle_fff6f6_ee332b" />
+
         <edu.ptu.customview.scrollText.WheelView
             android:id="@+id/wheelview6"
             android:layout_width="30dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="35dp"
+
+            android:background="@drawable/circle_fff6f6_ee332b" />
+
         <edu.ptu.customview.scrollText.WheelView
             android:id="@+id/wheelview7"
             android:layout_width="30dp"
-            android:layout_height="wrap_content" />
+
+            android:layout_height="35dp"
+            android:background="@drawable/circle_fff6f6_ee332b" />
     </LinearLayout>
 
 </LinearLayout>

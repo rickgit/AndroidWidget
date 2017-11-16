@@ -2,10 +2,13 @@ package edu.ptu.customview.scrollText;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -369,10 +372,13 @@ public class WheelView extends View {
             counter++;
 
         }
-
+        Drawable background = getBackground();
+        if (background!=null){
+            System.out.println("显示内容");
+        }
         // 中间两条横线
-        canvas.drawLine(0.0F, firstLineY, measuredWidth, firstLineY, paintIndicator);
-        canvas.drawLine(0.0F, secondLineY, measuredWidth, secondLineY, paintIndicator);
+//        canvas.drawLine(0.0F, firstLineY, measuredWidth, firstLineY, paintIndicator);
+//        canvas.drawLine(0.0F, secondLineY, measuredWidth, secondLineY, paintIndicator);
         // 单位的Label
         if (label != null) {
             int drawRightContentStart = measuredWidth - getTextWidth(paintCenterText, label);
