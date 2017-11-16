@@ -40,7 +40,43 @@ public class MainActivity extends AppCompatActivity {
                 int dur=1000;
                 Random random = new Random();
                 for (int i = 0; i < animators.size(); i++) {
-                    animators.get(i).cancel();
+                    long currentPlayTime = animators.get(i).getCurrentPlayTime();
+                }
+                for (int i = 0; i < whellView.size(); i++) {
+                    final int finalI = i;
+
+
+//                    int itemHeight = (int) whellView.get(finalI).getItemHeight();
+//                    int initValue = whellView.get(finalI).getCurrentItem() - 0;
+//                    whellView.get(finalI).setTotalScrollY(initValue*itemHeight+itemHeight*3);
+//                    whellView.get(finalI).invalidate();
+
+
+//                    int itemHeight = (int) whellView.get(i).getItemHeight();
+//                    int itemHeightStart = whellView.get(i).getCurrentItem() * itemHeight;
+//                    final int endTIme = itemHeightStart + itemHeight * 3;
+//                    ValueAnimator animator = ValueAnimator.ofInt(itemHeightStart, endTIme);
+//
+//                    animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+//                        @Override
+//                        public void onAnimationUpdate(final ValueAnimator valueAnimator) {
+//                            Integer animatedValue = (Integer) valueAnimator.getAnimatedValue();
+//
+//
+//                            whellView.get(finalI).setTotalScrollY(animatedValue);
+//                            whellView.get(finalI).invalidate();
+//                            if (endTIme==animatedValue)
+//                                whellView.get(finalI).smoothScroll(WheelView.ACTION.FLING);
+//                        }
+//                    });
+//                    animator.setDuration(5000);
+//                    animator.setInterpolator(new AccelerateDecelerateInterpolator());
+//                    animator.start();
+
+
+
+//                    animators.get(i).cancel();
+                    whellView.get(finalI).setCurrentItem(whellView.get(finalI).getCurrentItem()-1);
                     animators.get(i).setDuration(dur);
                     dur+=30+ random.nextInt(300);
                     animators.get(i).start();
@@ -69,23 +105,30 @@ public class MainActivity extends AppCompatActivity {
             final WheelView wheel = (WheelView) vgWheel.getChildAt(i);
             whellView.add(wheel);
             wheel.setAdapter(new NumericWheelAdapter(1, 32, "%02d"));
+            wheel.setCurrentItem(0);
             final int finalI = i;
             wheel.addOnItemSelectedListener(new OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(int index) {
-                    if (index!=finalI)
-                    wheel.setCurrentItem(finalI);
+//                    if (index!=finalI)
+//                    wheel.setCurrentItem(finalI);
                 }
             });
 
-            ValueAnimator animator = ValueAnimator.ofFloat(21f, 800.0f);
+            ValueAnimator animator = ValueAnimator.ofFloat(0, -wheel.getItemHeight()* vgWheel.getChildCount());
+            final int finalI1 = i;
             animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(final ValueAnimator valueAnimator) {
-                    wheel.scrollBy((Float) valueAnimator.getAnimatedValue());
+//                    System.out.println("动画的值 "+ finalI1 +" : "+ valueAnimator.getAnimatedValue());
+//                    wheel.scrollBy((Float) valueAnimator.getAnimatedValue());
+                    Float animatedValue = (Float) valueAnimator.getAnimatedValue();
+                    wheel.setTotalScrollY((int) (float)animatedValue);
+                    wheel.invalidate();
                 }
             });
-            animator.setDuration(5000);
+            animator.setDuration(1000);
+            animator.setFloatValues();
             animator.setInterpolator(new AccelerateDecelerateInterpolator());
             animators.add(animator);
         }

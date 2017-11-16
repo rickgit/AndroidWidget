@@ -1,11 +1,16 @@
 package edu.ptu.customview.scrollText;
 
 import java.util.TimerTask;
-
+/**
+ * 可以用 DecelerateInterpolator() 替换
+ * @author anshu.wang
+ * @time  2017-11-16 14:08:14
+ * @version 1.0
+ */
 final class InertiaTimerTask extends TimerTask
 {
 
-	float a;
+	float runningVelocity;
 	final float velocityY;
 	final WheelView loopView;
 
@@ -14,35 +19,35 @@ final class InertiaTimerTask extends TimerTask
 		super();
 		loopView = loopview;
 		this.velocityY = velocityY;
-		a = Integer.MAX_VALUE;
+		runningVelocity = Integer.MAX_VALUE;
 	}
 
 	@Override
 	public final void run()
 	{
-		if (a == Integer.MAX_VALUE)
+		if (runningVelocity == Integer.MAX_VALUE)
 		{
 			if (Math.abs(velocityY) > 2000F)
 			{
 				if (velocityY > 0.0F)
 				{
-					a = 2000F;
+					runningVelocity = 2000F;
 				} else
 				{
-					a = -2000F;
+					runningVelocity = -2000F;
 				}
 			} else
 			{
-				a = velocityY;
+				runningVelocity = velocityY;
 			}
 		}
-		if (Math.abs(a) >= 0.0F && Math.abs(a) <= 20F)
+		if (Math.abs(runningVelocity) >= 0.0F && Math.abs(runningVelocity) <= 20F)
 		{
 			loopView.cancelFuture();
 			loopView.handler.sendEmptyMessage(MessageHandler.WHAT_SMOOTH_SCROLL);
 			return;
 		}
-		int i = (int) ((a * 10F) / 1000F);
+		int i = (int) ((runningVelocity * 10F) / 1000F);
 		loopView.totalScrollY = loopView.totalScrollY - i;
 		if (!loopView.isLoop)
 		{
@@ -59,20 +64,20 @@ final class InertiaTimerTask extends TimerTask
 
 			if (loopView.totalScrollY <= top)
 			{
-				a = 40F;
+				runningVelocity = 40F;
 				loopView.totalScrollY = (int) top;
 			} else if (loopView.totalScrollY >= bottom)
 			{
 				loopView.totalScrollY = (int) bottom;
-				a = -40F;
+				runningVelocity = -40F;
 			}
 		}
-		if (a < 0.0F)
+		if (runningVelocity < 0.0F)
 		{
-			a = a + 20F;
+			runningVelocity = runningVelocity + 20F;
 		} else
 		{
-			a = a - 20F;
+			runningVelocity = runningVelocity - 20F;
 		}
 		loopView.handler.sendEmptyMessage(MessageHandler.WHAT_INVALIDATE_LOOP_VIEW);
 	}
