@@ -78,6 +78,6 @@ public class NumericWheelAdapter implements WheelAdapter
 	@Override
 	public int indexOf(Object o)
 	{
-		return Integer.parseInt(o.toString());
+		return  Integer.parseInt(o.toString());
 	}
 }

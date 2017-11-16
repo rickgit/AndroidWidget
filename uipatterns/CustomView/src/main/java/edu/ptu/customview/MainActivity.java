@@ -32,15 +32,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_num_rote);
         final LotteryNumGenView genView = (LotteryNumGenView) findViewById(R.id.tv_num);
+        final Random random = new Random();
         findViewById(R.id.tv_start).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //                genView.startGen();
 //                child.setNumber(3,System.currentTimeMillis()+5000,300);
                 int dur=1000;
-                Random random = new Random();
+                Random random =  new Random();
                 for (int i = 0; i < animators.size(); i++) {
                     long currentPlayTime = animators.get(i).getCurrentPlayTime();
+                    if (animators.get(i).isRunning())
+                        return;
                 }
                 for (int i = 0; i < whellView.size(); i++) {
                     final int finalI = i;
@@ -105,6 +108,11 @@ public class MainActivity extends AppCompatActivity {
             final WheelView wheel = (WheelView) vgWheel.getChildAt(i);
             whellView.add(wheel);
             wheel.setAdapter(new NumericWheelAdapter(1, 32, "%02d"));
+            /*new ArrayWheelAdapter(new ArrayList(){{
+                for (int j = 0; j < 32; j++) {
+                    String.format( "%02d",j);
+                }
+            }})*/
             wheel.setCurrentItem(0);
             final int finalI = i;
             wheel.addOnItemSelectedListener(new OnItemSelectedListener() {
@@ -115,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-            ValueAnimator animator = ValueAnimator.ofFloat(0, -wheel.getItemHeight()* vgWheel.getChildCount());
+            ValueAnimator animator = ValueAnimator.ofFloat(0, -wheel.getItemHeight()* vgWheel.getChildCount()- new Random().nextInt(32)*wheel.getItemHeight());
             final int finalI1 = i;
             animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
