@@ -80,14 +80,14 @@
             android:layout_width="30dp"
             android:layout_height="35dp"
 
-            android:background="@drawable/circle_fff6f6_ee332b" />
+            android:background="@drawable/circle_f5faff_35a3ff" />
 
         <edu.ptu.customview.scrollText.WheelView
             android:id="@+id/wheelview7"
             android:layout_width="30dp"
 
             android:layout_height="35dp"
-            android:background="@drawable/circle_fff6f6_ee332b" />
+            android:background="@drawable/circle_f5faff_35a3ff" />
     </LinearLayout>
 
 </LinearLayout>

@@ -151,6 +151,9 @@ public class MainActivity extends AppCompatActivity {
             animator.setFloatValues();
             animator.setInterpolator(new AccelerateDecelerateInterpolator());
             animators.add(animator);
+
+            if (i==vgWheel.getChildCount()-1||i==vgWheel.getChildCount()-2)
+                wheel.setTextPaintColor(0xff35a3ff);
         }
 //        whellView = (WheelView) vgWheelS;
 //        whellView.setAdapter(new ArrayWheelAdapter(new ArrayList(){
