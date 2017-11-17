@@ -14,13 +14,13 @@ import java.util.Random;
 
 import edu.ptu.customview.animation.LotteryNumGenView;
 import edu.ptu.customview.animation.LotteryScrollNumView;
-import edu.ptu.customview.scrollText.LotteryView;
+import edu.ptu.customview.scrollText.LotteryWheelView;
 import edu.ptu.customview.scrollText.adapter.ArrayWheelAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
     private LotteryScrollNumView child;
-    private List<LotteryView> whellView = new ArrayList<>();
+    private List<LotteryWheelView> whellView = new ArrayList<>();
     private List<ValueAnimator> animators = new ArrayList<>();
 
     @Override
@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
      **/
     private void initLotteryView(ViewGroup vgWheel) {
         for (int i = 0; i < vgWheel.getChildCount(); i++) {
-            final LotteryView wheel = (LotteryView) vgWheel.getChildAt(i);
+            final LotteryWheelView wheel = (LotteryWheelView) vgWheel.getChildAt(i);
             whellView.add(wheel);
             wheel.setAdapter(new ArrayWheelAdapter(new ArrayList() {{
                 for (int j = 0; j < 32; j++) {
