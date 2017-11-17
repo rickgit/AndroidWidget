@@ -45,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
                     if (animators.get(i).isRunning())
                         return;
                 }
+                System.out.println("数字=");
+                System.out.println("数字");
                 for (int i = 0; i < whellView.size(); i++) {
                     final int finalI = i;
 
@@ -83,12 +85,15 @@ public class MainActivity extends AppCompatActivity {
 
                     animators.get(i).setDuration(dur);
                     int num = random.nextInt(31) + 1;
-                    int nexValueDiff = num -(32-currentItem);
-                    float change=- whellView.get(finalI).getItemHeight()*nexValueDiff -whellView.get(finalI).getItemHeight() * 32;
-                    System.out.println("数字 "+num);
-                    dur += 30 + random.nextInt(300); animators.get(finalI).setFloatValues(0,change);
+                    int nexValueDiff = num - (32 - currentItem);
+                    float change = -whellView.get(finalI).getItemHeight() * nexValueDiff - whellView.get(finalI).getItemHeight() * 32;
+                    System.out.println("数字 " + num);
+                    dur += 30 + random.nextInt(300);
+                    animators.get(finalI).setFloatValues(0, change);
                     animators.get(i).start();
                 }
+                System.out.println("数字=");
+                System.out.println("数字");
 
             }
         });
@@ -116,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
             wheel.setAdapter(new ArrayWheelAdapter(new ArrayList() {{
                 for (int j = 0; j < 32; j++) {
 
-                        add(String.format("%02d", 32 - j ));
+                    add(String.format("%02d", 32 - j));
                 }
             }}));
             wheel.setCurrentItem(31);
