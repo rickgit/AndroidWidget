@@ -2,29 +2,19 @@ package edu.ptu.customview.scrollText;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
 
 import edu.ptu.customview.R;
-import edu.ptu.customview.scrollText.adapter.OnItemSelectedListener;
 import edu.ptu.customview.scrollText.adapter.WheelAdapter;
 
 
@@ -36,20 +26,7 @@ import edu.ptu.customview.scrollText.adapter.WheelAdapter;
  * @time 2017-11-15 10:30:23
  */
 public class WheelView extends View {
-
-    public enum ACTION {
-        // 点击，滑翔(滑到尽头)，拖拽事件
-        CLICK, FLING, DAGGLE
-    }
-
     Context context;
-
-    Handler handler;
-    List<OnItemSelectedListener> onItemSelectedListeners;
-
-    // Timer mTimer;
-    ScheduledExecutorService mExecutor = Executors.newSingleThreadScheduledExecutor();
-    private ScheduledFuture<?> mFuture;
 
     Paint paintOuterText;
     Paint paintCenterText;
@@ -99,12 +76,6 @@ public class WheelView extends View {
     // 半径
     int radius;
 
-    private int mOffset = 0;
-    private float previousY = 0;
-    long startTime = 0;
-
-    // 修改这个值可以改变滑行速度
-    private static final int VELOCITYFLING = 5;
     int widthMeasureSpec;
 
     private int mGravity = Gravity.CENTER;
@@ -136,7 +107,6 @@ public class WheelView extends View {
 
     private void initLoopView(Context context) {
         this.context = context;
-        handler = new MessageHandler(this);
 
         isLoop = true;
         textSize = 0;
@@ -224,33 +194,6 @@ public class WheelView extends View {
         itemHeight = lineSpacingMultiplier * maxTextHeight;
     }
 
-    public void smoothScroll(ACTION action) {
-        cancelFuture();
-        if (action == ACTION.FLING || action == ACTION.DAGGLE) {
-            mOffset = (int) ((totalScrollY % itemHeight + itemHeight) % itemHeight);
-            if ((float) mOffset > itemHeight / 2.0F) {
-                mOffset = (int) (itemHeight - (float) mOffset);
-            } else {
-                mOffset = -mOffset;
-            }
-        }
-        // 停止的时候，位置有偏移，不是全部都能正确停止到中间位置的，这里把文字位置挪回中间去
-        mFuture = mExecutor.scheduleWithFixedDelay(new SmoothScrollTimerTask(this, mOffset), 0, 10, TimeUnit.MILLISECONDS);
-    }
-
-    public final void scrollBy(float velocityY) {
-        cancelFuture();
-
-        mFuture = mExecutor.scheduleWithFixedDelay(new InertiaTimerTask(this, velocityY), 0, VELOCITYFLING, TimeUnit.MILLISECONDS);
-    }
-
-    public void cancelFuture() {
-        if (mFuture != null && !mFuture.isCancelled()) {
-            mFuture.cancel(true);
-            mFuture = null;
-        }
-    }
-
     /**
      * 设置是否循环滚动
      *
@@ -274,12 +217,6 @@ public class WheelView extends View {
         invalidate();
     }
 
-    public final void addOnItemSelectedListener(OnItemSelectedListener OnItemSelectedListener) {
-        if (this.onItemSelectedListeners == null) {
-            onItemSelectedListeners = new ArrayList<>();
-        }
-        onItemSelectedListeners.add(OnItemSelectedListener);
-    }
 
     public final void setAdapter(WheelAdapter adapter) {
         this.adapter = adapter;
@@ -295,18 +232,7 @@ public class WheelView extends View {
         return selectedItem;
     }
 
-/*	public CityWheelModel getArrayWheelAdapterCurrent(){
-        if (adapter instanceof ArrayWheelAdapter){
-			return (CityWheelModel) adapter.getItem(selectedItem);
-		}
-		return null;
-	}*/
 
-    protected final void onItemSelected() {
-        if (onItemSelectedListeners != null) {
-            postDelayed(new OnItemSelectedRunnable(this), 50L);
-        }
-    }
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -518,74 +444,6 @@ public class WheelView extends View {
         setMeasuredDimension(max,max);
         System.out.println("打印宽和高："+measuredWidth+" : "+measuredHeight);
     }
-
-	/*@Override
-	public boolean onTouchEvent(MotionEvent event)
-	{
-		boolean eventConsumed = gestureDetector.onTouchEvent(event);
-		switch (event.getAction())
-		{
-		case MotionEvent.ACTION_DOWN:
-			startTime = System.currentTimeMillis();
-			cancelFuture();
-			previousY = event.getRawY();
-			break;
-
-		case MotionEvent.ACTION_MOVE:
-			float dy = previousY - event.getRawY();
-			previousY = event.getRawY();
-			totalScrollY = (int) (totalScrollY + dy);
-
-			// 边界处理。
-			if (!isLoop)
-			{
-				float top = -initPosition * itemHeight;
-				float bottom = (adapter.getItemsCount() - 1 - initPosition) * itemHeight;
-				if (totalScrollY - itemHeight * 0.3 < top)
-				{
-					top = totalScrollY - dy;
-				} else if (totalScrollY + itemHeight * 0.3 > bottom)
-				{
-					bottom = totalScrollY - dy;
-				}
-
-				if (totalScrollY < top)
-				{
-					totalScrollY = (int) top;
-				} else if (totalScrollY > bottom)
-				{
-					totalScrollY = (int) bottom;
-				}
-			}
-			break;
-
-		case MotionEvent.ACTION_UP:
-		default:
-			if (!eventConsumed)
-			{
-				float y = event.getY();
-				double l = Math.acos((radius - y) / radius) * radius;
-				int circlePosition = (int) ((l + itemHeight / 2) / itemHeight);
-
-				float extraOffset = (totalScrollY % itemHeight + itemHeight) % itemHeight;
-				mOffset = (int) ((circlePosition - itemsVisible / 2) * itemHeight - extraOffset);
-
-				if ((System.currentTimeMillis() - startTime) > 120)
-				{
-					// 处理拖拽事件
-					smoothScroll(ACTION.DAGGLE);
-				} else
-				{
-					// 处理条目点击事件
-					smoothScroll(ACTION.CLICK);
-				}
-			}
-			break;
-		}
-		invalidate();
-
-		return true;
-	}*/
 
     /**
      * 获取Item个数

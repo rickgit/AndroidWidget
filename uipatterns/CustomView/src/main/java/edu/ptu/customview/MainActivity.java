@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.LinearInterpolator;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
@@ -18,8 +16,6 @@ import edu.ptu.customview.animation.LotteryNumGenView;
 import edu.ptu.customview.animation.LotteryScrollNumView;
 import edu.ptu.customview.scrollText.WheelView;
 import edu.ptu.customview.scrollText.adapter.ArrayWheelAdapter;
-import edu.ptu.customview.scrollText.adapter.NumericWheelAdapter;
-import edu.ptu.customview.scrollText.adapter.OnItemSelectedListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -126,13 +122,6 @@ public class MainActivity extends AppCompatActivity {
             }}));
             wheel.setCurrentItem(31);
             final int finalI = i;
-            wheel.addOnItemSelectedListener(new OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(int index) {
-//                    if (index!=finalI)
-//                    wheel.setCurrentItem(finalI);
-                }
-            });
 
             float scrollLength = -wheel.getItemHeight() * vgWheel.getChildCount() - new Random().nextInt(32) * wheel.getItemHeight();
             ValueAnimator animator = ValueAnimator.ofFloat(0, -1 * wheel.getItemHeight());
