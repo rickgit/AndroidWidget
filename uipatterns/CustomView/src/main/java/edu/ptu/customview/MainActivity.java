@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     private LotteryScrollNumView child;
     private List<WheelView> whellView = new ArrayList<>();
-    private  List<ValueAnimator> animators= new ArrayList<>();
+    private List<ValueAnimator> animators = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 //                genView.startGen();
 //                child.setNumber(3,System.currentTimeMillis()+5000,300);
-                int dur=1000;
-                Random random =  new Random();
+                int dur = 1000;
+                Random random = new Random();
                 for (int i = 0; i < animators.size(); i++) {
                     long currentPlayTime = animators.get(i).getCurrentPlayTime();
                     if (animators.get(i).isRunning())
@@ -77,11 +77,16 @@ public class MainActivity extends AppCompatActivity {
 //                    animator.start();
 
 
-
 //                    animators.get(i).cancel();
-                    whellView.get(finalI).setCurrentItem(whellView.get(finalI).getCurrentItem()-1);
+                    int currentItem = whellView.get(finalI).getCurrentItem();
+                    whellView.get(finalI).setCurrentItem(currentItem);
+
                     animators.get(i).setDuration(dur);
-                    dur+=30+ random.nextInt(300);
+                    int num = random.nextInt(31) + 1;
+                    int nexValueDiff = num -(32-currentItem);
+                    float change=- whellView.get(finalI).getItemHeight()*nexValueDiff -whellView.get(finalI).getItemHeight() * 32;
+                    System.out.println("数字 "+num);
+                    dur += 30 + random.nextInt(300); animators.get(finalI).setFloatValues(0,change);
                     animators.get(i).start();
                 }
 
@@ -107,13 +112,14 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < vgWheel.getChildCount(); i++) {
             final WheelView wheel = (WheelView) vgWheel.getChildAt(i);
             whellView.add(wheel);
-            wheel.setAdapter(new NumericWheelAdapter(1, 32, "%02d"));
-            /*new ArrayWheelAdapter(new ArrayList(){{
+//            wheel.setAdapter(new NumericWheelAdapter(1, 32, "%02d"));
+            wheel.setAdapter(new ArrayWheelAdapter(new ArrayList() {{
                 for (int j = 0; j < 32; j++) {
-                    String.format( "%02d",j);
+
+                        add(String.format("%02d", 32 - j ));
                 }
-            }})*/
-            wheel.setCurrentItem(0);
+            }}));
+            wheel.setCurrentItem(31);
             final int finalI = i;
             wheel.addOnItemSelectedListener(new OnItemSelectedListener() {
                 @Override
@@ -123,7 +129,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-            ValueAnimator animator = ValueAnimator.ofFloat(0, -wheel.getItemHeight()* vgWheel.getChildCount()- new Random().nextInt(32)*wheel.getItemHeight());
+            float scrollLength = -wheel.getItemHeight() * vgWheel.getChildCount() - new Random().nextInt(32) * wheel.getItemHeight();
+            ValueAnimator animator = ValueAnimator.ofFloat(0, -1 * wheel.getItemHeight());
             final int finalI1 = i;
             animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
@@ -131,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
 //                    System.out.println("动画的值 "+ finalI1 +" : "+ valueAnimator.getAnimatedValue());
 //                    wheel.scrollBy((Float) valueAnimator.getAnimatedValue());
                     Float animatedValue = (Float) valueAnimator.getAnimatedValue();
-                    wheel.setTotalScrollY((int) (float)animatedValue);
+                    wheel.setTotalScrollY((int) (float) animatedValue);
                     wheel.invalidate();
                 }
             });
