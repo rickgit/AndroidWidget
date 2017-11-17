@@ -25,7 +25,7 @@ import edu.ptu.customview.scrollText.adapter.WheelAdapter;
  * @version 1.0
  * @time 2017-11-15 10:30:23
  */
-public class WheelView extends View {
+public class LotteryView extends View {
     Context context;
 
     Paint paintOuterText;
@@ -82,14 +82,14 @@ public class WheelView extends View {
     private int drawCenterContentStart = 0;// 中间选中文字开始绘制位置
     private int drawOutContentStart = 0;// 非中间文字开始绘制位置
     private static final float SCALECONTENT = 0.8F;// 非中间文字则用此控制高度，压扁形成3d错觉
-    private static final float CENTERCONTENTOFFSET = 0;// 中间文字文字居中需要此偏移值
+    private static final float CENTERCONTENTOFFSET = 4;// 中间文字文字居中需要此偏移值
     private static final String GETPICKERVIEWTEXT = "getName";// 反射的方法名
 
-    public WheelView(Context context) {
+    public LotteryView(Context context) {
         this(context, null);
     }
 
-    public WheelView(Context context, AttributeSet attrs) {
+    public LotteryView(Context context, AttributeSet attrs) {
         super(context, attrs);
         textColorOut = getResources().getColor(R.color.pickerview_wheelview_textcolor_out);
         textColorCenter = getResources().getColor(R.color.pickerview_wheelview_textcolor_center);
@@ -188,7 +188,8 @@ public class WheelView extends View {
             paintCenterText.getTextBounds("\u661F\u671F", 0, 2, rect); // 星期
             int textHeight = rect.height();
             if (textHeight > maxTextHeight) {
-                maxTextHeight = textHeight;
+                maxTextHeight = textHeight+4;//修改高度
+                System.out.println("修改高度 "+maxTextHeight);
             }
         }
         itemHeight = lineSpacingMultiplier * maxTextHeight;

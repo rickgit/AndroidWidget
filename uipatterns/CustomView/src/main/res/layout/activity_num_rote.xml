@@ -41,48 +41,48 @@
         android:showDividers="middle"
         android:layout_height="wrap_content">
 
-        <edu.ptu.customview.scrollText.WheelView
+        <edu.ptu.customview.scrollText.LotteryView
             android:id="@+id/wheelview1"
             android:layout_width="30dp"
 
             android:layout_height="35dp"
             android:background="@drawable/circle_fff6f6_ee332b" />
 
-        <edu.ptu.customview.scrollText.WheelView
+        <edu.ptu.customview.scrollText.LotteryView
             android:id="@+id/wheelview2"
             android:layout_width="30dp"
             android:layout_height="35dp"
 
             android:background="@drawable/circle_fff6f6_ee332b" />
 
-        <edu.ptu.customview.scrollText.WheelView
+        <edu.ptu.customview.scrollText.LotteryView
             android:id="@+id/wheelview3"
             android:layout_width="30dp"
             android:layout_height="35dp"
             android:background="@drawable/circle_fff6f6_ee332b" />
 
-        <edu.ptu.customview.scrollText.WheelView
+        <edu.ptu.customview.scrollText.LotteryView
             android:id="@+id/wheelview4"
             android:layout_width="30dp"
             android:layout_height="35dp"
 
             android:background="@drawable/circle_fff6f6_ee332b" />
 
-        <edu.ptu.customview.scrollText.WheelView
+        <edu.ptu.customview.scrollText.LotteryView
             android:id="@+id/wheelview5"
             android:layout_width="30dp"
             android:layout_height="35dp"
 
             android:background="@drawable/circle_fff6f6_ee332b" />
 
-        <edu.ptu.customview.scrollText.WheelView
+        <edu.ptu.customview.scrollText.LotteryView
             android:id="@+id/wheelview6"
             android:layout_width="30dp"
             android:layout_height="35dp"
 
             android:background="@drawable/circle_f5faff_35a3ff" />
 
-        <edu.ptu.customview.scrollText.WheelView
+        <edu.ptu.customview.scrollText.LotteryView
             android:id="@+id/wheelview7"
             android:layout_width="30dp"
 
