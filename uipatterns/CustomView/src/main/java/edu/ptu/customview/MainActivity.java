@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
@@ -113,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
                     wheel.invalidate();
                 }
             });
-            animator.setDuration(1000);
+            animator.setDuration(2000);
             animator.setFloatValues();
             animator.setInterpolator(new AccelerateDecelerateInterpolator());
             animators.add(animator);
