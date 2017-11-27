@@ -1,4 +1,4 @@
-include ':NavPattern', ':SegmentView', ':CustomViewOrDrawable', ':Viewpager'
+include ':NavPattern', ':SegmentView', ':CustomViewOrDrawable', ':Viewpager', ':toolbar'
 include ':app', ':RecyclerView', ':Gridlayout', ':Cardview', ':multiplychannellib'
 //include ':V7appconpat'
 include ':RecyclerViewDemo'
@@ -10,3 +10,4 @@ project(':CustomView').projectDir = new File('uipatterns/CustomView')
 project(':SegmentView').projectDir = new File('uipatterns/SegmentView')
 project(':CustomViewOrDrawable').projectDir = new File('uipatterns/CustomViewOrDrawable')
 project(':Viewpager').projectDir = new File('uipatterns/Viewpager')
+project(':toolbar').projectDir = new File('uipatterns/toolbar')
