@@ -29,16 +29,16 @@ public class XRecyclerView extends RecyclerView implements Runnable{
 
         @Override
         public void scrollVerticallyBy(int dy) {
-            /**dy > 0 is load more; dy < 0 is refresh*/
-            if ( !isLoadingData && isTouching
-                    && ((dy < 0 && Math.abs(mHeaderView.getLayoutParams().height) < mHeaderViewMaxHeight)
-                    || (dy > 0 && Math.abs(mHeaderView.getLayoutParams().height) > mHeaderViewHeight))) {
-                mHandler.obtainMessage(0, dy, 0, null).sendToTarget();
-                onScrollChanged(0, 0, 0, 0);
-            }else if( !isLoadingMoreData && isManualLoadMoreData && isTouching
-                    &&(dy > 0 && Math.abs(mFooterView.getLayoutParams().height) < mFooterViewHeight)){
-                mHandler.obtainMessage(2, dy, 0, null).sendToTarget();
-            }
+//            /**dy > 0 is load more; dy < 0 is refresh*/
+//            if ( !isLoadingData && isTouching
+//                    && ((dy < 0 && Math.abs(mHeaderView.getLayoutParams().height) < mHeaderViewMaxHeight)
+//                    || (dy > 0 && Math.abs(mHeaderView.getLayoutParams().height) > mHeaderViewHeight))) {
+//                mHandler.obtainMessage(0, dy, 0, null).sendToTarget();
+//                onScrollChanged(0, 0, 0, 0);
+//            }else if( !isLoadingMoreData && isManualLoadMoreData && isTouching
+//                    &&(dy > 0 && Math.abs(mFooterView.getLayoutParams().height) < mFooterViewHeight)){
+//                mHandler.obtainMessage(2, dy, 0, null).sendToTarget();
+//            }
         }
     };
     @Override
