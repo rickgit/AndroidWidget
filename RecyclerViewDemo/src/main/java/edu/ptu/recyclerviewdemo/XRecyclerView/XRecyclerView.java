@@ -29,7 +29,7 @@ public class XRecyclerView extends RecyclerView implements Runnable{
 
         @Override
         public void scrollVerticallyBy(int dy) {
-//            /**dy > 0 is load more; dy < 0 is refresh*/
+            /**dy > 0 is load more; dy < 0 is refresh*/
 //            if ( !isLoadingData && isTouching
 //                    && ((dy < 0 && Math.abs(mHeaderView.getLayoutParams().height) < mHeaderViewMaxHeight)
 //                    || (dy > 0 && Math.abs(mHeaderView.getLayoutParams().height) > mHeaderViewHeight))) {
