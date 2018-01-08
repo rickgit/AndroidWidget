@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="edu.ptu.customview.MainActivity">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#11ac"
+        android:gravity="left"
+        android:minHeight="32dp"
+        android:text="显示彩期" />
+    <edu.ptu.customview.slidinglayout.SlidingLayout
+        android:id="@+id/sl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ccab"
+            android:gravity="center"
+            android:minHeight="160dp"
+            android:text="近五期期数据" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#1ab"
+            android:gravity="center"
+            android:minHeight="160dp"
+            android:text="近十期数据" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <edu.ptu.customview.LotteryOpenView
+                    android:id="@+id/tv1"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_weight="1"
+
+                    android:background="#aca"
+                    android:text="TextView center " />
+
+                <TextView
+                    android:id="@+id/tv3"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_weight="1"
+                    android:background="#cca"
+                    android:text="TextView center " />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_weight="1"
+                    android:background="#cca"
+                    android:text="TextView center " /> <TextView
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginTop="12dp"
+                android:layout_weight="1"
+                android:background="#cca"
+                android:text="TextView center " />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_weight="1"
+                    android:background="#cca"
+                    android:text="TextView center " />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_weight="1"
+                    android:background="#cca"
+                    android:text="TextView center " />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_weight="1"
+                    android:background="#cca"
+                    android:text="TextView center " />
+            </LinearLayout>
+
+        </ScrollView>
+
+    </edu.ptu.customview.slidinglayout.SlidingLayout>
+
+
+</LinearLayout>

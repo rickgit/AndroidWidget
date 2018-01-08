@@ -7,8 +7,10 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MotionEvent;
 import android.view.View;
 
+import edu.ptu.viewpager.LogUtils;
 import edu.ptu.viewpager.R;
 import edu.ptu.viewpager.fragment.Simp1Fragment;
 
@@ -35,5 +37,12 @@ public class FragmentViewPagerActivity   extends AppCompatActivity {
             }
         });
         vp.setOffscreenPageLimit(5);
+        vp.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                LogUtils.logMainInfo("onTouch");
+                return false;
+            }
+        });
     }
 }

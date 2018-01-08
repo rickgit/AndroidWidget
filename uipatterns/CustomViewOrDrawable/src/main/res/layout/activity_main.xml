@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:gravity="center_horizontal"
     tools:context="edu.ptucustomviewordrawable.MainActivity">
 
     <TextView
@@ -45,8 +46,12 @@
             android:text="hello3" />
 
     </edu.ptucustomviewordrawable.customDrawLine.RadioFrameLinearLayout>
-
-    <edu.ptucustomviewordrawable.customDrawLine.DrawNum
+    <ImageView
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:src="@drawable/ic_launcher"
+        android:layout_height="wrap_content" />
+   <!-- <edu.ptucustomviewordrawable.customDrawLine.DrawNum
         android:id="@+id/drawpanel"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -65,6 +70,5 @@
             android:layout_height="48dp"
             android:gravity="center"  android:textSize="48dp"
             android:text="按钮2 " />
-    </edu.ptucustomviewordrawable.customDrawLine.DrawNum>
-
+    </edu.ptucustomviewordrawable.customDrawLine.DrawNum>-->
 </LinearLayout>

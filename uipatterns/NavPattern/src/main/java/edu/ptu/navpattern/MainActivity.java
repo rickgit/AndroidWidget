@@ -19,7 +19,7 @@ import edu.ptu.navpattern.tooltip.OnItemClickListener;
 import edu.ptu.navpattern.tooltip.Tooltip;
 
 public class MainActivity extends AppCompatActivity {
-    CharSequence [] charSequences={"11","222"};
+    CharSequence [] charSequences={"11","222","11","222","222","11","222","222","11","222"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

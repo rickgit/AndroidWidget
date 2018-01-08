@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.ptu.demo.R;
-import edu.ptu.demo.test.RecyclerActivity;
+import edu.ptu.demo.test.recyclerview.RecyclerActivity;
 import edu.ptu.demo.test.utils.Utils;
 
 /**
