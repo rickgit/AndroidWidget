@@ -48,5 +48,6 @@ public class RecyclerGridActivity extends FragmentActivity {
                 return datas.size();
             }
         });
+
     }
 }
